@@ -2,27 +2,41 @@
 % Please edit documentation in R/download_PIB.R
 \name{download_PIB}
 \alias{download_PIB}
-\title{Download PIB Data (2010-2021) from IBGE}
+\title{Download PIB (Produto Interno Bruto) data from IBGE}
 \usage{
 download_PIB(dir_path = "data/")
 }
 \arguments{
-\item{dir_path}{Character. The destination directory where the downloaded ZIP file will be saved. Default is "data/".}
+\item{dir_path}{Path to the directory where the files will be saved (default: "data/").}
 }
 \value{
-No return value, called for side effects (file download).
+Invisibly returns the full path of the downloaded and extracted files.
 }
 \description{
-This function downloads the PIB (Produto Interno Bruto) dataset for the years 2010-2021 from the IBGE FTP server and saves it to a specified directory.
+This function downloads the PIB (Produto Interno Bruto) data for municipalities in Brazil 
+for the years 2010-2021 from IBGE's server. It saves the ZIP file, extracts its contents, 
+and removes the temporary ZIP file after extraction.
+}
+\details{
+The function ensures that the specified directory exists, performs the download, 
+extracts the files, and cleans up by removing the ZIP file.
+
+
+The function performs the following steps:
+1. Downloads the ZIP file containing PIB data from IBGE's server.
+2. Ensures that the specified directory exists, creating it if necessary.
+3. Extracts the contents of the ZIP file, using the `zip` package (if available) for better handling of special characters.
+4. Removes the temporary ZIP file after extraction.
+
+The final extracted data will be saved in the specified directory, with the ZIP file being removed after the process.
 }
 \examples{
-# Download the PIB dataset and save it in the default directory ("data/")
+\dontrun{
+# Download PIB data to the default directory ("data/")
 download_PIB()
 
-# Download the PIB dataset and save it in the working directory
-download_PIB(".")
-
-# Download the PIB dataset and save it in a specific folder
-download_PIB("custom_folder/")
+# Download PIB data to a custom directory
+download_PIB(dir_path = "data/raw/")
+}
 
 }
