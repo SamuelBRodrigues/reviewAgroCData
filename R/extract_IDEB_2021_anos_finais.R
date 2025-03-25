@@ -45,11 +45,13 @@ extract_IDEB_2021_anos_finais <- function(
     dplyr::select(CO_MUNICIPIO,
                   NO_MUNICIPIO,
                   SG_UF,
+                  REDE,
                   VL_OBSERVADO_2021) %>%
-    dplyr::rename(municipio_codigo = CO_MUNICIPIO,
-                  municipio_nome =  NO_MUNICIPIO,
-                  estado_sigla = SG_UF,
-                  IDEB_2021 = VL_OBSERVADO_2021)
+    dplyr::rename(`municipio_codigo` = CO_MUNICIPIO,
+                  `municipio_nome` =  NO_MUNICIPIO,
+                  `estado_sigla` = SG_UF,
+                  `IDEB_2021` = VL_OBSERVADO_2021) %>%
+    dplyr::filter(REDE == 'Pública')
 
   # Filter IDEB data to keep only rows for target cities
   message('Filtering data for target cities...')
