@@ -13,12 +13,12 @@ download_PIB(dir_path = "data/")
 Invisibly returns the full path of the downloaded and extracted files.
 }
 \description{
-This function downloads the PIB (Produto Interno Bruto) data for municipalities in Brazil 
-for the years 2010-2021 from IBGE's server. It saves the ZIP file, extracts its contents, 
+This function downloads the PIB (Produto Interno Bruto) data for municipalities in Brazil
+for the years 2010-2021 from IBGE's server. It saves the ZIP file, extracts its contents,
 and removes the temporary ZIP file after extraction.
 }
 \details{
-The function ensures that the specified directory exists, performs the download, 
+The function ensures that the specified directory exists, performs the download,
 extracts the files, and cleans up by removing the ZIP file.
 
 
