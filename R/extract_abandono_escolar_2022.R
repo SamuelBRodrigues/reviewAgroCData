@@ -52,7 +52,7 @@ extract_abandono_escolar_2022 <- function(
                   `municipio_nome` =  NO_MUNICIPIO,
                   `estado_sigla` = SG_UF,
                   `taxa_abandono_ensino_fundamental` = `3_CAT_FUN`,
-                  `taxa_abadono_ensino_medio` = `3_CAT_MED`)
+                  `taxa_abandono_ensino_medio` = `3_CAT_MED`)
 
   # Filter IDEB data to keep only rows for target cities
   message('Filtering data for target cities...')
