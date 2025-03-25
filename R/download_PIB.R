@@ -1,10 +1,10 @@
 #' Download PIB (Produto Interno Bruto) data from IBGE
 #'
-#' This function downloads the PIB (Produto Interno Bruto) data for municipalities in Brazil 
-#' for the years 2010-2021 from IBGE's server. It saves the ZIP file, extracts its contents, 
+#' This function downloads the PIB (Produto Interno Bruto) data for municipalities in Brazil
+#' for the years 2010-2021 from IBGE's server. It saves the ZIP file, extracts its contents,
 #' and removes the temporary ZIP file after extraction.
-#' 
-#' The function ensures that the specified directory exists, performs the download, 
+#'
+#' The function ensures that the specified directory exists, performs the download,
 #' extracts the files, and cleans up by removing the ZIP file.
 #'
 #' @param dir_path Path to the directory where the files will be saved (default: "data/").
@@ -17,7 +17,7 @@
 #' 2. Ensures that the specified directory exists, creating it if necessary.
 #' 3. Extracts the contents of the ZIP file, using the `zip` package (if available) for better handling of special characters.
 #' 4. Removes the temporary ZIP file after extraction.
-#' 
+#'
 #' The final extracted data will be saved in the specified directory, with the ZIP file being removed after the process.
 #'
 #' @examples
@@ -32,43 +32,18 @@
 #' @export
 download_PIB <- function(dir_path = "data/") {
   url <- "https://ftp.ibge.gov.br/Pib_Municipios/2021/base/base_de_dados_2010_2021_xlsx.zip"
-  file_name <- "pib_data.zip"  # Simpler name to avoid issues
-  file_path <- file.path(dir_path, file_name)
-  
+
   # Ensure the directory exists
   if (!dir.exists(dir_path)) {
     dir.create(dir_path, recursive = TRUE)
   }
-  
-  tryCatch({
-    # Download using automatic method
-    download.file(url, destfile = file_path, mode = "wb", method = "auto")
-    
-    # Check if the download was successful
-    if (!file.exists(file_path) || file.info(file_path)$size == 0) {
-      stop("Download failed or the file is empty")
-    }
-    
-    message("Download completed: ", file_path)
-    
-    # Robust extraction with special character handling
-    if (requireNamespace("zip", quietly = TRUE)) {
-      # Use 'zip' package, which is more robust for special characters
-      zip::unzip(file_path, exdir = dir_path)
-    } else {
-      # Alternative for systems without the 'zip' package
-      utils::unzip(file_path, exdir = dir_path)
-    }
-    
-    message("ZIP file extracted successfully.")
-    
-    # Remove the ZIP file after extraction
-    file.remove(file_path)
-    message("ZIP file removed.")
-    
-  }, error = function(e) {
-    message("Error during the process: ", e$message)
-    # Remove the corrupted ZIP file if it exists
-    if (file.exists(file_path)) file.remove(file_path)
-  })
+
+  # Download the file
+  file_path <- .download_file(url, dir_path)
+
+  # Extract the ZIP file
+  .extract_zip(file_path, dir_path)
+
+  # Remove the ZIP file after extraction
+  .remove_zip(file_path)
 }
