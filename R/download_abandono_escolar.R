@@ -14,7 +14,8 @@
 #' @export
 
 download_abandono_escolar <- function(dir_path = "data/") {
-  url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2021/tx_rend_municipios_2021.zip"
+  #url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2021/tx_rend_municipios_2021.zip"
+  url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2022/tx_rend_municipios_2022.zip"
 
   # Ensure the directory exists
   if (!dir.exists(dir_path)) {
