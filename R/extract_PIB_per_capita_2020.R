@@ -30,7 +30,7 @@ extract_PIB_per_capita_2020 <- function(
                   `Sigla da Unidade da Federação`,
                   `Nome do Município`,
                   `Produto Interno Bruto per capita, \r\na preços correntes\r\n(R$ 1,00)`
-    )
+    ) %>%
 
   return(pib_2020)
 }
