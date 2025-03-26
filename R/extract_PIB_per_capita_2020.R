@@ -20,7 +20,7 @@ extract_PIB_per_capita_2020 <- function(
   )
 
   # Load target cities data from package
-  load(system.file("data", "target_cities.rda", package = "getAgroCData"))
+  load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
 
   # Filter and select data
   pib_2020 <- pib_data %>%

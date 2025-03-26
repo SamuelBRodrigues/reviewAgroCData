@@ -36,7 +36,7 @@ extract_IDEB_2021_anos_finais <- function(
 
   # Load target cities data from the package
   message('Loading target cities data...')
-  load(system.file("data", "target_cities.rda", package = "getAgroCData"))
+  load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
   message('Target cities data loaded.')
 
   # Filter and select relevant columns from IDEB data

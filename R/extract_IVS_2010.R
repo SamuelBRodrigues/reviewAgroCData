@@ -42,7 +42,7 @@ extract_IVS_2010 <- function(
   )
 
   # Load target cities data from package
-  load(system.file("data", "target_cities.rda", package = "getAgroCData"))
+  load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
 
   message('Applying filters...')
 
