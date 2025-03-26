@@ -43,7 +43,7 @@ extract_CAPAG_poupanca_corrente_2022 <- function(
 
   # Load target cities data from the package
   message('Loading target cities data...')
-  load(system.file("data", "target_cities.rda", package = "getAgroCData"))
+  load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
   message('Target cities data loaded.')
 
   # Filter and select relevant columns from CAPAG data
