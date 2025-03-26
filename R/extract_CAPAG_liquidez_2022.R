@@ -54,7 +54,7 @@ extract_CAPAG_liquidez_2022 <- function(
                   UF,
                   Indicador_3_Revisão) %>%
     dplyr::rename(`municipio_codigo` = Cod.IBGE,
-                  `municipio_nome` =  Município,
+                  `municipio` =  Município,
                   `estado_sigla` = UF,
                   `liquidez` = `Indicador_3_Revisão`)
 

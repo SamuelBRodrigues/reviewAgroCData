@@ -47,7 +47,7 @@ extract_CAPAG_endividamento_2022 <- function(
                   UF,
                   Indicador_1_Revisão) %>%
     dplyr::rename(`municipio_codigo` = Cod.IBGE,
-                  `municipio_nome` =  Município,
+                  `municipio` =  Município,
                   `estado_sigla` = UF,
                   `endividamento` = `Indicador_1_Revisão`)
 
