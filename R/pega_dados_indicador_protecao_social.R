@@ -207,3 +207,126 @@ get_situacao_pobreza_data <- function(cod_municipios_ibge = target_cities$munici
   )
 
 }
+
+#' Download dos dados do SUAS - CRAS
+#'
+#' A função baixa os dados do CRAS da bases do senso SUAS
+#'
+#' @param dir diretório onde os dados serão baixados
+#' @param ano Ano de interesse dos dados
+#'
+#' @returns Um arquivo compactado no diretorio indicado
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   download_cras_data(dir = "data_raw", ano = "2022")
+#' }
+download_cras_data <- function(dir = "data_raw", ano = "2022"){
+
+  # Lista nomeada com os links de download dos dados
+  links <- list(
+    "2023" = "https://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/1%20-%20CRAS(4).rar",
+    "2022" = "https://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/1_CRAS.rar",
+    "2021" = "https://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/1%20-%20CRAS(1).zip",
+    "2020" = "https://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/1_CRAS_2020.zip",
+    "2019" = "https://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/CRAS(5).zip",
+    "2018" = "https://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/CRAS(3).zip",
+    "2017" = "http://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/Censo_SUAS/2017/Censo_SUAS_2017_CRAS.zip",
+    "2016" = "http://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/Censo_SUAS_2016/CensoSUAS2016_CRAS.zip",
+    "2015" = "http://aplicacoes.mds.gov.br/sagi/dicivip_datain/ckfinder/userfiles/files/Censo_SUAS_2015/CensoSUAS2015_CRAS.zip"
+  )
+
+  # Url do download de acordo com o ano
+  url <- links[ano] |> purrr::pluck(1)
+
+  # Tipo do arquivo baixado
+  file_type <- url |> stringr::str_extract("\\.(rar|zip)$")
+
+  # Nome do arquivo baixado
+  file_name <- stringr::str_glue("censo_suas_cras_{ano}{file_type}")
+
+  # Caminho do arquivo
+  path <- stringr::str_glue("{dir}/cras/{ano}")
+
+  if(!dir.exists(path)){
+    dir.create(path, recursive = TRUE)
+  }
+
+  # Baixando os dados
+  options(timeout = 600) #aumentando o tempo limite de donwload
+  download.file(url,
+                mode = "wb",
+                destfile = stringr::str_glue("{path}/{file_name}")
+  )
+
+}
+
+#' Trata os dados do CRAS
+#'
+#' A função trata os dados do CRAS já baixados e extraídos no mesmo diretório
+#' indicado de download
+#'
+#' @param dir Diretório onde os dados foram baixados
+#' @param ano Ano de interesse dos dados a serem tratados
+#'
+#' @returns Uma tabela com os dados do CRAS a nível municipal
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   extract_cras_data(dir = "data_raw", ano = "2022")
+#' }
+extract_cras_data <- function(dir = "data_raw", ano = "2022"){
+
+  file_folder_list <- list(
+    "2023" = "1%20-%20CRAS(4)",
+    "2022" = "1_CRAS",
+    "2021" = "1%20-%20CRAS(1)",
+    "2020" = "1_CRAS_2020",
+    "2019" = "CRAS(5)",
+    "2018" = "CRAS(3)",
+    "2017" = "Censo_SUAS_2017_CRAS",
+    "2016" = "CensoSUAS2016_CRAS",
+    "2015" = "CensoSUAS2015_CRAS"
+  )
+
+  file_folder <- file_folder_list[ano] |> purrr::pluck(1)
+
+  path <- stringr::str_glue("{dir}/cras/{ano}/{file_folder}")
+
+  file_path <- list.files(path,
+                          pattern = "(Divulgação|divulgacao).xlsx",
+                          full.names = T)
+
+  data <- readxl::read_xlsx(file_path) |>
+    dplyr::rename(
+      "cras" = q01,
+      "municipio_nome" = q09,
+      "estado_sigla" = q010
+    ) |>
+    dplyr::group_by(
+      estado_sigla, municipio_nome
+    ) |>
+    dplyr::summarise(
+      cras = n()
+    ) |>
+    dplyr::left_join(
+      pop_municipios |>
+        tidyr::unite(
+          "municipio_codigo",
+          cod_uf:cod_munic,
+          sep = ""
+        )
+      ,
+      by = join_by(municipio_nome == nome_do_municipio, estado_sigla == uf)
+    ) |>
+    dplyr::mutate(
+      cras_por_100k_hab = (cras/populacao) * 100000
+    ) |>
+    dplyr::relocate(
+      municipio_codigo, municipio_nome, cras, populacao, cras_por_100k_hab
+    )
+
+  return(data)
+}
