@@ -2,7 +2,7 @@
 #'
 #' This function extracts and processes IDEB (Índice de Desenvolvimento da Educação Básica) data for the year 2021, focusing on public schools in target municipalities.
 #'
-#' @param file_path A character string specifying the path to the Excel file containing IDEB data. Default is 'data/divulgacao_anos_iniciais_municipios_2023/divulgacao_anos_iniciais_municipios_2023.xlsx'.
+#' @param file_path A character string specifying the path to the Excel file containing IDEB data. Default is 'data_raw/divulgacao_anos_iniciais_municipios_2023/divulgacao_anos_iniciais_municipios_2023.xlsx'.
 #'
 #' @return A data frame containing filtered IDEB data with the following columns:
 #'   - `municipio_codigo`: Municipality code
@@ -23,7 +23,7 @@
 #' @importFrom dplyr select rename filter
 #' @export
 extract_IDEB_2021_anos_iniciais <- function(
-    file_path = 'data/divulgacao_anos_iniciais_municipios_2023/divulgacao_anos_iniciais_municipios_2023.xlsx'
+    file_path = 'data_raw/divulgacao_anos_iniciais_municipios_2023/divulgacao_anos_iniciais_municipios_2023.xlsx'
 ) {
   # Start message for file loading
   message('Loading IDEB data from file: ', file_path)

@@ -4,7 +4,7 @@
 #' from the Tesouro Transparente platform. The data is provided in an Excel file and will be saved to the
 #' specified directory.
 #'
-#' @param dir_path Character. Directory path where the downloaded file will be saved. Default is "data/".
+#' @param dir_path Character. Directory path where the downloaded file will be saved. Default is "data_raw/".
 #'        The directory will be created if it doesn't already exist.
 #'
 #' @return Invisible path to the downloaded file (string). The file will be named
@@ -12,15 +12,15 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Download the CAPAG data to the default "data/" directory
+#' # Download the CAPAG data to the default "data_raw/" directory
 #' download_CAPAG()
 #'
 #' # Download the CAPAG data to a custom directory
-#' download_CAPAG("my_data/")
+#' download_CAPAG("my_data")
 #' }
 #'
 #' @export
-download_CAPAG <- function(dir_path = "data/") {
+download_CAPAG <- function(dir_path = "data_raw/") {
   url <- "https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/6a218451-f1b4-4fce-ac2a-00a3675bf4eb/download/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx"
 
   # Ensure the directory exists

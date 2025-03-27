@@ -4,10 +4,10 @@
 \alias{download_CAPAG}
 \title{Download CAPAG (Municipal Government Financial Management) Data}
 \usage{
-download_CAPAG(dir_path = "data/")
+download_CAPAG(dir_path = "data_raw/")
 }
 \arguments{
-\item{dir_path}{Character. Directory path where the downloaded file will be saved. Default is "data/".
+\item{dir_path}{Character. Directory path where the downloaded file will be saved. Default is "data_raw/".
 The directory will be created if it doesn't already exist.}
 }
 \value{
@@ -21,11 +21,11 @@ specified directory.
 }
 \examples{
 \dontrun{
-# Download the CAPAG data to the default "data/" directory
+# Download the CAPAG data to the default "data_raw/" directory
 download_CAPAG()
 
 # Download the CAPAG data to a custom directory
-download_CAPAG("my_data/")
+download_CAPAG("my_data")
 }
 
 }

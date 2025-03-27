@@ -5,7 +5,7 @@
 #' The data is filtered to include only municipalities listed in the target cities data.
 #'
 #' @param file_path Character. Path to the Excel file containing the enrollment data. Default is
-#'        'data/Taxa líquida de matrículas em creches.xlsx'. The function will load the data from the file
+#'        'data_raw/Taxa líquida de matrículas em creches.xlsx'. The function will load the data from the file
 #'        and filter for the year 2022, focusing on target cities.
 #'
 #' @return A data frame with the following columns:
@@ -19,12 +19,12 @@
 #' taxa_matricula_data <- extract_taxa_matricula_creche()
 #'
 #' # Load and process data from a custom file path
-#' taxa_matricula_data <- extract_taxa_matricula_creche("custom_data/Taxa líquida de matrículas em creches.xlsx")
+#' taxa_matricula_data <- extract_taxa_matricula_creche("custom_data_raw/Taxa líquida de matrículas em creches.xlsx")
 #' }
 #'
 #' @export
 extract_taxa_matricula_creche <- function(
-    file_path = 'data/Taxa líquida de matrículas em creches.xlsx'
+    file_path = 'data_raw/Taxa líquida de matrículas em creches.xlsx'
 ) {
   # Start message for file loading
   message('Loading data from file: ', file_path)

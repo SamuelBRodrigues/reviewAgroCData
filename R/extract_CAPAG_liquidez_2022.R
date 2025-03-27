@@ -5,7 +5,7 @@
 #' only the target cities and relevant columns are selected.
 #'
 #' @param file_path Character. The path to the CAPAG data Excel file.
-#'        The default is 'data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.
+#'        The default is 'data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.
 #'
 #' @return A data frame containing the liquidity data (`liquidez`) for the target cities.
 #'         The resulting data frame includes the following columns:
@@ -29,7 +29,7 @@
 #'
 #' @export
 extract_CAPAG_liquidez_2022 <- function(
-    file_path = 'data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'
+    file_path = 'data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'
 ) {
   # Start message for file loading
   message('Loading CAPAG data from file: ', file_path)

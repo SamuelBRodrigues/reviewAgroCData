@@ -4,10 +4,10 @@
 \alias{download_PIB}
 \title{Download PIB (Produto Interno Bruto) data from IBGE}
 \usage{
-download_PIB(dir_path = "data/")
+download_PIB(dir_path = "data_raw")
 }
 \arguments{
-\item{dir_path}{Path to the directory where the files will be saved (default: "data/").}
+\item{dir_path}{Path to the directory where the files will be saved (default: "data_raw").}
 }
 \value{
 Invisibly returns the full path of the downloaded and extracted files.
@@ -32,11 +32,11 @@ The final extracted data will be saved in the specified directory, with the ZIP 
 }
 \examples{
 \dontrun{
-# Download PIB data to the default directory ("data/")
+# Download PIB data to the default directory ("data_raw")
 download_PIB()
 
 # Download PIB data to a custom directory
-download_PIB(dir_path = "data/raw/")
+download_PIB(dir_path = "data_rawraw/")
 }
 
 }

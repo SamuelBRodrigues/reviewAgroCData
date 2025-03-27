@@ -6,7 +6,7 @@
 #' after the extraction process is completed.
 #'
 #' @param dir_path Path to the directory where the files will be saved and extracted.
-#' Defaults to `"data/"`.
+#' Defaults to `"data_raw/"`.
 #'
 #' @return Invisibly returns the paths of the downloaded and extracted files.
 #'
@@ -22,15 +22,15 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Download IDEB data for Fundamental Education to the default directory ("data/")
+#' # Download IDEB data for Fundamental Education to the default directory ("data_raw/")
 #' download_IDEB_fundamental()
 #'
 #' # Download IDEB data to a custom directory
-#' download_IDEB_fundamental(dir_path = "data/raw/")
+#' download_IDEB_fundamental(dir_path = "data_raw/")
 #' }
 #'
 #' @export
-download_IDEB_fundamental <- function(dir_path = "data/") {
+download_IDEB_fundamental <- function(dir_path = "data_raw/") {
   # Anos iniciais:
   url_f1 <- "https://download.inep.gov.br/ideb/resultados/divulgacao_anos_iniciais_municipios_2023.zip"
   # Anos finais:

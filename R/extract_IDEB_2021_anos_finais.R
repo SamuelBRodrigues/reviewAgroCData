@@ -5,7 +5,7 @@
 #' the filtered data with relevant columns.
 #'
 #' @param file_path A character string indicating the path to the Excel file containing the IDEB
-#' data for 2021. The default path is 'data/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx'.
+#' data for 2021. The default path is 'data_raw/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx'.
 #'
 #' @return A data frame containing the filtered IDEB data for the target cities, with the following columns:
 #' \itemize{
@@ -21,7 +21,7 @@
 #'
 #' @export
 extract_IDEB_2021_anos_finais <- function(
-    file_path = 'data/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx'
+    file_path = 'data_raw/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx'
 ) {
   # Start message for file loading
   message('Loading IDEB data from file: ', file_path)

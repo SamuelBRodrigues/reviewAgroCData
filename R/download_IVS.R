@@ -6,7 +6,7 @@
 #' and uses robust extraction methods for files with special characters.
 #'
 #' @param dir_path A character string specifying the directory path where the data should be downloaded and extracted.
-#' Defaults to `"data/"`.
+#' Defaults to `"data_raw/"`.
 #'
 #' @details
 #' The function downloads a ZIP file from the IPEA API containing the basecompletamunicipal dataset.
@@ -23,10 +23,10 @@
 #' download_IVS()
 #'
 #' # Download and extract the IVS data to a custom directory
-#' download_IVS(dir_path = "my_data/")
+#' download_IVS(dir_path = "my_data_raw/")
 #'
 #' @export
-download_IVS <- function(dir_path = "data/") {
+download_IVS <- function(dir_path = "data_raw/") {
   url <- "https://api-ivs.ipea.gov.br/cockpit/storage/uploads/databases/basecompletamunicipal.zip"
 
   # Ensure the directory exists

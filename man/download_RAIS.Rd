@@ -7,7 +7,7 @@
 download_RAIS(dir_path = "data_raw/")
 }
 \arguments{
-\item{dir_path}{A character string specifying the directory where the file will be saved. Default is "data/".}
+\item{dir_path}{A character string specifying the directory where the file will be saved. Default is "data_raw/".}
 }
 \value{
 No return value. The function downloads the file and saves it locally.

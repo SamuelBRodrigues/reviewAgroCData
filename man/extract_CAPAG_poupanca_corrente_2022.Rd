@@ -5,12 +5,12 @@
 \title{Extract and Process CAPAG Current Savings Data for 2022}
 \usage{
 extract_CAPAG_poupanca_corrente_2022(
-  file_path = "data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx"
+  file_path = "data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx"
 )
 }
 \arguments{
 \item{file_path}{Character. The path to the CAPAG data Excel file.
-The default is 'data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.}
+The default is 'data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.}
 }
 \value{
 A data frame containing the current savings data (`poupança corrente`) for the target cities.

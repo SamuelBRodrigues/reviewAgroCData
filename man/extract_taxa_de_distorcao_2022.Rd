@@ -5,11 +5,11 @@
 \title{Extract and Filter 2022 Distortion Rate Data}
 \usage{
 extract_taxa_de_distorcao_2022(
-  file_path = "data/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx"
+  file_path = "data_raw/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx"
 )
 }
 \arguments{
-\item{file_path}{Character. The path to the Excel file containing the 2022 distortion rate data. Default is `"data/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx"`.}
+\item{file_path}{Character. The path to the Excel file containing the 2022 distortion rate data. Default is `"data_raw/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx"`.}
 }
 \value{
 A data frame containing the filtered distortion rate data for target cities.

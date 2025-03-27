@@ -5,12 +5,12 @@
 \title{Extract School Dropout Rates for 2021}
 \usage{
 extract_abandono_escolar_2021(
-  file_path = "data/tx_rend_municipios_2021/tx_rend_municipios_2021.xlsx"
+  file_path = "data_raw/tx_rend_municipios_2021/tx_rend_municipios_2021.xlsx"
 )
 }
 \arguments{
 \item{file_path}{Character. Path to the Excel file containing the dropout rate data.
-Default is 'data/tx_rend_municipios_2021/tx_rend_municipios_2021.xlsx'.}
+Default is 'data_raw/tx_rend_municipios_2021/tx_rend_municipios_2021.xlsx'.}
 }
 \value{
 A data frame containing school dropout rates for selected municipalities,

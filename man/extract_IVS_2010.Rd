@@ -4,11 +4,11 @@
 \alias{extract_IVS_2010}
 \title{Extract and Filter IVS 2010 Data for Target Cities}
 \usage{
-extract_IVS_2010(file_path = "data/atlasivs_dadosbrutos_pt_v2.xlsx")
+extract_IVS_2010(file_path = "data_raw/atlasivs_dadosbrutos_pt_v2.xlsx")
 }
 \arguments{
 \item{file_path}{A character string specifying the path to the Excel file containing the IVS data.
-Defaults to `'data/atlasivs_dadosbrutos_pt_v2.xlsx'`.}
+Defaults to `'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx'`.}
 }
 \value{
 A filtered data frame containing the selected information for the target cities for the year 2020.

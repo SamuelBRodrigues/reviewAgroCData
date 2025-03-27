@@ -5,11 +5,11 @@
 \title{Extract PIB per capita data for the year 2020}
 \usage{
 extract_PIB_per_capita_2020(
-  file_path = "data/PIB dos Munic�pios - base de dados 2010-2021.xlsx"
+  file_path = "data_raw/PIB dos Munic�pios - base de dados 2010-2021.xlsx"
 )
 }
 \arguments{
-\item{file_path}{Path to the Excel file. Default is 'data/PIB dos Munic�pios - base de dados 2010-2021.xlsx'.}
+\item{file_path}{Path to the Excel file. Default is 'data_raw/PIB dos Munic�pios - base de dados 2010-2021.xlsx'.}
 }
 \value{
 A tibble containing filtered 2020 data with columns: 'Código do Município', 'Sigla da Unidade da Federação',

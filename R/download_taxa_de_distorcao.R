@@ -2,7 +2,7 @@
 #'
 #' This function downloads the distortion rate dataset from the INEP website, extracts it, and removes the ZIP file after extraction.
 #'
-#' @param dir_path Character. The directory where the file will be downloaded and extracted. Default is `"data/"`.
+#' @param dir_path Character. The directory where the file will be downloaded and extracted. Default is `"data_raw/"`.
 #'
 #' @return No return value. The function downloads and extracts the dataset into the specified directory.
 #'
@@ -13,7 +13,7 @@
 #' }
 #'
 #' @export
-download_taxa_de_distorcao <- function(dir_path = "data/") {
+download_taxa_de_distorcao <- function(dir_path = "data_raw/") {
   url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2022/TDI_2022_MUNICIPIOS.zip"
 
   # Ensure the directory exists

@@ -5,12 +5,12 @@
 \title{Extract and Process CAPAG Debt Data for 2022}
 \usage{
 extract_CAPAG_endividamento_2022(
-  file_path = "data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx"
+  file_path = "data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx"
 )
 }
 \arguments{
 \item{file_path}{Character. The file path of the CAPAG data Excel file.
-The default is 'data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.}
+The default is 'data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.}
 }
 \value{
 A data frame containing the debt information (`endividamento`) for the target cities, including

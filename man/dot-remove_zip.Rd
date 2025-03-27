@@ -16,5 +16,5 @@ NULL. The function removes the ZIP file if it exists.
 Remove a ZIP file after extraction
 }
 \examples{
-.remove_zip("data/data.zip")
+.remove_zip("data_raw/data.zip")
 }

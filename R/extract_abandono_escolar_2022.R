@@ -4,7 +4,7 @@
 #' It filters the dataset to include only relevant municipalities and selects specific columns.
 #'
 #' @param file_path Character. Path to the Excel file containing the dropout rate data.
-#' Default is 'data/tx_rend_municipios_2022/tx_rend_municipios_2022.xlsx'.
+#' Default is 'data_raw/tx_rend_municipios_2022/tx_rend_municipios_2022.xlsx'.
 #'
 #' @return A data frame containing school dropout rates for selected municipalities,
 #' with columns for municipality code, municipality name, state abbreviation,
@@ -20,7 +20,7 @@
 #'
 #' @export
 extract_abandono_escolar_2022 <- function(
-    file_path = 'data/tx_rend_municipios_2022/tx_rend_municipios_2022.xlsx'
+    file_path = 'data_raw/tx_rend_municipios_2022/tx_rend_municipios_2022.xlsx'
 ) {
   # Start message for file loading
   message('Loading INEP data from file: ', file_path)

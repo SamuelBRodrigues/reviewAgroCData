@@ -1,11 +1,11 @@
 #' Download a file from a given URL
 #'
 #' @param url Character. The URL of the file to download.
-#' @param dir_path Character. The directory where the file should be saved. Default is "data/".
+#' @param dir_path Character. The directory where the file should be saved. Default is "data_raw/".
 #' @return Character. The path to the downloaded file, or NULL if the download fails.
 #' @examples
 #' file_path <- .download_file("https://example.com/data.zip")
-.download_file <- function(url, dir_path = "data/") {
+.download_file <- function(url, dir_path = "data_raw/") {
   file_name <- basename(url)
   file_path <- file.path(dir_path, file_name)
 
@@ -37,11 +37,11 @@
 #' Extract a ZIP file to a specified directory
 #'
 #' @param file_path Character. The path to the ZIP file to be extracted.
-#' @param dir_path Character. The directory where the contents should be extracted. Default is "data/".
+#' @param dir_path Character. The directory where the contents should be extracted. Default is "data_raw/".
 #' @return NULL. The function extracts the files.
 #' @examples
-#' .extract_zip("data/data.zip")
-.extract_zip <- function(file_path, dir_path = "data/") {
+#' .extract_zip("data_raw/data.zip")
+.extract_zip <- function(file_path, dir_path = "data_raw/") {
   tryCatch({
     # Extract ZIP file
     if (requireNamespace("zip", quietly = TRUE)) {
@@ -62,7 +62,7 @@
 #' @param file_path Character. The path to the ZIP file to be removed.
 #' @return NULL. The function removes the ZIP file if it exists.
 #' @examples
-#' .remove_zip("data/data.zip")
+#' .remove_zip("data_raw/data.zip")
 .remove_zip <- function(file_path) {
   tryCatch({
     if (file.exists(file_path)) {

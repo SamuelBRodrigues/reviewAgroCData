@@ -5,7 +5,7 @@
 #' only target cities and relevant columns.
 #'
 #' @param file_path Character. The file path of the CAPAG data Excel file.
-#'        The default is 'data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.
+#'        The default is 'data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'.
 #'
 #' @return A data frame containing the debt information (`endividamento`) for the target cities, including
 #'         columns: `municipio_codigo`, `municipio_nome`, `estado_sigla`, and `endividamento`.
@@ -22,7 +22,7 @@
 #'
 #' @export
 extract_CAPAG_endividamento_2022 <- function(
-    file_path = 'data/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'
+    file_path = 'data_raw/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx'
 ) {
   # Start message for file loading
   message('Loading CAPAG data from file: ', file_path)

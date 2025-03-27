@@ -4,12 +4,12 @@
 \alias{.extract_zip}
 \title{Extract a ZIP file to a specified directory}
 \usage{
-.extract_zip(file_path, dir_path = "data/")
+.extract_zip(file_path, dir_path = "data_raw/")
 }
 \arguments{
 \item{file_path}{Character. The path to the ZIP file to be extracted.}
 
-\item{dir_path}{Character. The directory where the contents should be extracted. Default is "data/".}
+\item{dir_path}{Character. The directory where the contents should be extracted. Default is "data_raw/".}
 }
 \value{
 NULL. The function extracts the files.
@@ -18,5 +18,5 @@ NULL. The function extracts the files.
 Extract a ZIP file to a specified directory
 }
 \examples{
-.extract_zip("data/data.zip")
+.extract_zip("data_raw/data.zip")
 }

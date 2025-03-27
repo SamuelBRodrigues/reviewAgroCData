@@ -7,7 +7,7 @@
 #' The function ensures that the specified directory exists, performs the download,
 #' extracts the files, and cleans up by removing the ZIP file.
 #'
-#' @param dir_path Path to the directory where the files will be saved (default: "data/").
+#' @param dir_path Path to the directory where the files will be saved (default: "data_raw").
 #'
 #' @return Invisibly returns the full path of the downloaded and extracted files.
 #'
@@ -22,15 +22,15 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Download PIB data to the default directory ("data/")
+#' # Download PIB data to the default directory ("data_raw")
 #' download_PIB()
 #'
 #' # Download PIB data to a custom directory
-#' download_PIB(dir_path = "data/raw/")
+#' download_PIB(dir_path = "data_rawraw/")
 #' }
 #'
 #' @export
-download_PIB <- function(dir_path = "data/") {
+download_PIB <- function(dir_path = "data_raw") {
   url <- "https://ftp.ibge.gov.br/Pib_Municipios/2021/base/base_de_dados_2010_2021_xlsx.zip"
 
   # Ensure the directory exists

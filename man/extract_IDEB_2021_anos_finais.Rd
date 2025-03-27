@@ -6,12 +6,12 @@
 \usage{
 extract_IDEB_2021_anos_finais(
   file_path =
-    "data/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx"
+    "data_raw/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx"
 )
 }
 \arguments{
 \item{file_path}{A character string indicating the path to the Excel file containing the IDEB
-data for 2021. The default path is 'data/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx'.}
+data for 2021. The default path is 'data_raw/divulgacao_anos_finais_municipios_2023/divulgacao_anos_finais_municipios_2023.xlsx'.}
 }
 \value{
 A data frame containing the filtered IDEB data for the target cities, with the following columns:

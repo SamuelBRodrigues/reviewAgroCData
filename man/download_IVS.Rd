@@ -4,11 +4,11 @@
 \alias{download_IVS}
 \title{Download and Extract the IVS Data}
 \usage{
-download_IVS(dir_path = "data/")
+download_IVS(dir_path = "data_raw/")
 }
 \arguments{
 \item{dir_path}{A character string specifying the directory path where the data should be downloaded and extracted.
-Defaults to `"data/"`.}
+Defaults to `"data_raw/"`.}
 }
 \value{
 This function does not return any value. It performs the download and extraction side-effects.
@@ -32,6 +32,6 @@ corrupted files if necessary.
 download_IVS()
 
 # Download and extract the IVS data to a custom directory
-download_IVS(dir_path = "my_data/")
+download_IVS(dir_path = "my_data_raw/")
 
 }

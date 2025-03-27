@@ -3,7 +3,7 @@
 #' This function downloads the RAIS 2022 data file from the official government website
 #' and saves it in the specified directory.
 #'
-#' @param dir_path A character string specifying the directory where the file will be saved. Default is "data/".
+#' @param dir_path A character string specifying the directory where the file will be saved. Default is "data_raw/".
 #'
 #' @return No return value. The function downloads the file and saves it locally.
 #'

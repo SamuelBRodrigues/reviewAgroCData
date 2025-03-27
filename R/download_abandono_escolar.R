@@ -2,7 +2,7 @@
 #'
 #' This function downloads and extracts school dropout data from the INEP database.
 #'
-#' @param dir_path A character string specifying the directory path where the file will be downloaded and extracted. Default is 'data/'.
+#' @param dir_path A character string specifying the directory path where the file will be downloaded and extracted. Default is 'data_raw/'.
 #'
 #' @details
 #' The function ensures the target directory exists, downloads the ZIP file containing school dropout data, extracts its contents, and removes the ZIP file after extraction.
@@ -13,9 +13,9 @@
 #'
 #' @export
 
-download_abandono_escolar <- function(dir_path = "data/") {
-  #url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2021/tx_rend_municipios_2021.zip"
-  url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2022/tx_rend_municipios_2022.zip"
+download_abandono_escolar <- function(dir_path = "data_raw/") {
+  url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2021/tx_rend_municipios_2021.zip"
+  #url <- "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2022/tx_rend_municipios_2022.zip"
 
   # Ensure the directory exists
   if (!dir.exists(dir_path)) {

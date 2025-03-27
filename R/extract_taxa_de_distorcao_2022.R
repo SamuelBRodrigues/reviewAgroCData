@@ -2,7 +2,7 @@
 #'
 #' This function loads the 2022 distortion rate dataset from an Excel file, filters the relevant data, and returns only the records for target cities.
 #'
-#' @param file_path Character. The path to the Excel file containing the 2022 distortion rate data. Default is `"data/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx"`.
+#' @param file_path Character. The path to the Excel file containing the 2022 distortion rate data. Default is `"data_raw/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx"`.
 #'
 #' @return A data frame containing the filtered distortion rate data for target cities.
 #'
@@ -14,7 +14,7 @@
 #'
 #' @export
 extract_taxa_de_distorcao_2022 <- function(
-    file_path = 'data/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx'
+    file_path = 'data_raw/TDI_2022_MUNICIPIOS/TDI_MUNICIPIOS_2022.xlsx'
 ) {
   # Start message for file loading
   message('Loading INEP data from file: ', file_path)

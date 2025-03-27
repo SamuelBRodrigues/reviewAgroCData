@@ -4,11 +4,11 @@
 \alias{download_IDEB_fundamental}
 \title{Download IDEB (Índice de Desenvolvimento da Educação Básica) Data for Fundamental Education}
 \usage{
-download_IDEB_fundamental(dir_path = "data/")
+download_IDEB_fundamental(dir_path = "data_raw/")
 }
 \arguments{
 \item{dir_path}{Path to the directory where the files will be saved and extracted.
-Defaults to `"data/"`.}
+Defaults to `"data_raw/"`.}
 }
 \value{
 Invisibly returns the paths of the downloaded and extracted files.
@@ -31,11 +31,11 @@ being removed after the process.
 }
 \examples{
 \dontrun{
-# Download IDEB data for Fundamental Education to the default directory ("data/")
+# Download IDEB data for Fundamental Education to the default directory ("data_raw/")
 download_IDEB_fundamental()
 
 # Download IDEB data to a custom directory
-download_IDEB_fundamental(dir_path = "data/raw/")
+download_IDEB_fundamental(dir_path = "data_raw/")
 }
 
 }

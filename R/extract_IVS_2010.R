@@ -5,7 +5,7 @@
 #' the municipality name, state name, and two IVS indicators: income and work, and urban infrastructure.
 #'
 #' @param file_path A character string specifying the path to the Excel file containing the IVS data.
-#' Defaults to `'data/atlasivs_dadosbrutos_pt_v2.xlsx'`.
+#' Defaults to `'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx'`.
 #'
 #' @details
 #' The function reads an Excel file containing the IVS data using the `readxl` package. It then loads a list
@@ -32,7 +32,7 @@
 #' @importFrom readxl read_xlsx
 #' @import dplyr
 extract_IVS_2010 <- function(
-    file_path = 'data/atlasivs_dadosbrutos_pt_v2.xlsx'
+    file_path = 'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx'
 ) {
   message('Loading file...')
   # Read data, keeping headers

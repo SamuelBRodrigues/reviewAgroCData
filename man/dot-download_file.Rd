@@ -4,12 +4,12 @@
 \alias{.download_file}
 \title{Download a file from a given URL}
 \usage{
-.download_file(url, dir_path = "data/")
+.download_file(url, dir_path = "data_raw/")
 }
 \arguments{
 \item{url}{Character. The URL of the file to download.}
 
-\item{dir_path}{Character. The directory where the file should be saved. Default is "data/".}
+\item{dir_path}{Character. The directory where the file should be saved. Default is "data_raw/".}
 }
 \value{
 Character. The path to the downloaded file, or NULL if the download fails.

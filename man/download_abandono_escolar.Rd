@@ -4,10 +4,10 @@
 \alias{download_abandono_escolar}
 \title{Download and Extract School Dropout Data}
 \usage{
-download_abandono_escolar(dir_path = "data/")
+download_abandono_escolar(dir_path = "data_raw/")
 }
 \arguments{
-\item{dir_path}{A character string specifying the directory path where the file will be downloaded and extracted. Default is 'data/'.}
+\item{dir_path}{A character string specifying the directory path where the file will be downloaded and extracted. Default is 'data_raw/'.}
 }
 \description{
 This function downloads and extracts school dropout data from the INEP database.

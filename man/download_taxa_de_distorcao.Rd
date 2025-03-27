@@ -4,10 +4,10 @@
 \alias{download_taxa_de_distorcao}
 \title{Download and Extract Distortion Rate Data}
 \usage{
-download_taxa_de_distorcao(dir_path = "data/")
+download_taxa_de_distorcao(dir_path = "data_raw/")
 }
 \arguments{
-\item{dir_path}{Character. The directory where the file will be downloaded and extracted. Default is `"data/"`.}
+\item{dir_path}{Character. The directory where the file will be downloaded and extracted. Default is `"data_raw/"`.}
 }
 \value{
 No return value. The function downloads and extracts the dataset into the specified directory.
