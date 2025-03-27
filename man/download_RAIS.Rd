@@ -4,7 +4,7 @@
 \alias{download_RAIS}
 \title{Download RAIS 2022 Data}
 \usage{
-download_RAIS(dir_path = "data/")
+download_RAIS(dir_path = "data_raw/")
 }
 \arguments{
 \item{dir_path}{A character string specifying the directory where the file will be saved. Default is "data/".}

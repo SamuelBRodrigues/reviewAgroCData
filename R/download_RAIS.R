@@ -13,7 +13,7 @@
 #'
 #' @export
 
-download_RAIS <- function(dir_path = "data/") {
+download_RAIS <- function(dir_path = "data_raw/") {
   url_2022 <- "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais/rais-2022/4-tabelas_rais-2022.xlsx"
 
   # Ensure the directory exists
