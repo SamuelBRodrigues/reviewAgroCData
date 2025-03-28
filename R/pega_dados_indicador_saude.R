@@ -85,7 +85,203 @@ get_gastos_per_capta_saude <- function(cod_municipios_ibge = target_cities$munic
 }
 
 
+#' Extração dados de Mortalidade Infantil e Nascimento DATASUS
+#'
+#' A função extrai os dados de mortalidade infantil e nascimento direto da plataforma
+#' do DATASUS através do pacote datasus e calcula a taxa de mortalidade infantil para
+#' 1000 nascimentos a nível municipal.
+#'
+#' @param ano Ano de interesse dos dados
+#'
+#' @returns Um dataframe com os dados de Mortalidade Infantil, Nascimento, Taxa
+#' de Mortaliade Infantil para 1000 nascimentos a nível municipal
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   get_taxa_mortalidade_infantil(ano = "2023")
+#' }
+get_taxa_mortalidade_infantil <- function(ano = "2022"){
 
+  data_mortalidade <- datasus::sim_inf10_mun(periodo = ano) |>
+    tibble::tibble() |>
+    tail(-1) |>
+    dplyr::mutate(
+      cod_uf = stringr::str_extract(Município, ".."),
+      Município = stringr::str_extract(Município, '\\D+$') |> stringr::str_remove(" ")
+    ) |>
+    subset(
+      !stringr::str_detect(Município, 'IGNORADO')
+    ) |>
+    dplyr::left_join(
+      pop_municipios |>
+        tidyr::unite(
+          "municipio_codigo",
+          cod_uf:cod_munic,
+          sep = "",
+          remove = FALSE
+        ) |>
+        dplyr::mutate(
+          nome_do_municipio = stringr::str_to_upper(abjutils::rm_accent(nome_do_municipio)),
+          municipio_codigo = as.character(municipio_codigo),
+          cod_uf = as.character(cod_uf)
+        ) |>
+        dplyr::select(
+          nome_do_municipio, municipio_codigo, cod_uf
+        ),
+      by = join_by(Município == nome_do_municipio, cod_uf == cod_uf)
+    ) |>
+    dplyr::rename(
+      "mortalidade_infantil" = `Óbitos p/Residênc`
+    ) |>
+    dplyr::select(
+      municipio_codigo, mortalidade_infantil, cod_uf
+    )
+
+  data_nascimento <- datasus::sinasc_nv_mun(periodo = ano) |>
+    tibble::tibble() |>
+    tail(-1) |>
+    dplyr::mutate(
+      cod_uf = stringr::str_extract(Município, ".."),
+      Município = stringr::str_extract(Município, '\\D+$') |> stringr::str_remove(" ")
+    ) |>
+    subset(
+      !stringr::str_detect(Município, 'IGNORADO')
+    ) |>
+    dplyr::left_join(
+      pop_municipios |>
+        tidyr::unite(
+          "municipio_codigo",
+          cod_uf:cod_munic,
+          sep = "",
+          remove = FALSE
+        ) |>
+        dplyr::mutate(
+          nome_do_municipio = stringr::str_to_upper(abjutils::rm_accent(nome_do_municipio)),
+          municipio_codigo = as.character(municipio_codigo),
+          cod_uf = as.character(cod_uf)
+        ) |>
+        dplyr::select(
+          nome_do_municipio, municipio_codigo, cod_uf
+        ),
+      by = join_by(Município == nome_do_municipio, cod_uf == cod_uf)
+    ) |>
+    dplyr::rename(
+      "nascimentos" = `Nascim p/resid.mãe`
+    ) |>
+    dplyr::select(
+      municipio_codigo, nascimentos, cod_uf
+    )
+
+  data <- data_nascimento |>
+    dplyr::left_join(
+      data_mortalidade,
+      by = join_by(municipio_codigo, cod_uf)
+    ) |>
+    dplyr::mutate(
+      nascimentos = tidyr::replace_na(nascimentos, 0),
+      mortalidade_infantil = tidyr::replace_na(mortalidade_infantil, 0),
+      taxa_mortalidade_infantil = mortalidade_infantil/nascimentos * 1000
+    )
+
+  return(data)
+
+}
+
+#' Extração dados de Óbitos por Causas Evitáveis DATASUS
+#'
+#' A função extrai os dados óbitos por Causas evitáveis em menores do que 5 anos e
+#' óbitos por Causas evitáveis entre 5 a 75 anos direto da plataforma do DATASUS
+#' através do pacote datasus a nível municipal.
+#'
+#' @param ano Ano de interesse dos dados
+#'
+#' @returns Um dataframe com os dados óbitos evitáveis e as causas evitáveis a nível municipal
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   get_obitos_evitaveis(ano = "2023")
+#' }
+get_obitos_evitaveis <- function(ano = 2023){
+
+  # Pegando os dados de morte evitaveis para menor do que 5 anos
+  mortes_evitaveis_menor_5 <- datasus::sim_evita10_mun(coluna = "Causas evitáveis",periodo = ano)
+
+  # Pegando os dados de morte evitaveis para maior do que 5 anos
+  mortes_evitaveis_maior_5 <- datasus::sim_evitb10_mun(coluna = "Causas evitáveis",periodo = ano)
+
+  # Estruturando os dados
+  data <- mortes_evitaveis_menor_5 |>
+    # Renomeando o valor total de acordo com cada base
+    dplyr::rename(
+      "Total_menor_5" = Total
+    ) |>
+    dplyr::left_join(
+      mortes_evitaveis_maior_5 |>
+        dplyr::rename(
+          "Total_maior_5" = Total
+        ),
+      by = join_by(Município),
+      suffix = c("_menor_5", "_maior_5")
+    ) |>
+    # Transformando em um tibble
+    tibble::tibble() |>
+    # Retirando as linhas "MUNICIPIO IGNORADO"
+    subset(
+      !stringr::str_detect(Município, "MUNICIPIO IGNORADO")
+    ) |>
+    # Removendo a soma total
+    tail(-1) |>
+    # Pegando o codigo das UF e o nome dos municípios
+    dplyr::mutate(
+      cod_uf = stringr::str_extract(Município, ".."),
+      Município = stringr::str_extract(Município, '\\D+$') |> stringr::str_remove(" ")
+    ) |>
+    # Renomeando a coluna município
+    dplyr::rename(
+      "nome_do_municipio" = Município
+    ) |>
+    # Adicionando os códigos do ibge dos municípios
+    dplyr::left_join(
+      pop_municipios |>
+        # Criando a coluna com os códigos do ibge dos municípios
+        tidyr::unite(
+          "municipio_codigo",
+          cod_uf:cod_munic,
+          sep = "",
+          remove = FALSE
+        ) |>
+        # Corrigindo nomes dos município
+        dplyr::mutate(
+          nome_do_municipio = stringr::str_to_upper(abjutils::rm_accent(nome_do_municipio)),
+          municipio_codigo = as.character(municipio_codigo),
+          cod_uf = as.character(cod_uf)
+        ) |>
+        # Selecionando as colunas de interesse
+        dplyr::select(
+          nome_do_municipio, municipio_codigo, cod_uf
+        ),
+    ) |>
+    # Tratando os NA
+    dplyr::mutate(
+      dplyr::across(-c(nome_do_municipio, municipio_codigo),
+                    ~ tidyr::replace_na(.x, 0))
+    ) |>
+    # Removendo colunas que não são de interesse
+    dplyr::select(
+      -nome_do_municipio, -cod_uf
+    ) |>
+    dplyr::mutate(
+      ano = ano
+    ) |>
+    dplyr::relocate(
+      municipio_codigo,
+      ano
+    ) |>
+    janitor::clean_names()
+
+}
 
 
 
