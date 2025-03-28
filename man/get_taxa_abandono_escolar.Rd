@@ -2,7 +2,7 @@
 % Please edit documentation in R/pega_dados_indicador_educacao.R
 \name{get_taxa_abandono_escolar}
 \alias{get_taxa_abandono_escolar}
-\title{Obter Taxa de Abandono Escolar por Município}
+\title{Obter Taxa de Distorção Idade-Série por Município}
 \usage{
 get_taxa_abandono_escolar(download = TRUE, ano = "2023")
 }
@@ -11,23 +11,23 @@ get_taxa_abandono_escolar(download = TRUE, ano = "2023")
 localmente. Caso contrário, apenas tentará carregar os dados já existentes.}
 
 \item{ano}{Um valor numérico ou caractere indicando o ano para o qual os dados devem ser obtidos. Os anos disponíveis
-são: 2007 até 2023.}
+são: 2006 até 2023.}
 }
 \value{
-Um data frame contendo os dados de taxa de abandono escolar, com as colunas: `municipio_codigo`, `municipio_nome`,
-  `estado_sigla`, `taxa_abandono_fundamental_<ano>`, `taxa_abandono_medio_<ano>`, onde `<ano>` é o ano solicitado.
+Um data frame contendo os dados de taxa de distorção idade-série, com as colunas: `municipio_codigo`, `municipio_nome`,
+  `estado_sigla`, `tdi_ensino_fundamental_<ano>`, `tdi_ensino_medio_<ano>`, onde `<ano>` é o ano solicitado.
 }
 \description{
-Esta função permite obter os dados de taxa de abandono escolar fornecidos pelo INEP para o ano especificado.
+Esta função permite obter os dados de taxa de distorção idade-série fornecidos pelo INEP para o ano especificado.
 Os dados podem ser baixados automaticamente, caso não estejam presentes no diretório local.
 }
 \examples{
 \dontrun{
-  # Obter taxa de abandono escolar para o ano de 2023
-  taxa_abandono_2023 <- et_taxa_abandono_escolar(download = TRUE, ano = "2023")
+  # Obter taxa de distorção idade-série para o ano de 2023
+  tdi_2023 <- get_taxa_distorcao_idade_serie(download = TRUE, ano = "2023")
 
-  # Obter taxa de abandono escolar para o ano de 2022 sem baixar o arquivo
-  taxa_abandono_2022 <- et_taxa_abandono_escolar(download = FALSE, ano = "2022")
+  # Obter taxa de distorção idade-série para o ano de 2022 sem baixar o arquivo
+  tdi_2022 <- get_taxa_distorcao_idade_serie(download = FALSE, ano = "2022")
 }
 
 }
