@@ -142,18 +142,18 @@ get_taxa_abandono_escolar <- function(download = TRUE, ano = "2023") {
     "2021" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2021/tx_rend_municipios_2021.zip",
     "2020" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2020/tx_rend_municipios_2020.zip",
     "2019" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2019/tx_rend_municipios_2019.zip",
-    "2018" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2018/tx_rend_municipios_2018.zip",
-    "2017" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2017/tx_rend_municipios_2017.zip",
-    "2016" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2016/tx_rend_municipios_2016.zip",
-    "2015" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2015/tx_rend_municipios_2015.zip",
-    "2014" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2014/tx_rend_municipios_2014.zip",
-    "2013" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2013/tx_rend_municipios_2013.zip",
-    "2012" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2012/tx_rend_municipios_2012.zip",
-    "2011" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2011/tx_rend_municipios_2011.zip",
-    "2010" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2010/tx_rend_municipios_2010.zip",
-    "2009" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2009/tx_rend_municipios_2009.zip",
-    "2008" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2008/tx_rend_municipios_2008.zip",
-    "2007" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2007/tx_rend_municipios_2007.zip"
+    "2018" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2018/TX_REND_MUNICIPIOS_2018.zip",
+    "2017" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2017/TAXA_REND_2017_MUNICIPIOS.zip",
+    "2016" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2016/TAXA_REND_2016_MUNICIPIOS.zip",
+    "2015" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2015/taxa_rendimento/tx_rendimento_municipios_2015.zip",
+    "2014" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2014/taxa_rendimento/tx_rendimento_municipios_2014.zip",
+    "2013" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2013/taxa_rendimento/tx_rendimento_municipios_2013.zip",
+    "2012" = "https://download.inep.gov.br/informacoes_estatisticas/indicadores_educacionais/2012/taxas_rendimento/tx_rendimento_municipios_2012.zip",
+    "2011" = "https://download.inep.gov.br/informacoes_estatisticas/2011/indicadores_educacionais/taxa_rendimento/2011/tx_rendimento_municipios_2011_2.zip",
+    "2010" = "https://download.inep.gov.br/informacoes_estatisticas/2011/indicadores_educacionais/taxa_rendimento/2010/tx_rendimento_municipios_2010.zip",
+    "2009" = "https://download.inep.gov.br/informacoes_estatisticas/2011/indicadores_educacionais/taxa_rendimento/2009/tx_rendimento_municipios_2009.zip",
+    "2008" = "https://download.inep.gov.br/informacoes_estatisticas/2011/indicadores_educacionais/taxa_rendimento/2008/tx_rendimento_municipios_2008.zip",
+    "2007" = "https://download.inep.gov.br/informacoes_estatisticas/2011/indicadores_educacionais/taxa_rendimento/2007/tx_rendimento_municipios_2007.zip"
   )
 
   # Configurar URL e caminho do arquivo
