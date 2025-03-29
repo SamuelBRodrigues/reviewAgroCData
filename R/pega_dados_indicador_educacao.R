@@ -431,63 +431,109 @@ get_taxa_liq_matricula_creche <- function(ano = '2023'){
   return(taxa_liq_matricula)
 }
 
-
-#' Obter gastos totais com educação por município
+#' Obter os gastos per capita em educação por município
 #'
-#' Esta função carrega e processa os dados de gastos públicos com educação
-#' a partir de arquivos CSV, filtrando por município e consolidando os valores.
+#' Esta função coleta os dados de gastos per capita em educação para os municípios
+#' especificados, consultando a API da FGV.
 #'
-#' Os dados foram retirados de https://siconfi.tesouro.gov.br/siconfi/pages/public/consulta_finbra/finbra_list.jsf
+#' @param cod_ibge Vetor de códigos IBGE dos municípios a serem consultados.
+#'                 O padrão é `target_cities$municipio_codigo`. Deve ser um vetor numérico.
 #'
-#' @param ano Integer. Ano dos dados a serem carregados (entre 2013 e 2024). Default: 2022.
-#' @return Dataframe com os municípios e seus respectivos gastos totais com educação.
+#' @return Um `data.frame` contendo os dados de gastos per capita em educação
+#'         para os municípios consultados, incluindo as colunas:
+#'         - `municipio_codigo`: Código IBGE do município.
+#'         - `ano`: Ano da observação.
+#'         - `gastos_per_capita_educacao`: Valor do gasto per capita em educação.
+#'         - Demais colunas retornadas pela API, com nomes padronizados.
+#'
 #' @examples
-#' gastos_educacao <- get_gastos_totais_educacao(ano = 2023)
-#' head(gastos_educacao)
 #'
-#' @importFrom readr read_delim locale
+#' # Obter os gastos per capita em educação para os municípios padrão
+#' get_gastos_per_capita_educacao()
+#'
+#' # Obter os gastos per capita em educação para municípios específicos
+#' get_gastos_per_capita_educacao(c(3550308, 3304557))
+#'
 #' @export
-get_gastos_totais_educacao <- function(ano = 2022) {
-  anos_disponiveis <- as.character(2013:2024)
-  ano <- as.character(ano)
+get_gastos_per_capita_educacao <- function(cod_ibge = target_cities$municipio_codigo) {
+  message("Coletando dados...")
 
-  if (!(ano %in% anos_disponiveis)) {
-    stop("Ano inválido. Os anos disponíveis são: ", paste(anos_disponiveis, collapse = ", "))
-  }
+  gastos_educacao <- purrr::map_df(
+    target_cities$municipio_codigo,
 
-  file_path <- paste0('data_raw/finbra_despesas_por_funcao/finbra_despesas_por_funcao_', ano, '.csv')
+    ~{
 
-  message("Carregando a base de dados...")
-  df <- readr::read_delim(file_path,
-                          delim = ";",
-                          locale = locale(encoding = "ISO-8859-1"),
-                          skip = 3,
-                          show_col_types = FALSE)
-  message("Base de dados carregada com sucesso!")
+      # Mimetiza comportamento
+      Sys.sleep(runif(1,1,3))
 
-  message("Filtrando dados...")
-  gastos_totais_edu <- df %>%
-    filter(Conta == '12 - Educação',
-           Coluna %in% c('Despesas Empenhadas', 'Despesas Liquidadas', 'Despesas Pagas'))
+      # Url da API
+      url <- "https://analitica.municipios.fgv.br/"
 
-  message("Filtrando cidades...")
-  gastos_totais_edu <- gastos_totais_edu %>%
-    mutate(`Cod.IBGE` = as.character(`Cod.IBGE`)) %>%
-    filter(`Cod.IBGE` %in% target_cities$municipio_codigo)
+      # Codigo da cidade segundo ibge
+      city_code_ibge <- .x
+      # Definir os parâmetros da query
+      query_params <- list(
+        callback = "jQuery36403137933189103961_1743266780826",
+        api_ticket = "b09981dc947ed0b1e3a8371eeaf67178c5caf20ee90bcea702cb8c2a19145d3a",
+        channel = "default",
+        api_indicator = "8efb100a295c0c690931222ff4467bb8",
+        filters = stringr::str_glue("co_municipio,2,'{city_code_ibge}'")
+      )
 
-  message("Calculando gastos totais com educação...")
-  gastos_totais_edu <- gastos_totais_edu %>%
-    group_by(`Cod.IBGE`) %>%
-    summarise(gastos_totais_educacao = sum(as.double(gsub(",", ".", Valor))), .groups = 'drop') %>%
-    rename(municipio_codigo = `Cod.IBGE`)
+      # Construir a requisição
+      resp <- httr2::request(url) |>
+        httr2::req_url_query(!!!query_params) |>  # Adiciona os parâmetros de query
+        httr2::req_headers(
+          "accept" = "*/*",
+          "accept-language" = "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+          "cookie" = "_ga=GA1.1.1812424873.1742563784; _ga_LDYK37ZKX2=GS1.1.1743266521.7.1.1743266780.0.0.0",
+          "referer" = "https://municipios.fgv.br/",
+          "sec-ch-ua" = "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Opera GX\";v=\"117\"",
+          "sec-ch-ua-mobile" = "?0",
+          "sec-ch-ua-platform" = "\"Windows\"",
+          "sec-fetch-dest" = "script",
+          "sec-fetch-mode" = "no-cors",
+          "sec-fetch-site" = "same-site",
+          "user-agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0"
+        ) |>
+        httr2::req_perform()
+      # Lendo a resposta da API como um texto
+      body <- resp |> httr2::resp_body_string()
 
-  message("Selecionando colunas...")
-  gastos_totais_edu <- gastos_totais_edu %>%
-    right_join(target_cities, by = 'municipio_codigo') %>%
-    select(municipio_codigo, municipio_nome, estado_sigla, gastos_totais_educacao)
+      # Estruturar a resposta como um json
+      jsonp_response <- body
 
-  message("Concluído!")
-  return(gastos_totais_edu)
+      # Remover o callback e extrair apenas o JSON
+      json_text <- sub("^[^(]*\\((.*)\\);?$", "\\1", jsonp_response)
+
+      # Converter JSON para lista
+      json_data <- jsonlite::fromJSON(json_text)
+
+
+      data <- json_data$dados |>
+        tibble::tibble() |>
+        janitor::clean_names() |>
+        dplyr::select(-ds_config) |>
+        dplyr::mutate(
+          municipio_codigo = .x
+        ) |>
+        dplyr::relocate(
+          municipio_codigo,
+          ano
+        )
+
+      message(stringr::str_glue("Os dados do municipio {data$no_municipio[1]} foram coletados"))
+
+      return(data)
+    }
+  )
+
+  # Renomeia a coluna final
+  gastos_educacao <- gastos_educacao |>
+    dplyr::rename(gastos_per_capita_educacao = valor_por_populacao,
+                  municipio_nome = no_municipio)
+
+  message("Dados coletados com sucesso!")
+  return(gastos_educacao)
 }
-
 
