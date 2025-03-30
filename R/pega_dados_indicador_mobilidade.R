@@ -24,7 +24,7 @@ get_internacoes_DATASUS <- function(ano){
   url <- "http://tabnet.datasus.gov.br/cgi/tabcgi.exe?sih/cnv/fibr.def"
 
   # Requisição para acesso aos dados de internações por acidente de transporte
-  req <- request(url) |>
+  req <- httr2::request(url) |>
     req_method("POST") |> # Utilizando o método POST para enviar dados para API
     req_headers(
       "Accept" = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -81,7 +81,7 @@ get_internacoes_DATASUS <- function(ano){
         dplyr::select(municipio,uf, populacao)
     ) |>
     dplyr::mutate(
-      taxa_internacoes_100k_hab = (obitos/populacao)*100000
+      taxa_internacoes_100k_hab = (internacoes/populacao)*100000
     )
 
   return(internacoes)

@@ -32,7 +32,8 @@
 #' @importFrom readxl read_xlsx
 #' @import dplyr
 extract_IVS_2010 <- function(
-    file_path = 'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx'
+    file_path = 'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx',
+    ano = 2022
 ) {
   message('Loading file...')
   # Read data, keeping headers
@@ -40,24 +41,31 @@ extract_IVS_2010 <- function(
     file_path,
     col_names = TRUE
   )
-
-  # Load target cities data from package
-  load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
-
-  message('Applying filters...')
+  ano = 2022
+  ano <- ano |> as.character()
 
   # Filter and select data
-  ivs_2010 <- ivs_data %>%
-    dplyr::filter(ano == 2020) %>%
-    dplyr::select(nome_municipio,
-                  nome_uf,
-                  ivs_renda_e_trabalho,
-                  ivs_infraestrutura_urbana)
+  ivs <- ivs_data |>
+    dplyr::filter(
+      nivel == "regiao,uf,rm,municipio",
+      label_cor == "Total Cor",
+      label_sexo == "Total Sexo",
+      label_sit_dom == "Total Situação de Domicílio"
+    ) |>
+    dplyr::select(
+      municipio,
+      ano,
+      ivs,
+      ivs_infraestrutura_urbana,
+      ivs_capital_humano,
+      ivs_renda_e_trabalho
+    ) |>
+    dplyr::rename(
+      "municipio_codigo" = municipio
+    ) |>
+    dplyr::filter(
+      ano == ano
+    )
 
-  # Display message
-  message("IVS 2010 data for target cities successfully extracted and filtered.")
-
-  message('Complete')
-
-  return(ivs_2010)
+  return(ivs)
 }
