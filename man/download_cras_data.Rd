@@ -4,7 +4,7 @@
 \alias{download_cras_data}
 \title{Download dos dados do SUAS - CRAS}
 \usage{
-download_cras_data(dir = "data_raw", ano = "2022")
+download_cras_data(dir = "data_raw", ano = 2023)
 }
 \arguments{
 \item{dir}{diretório onde os dados serão baixados}

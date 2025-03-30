@@ -31,7 +31,7 @@
 #' @export
 #' @importFrom readxl read_xlsx
 #' @import dplyr
-extract_IVS_2010 <- function(
+extract_IVS <- function(
     file_path = 'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx',
     ano = 2022
 ) {

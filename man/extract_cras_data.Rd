@@ -4,7 +4,7 @@
 \alias{extract_cras_data}
 \title{Trata os dados do CRAS}
 \usage{
-extract_cras_data(dir = "data_raw", ano = "2022")
+extract_cras_data(dir = "data_raw", ano = 2022)
 }
 \arguments{
 \item{dir}{Diretório onde os dados foram baixados}
