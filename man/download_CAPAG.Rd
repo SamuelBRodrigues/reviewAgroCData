@@ -2,30 +2,34 @@
 % Please edit documentation in R/download_CAPAG.R
 \name{download_CAPAG}
 \alias{download_CAPAG}
-\title{Download CAPAG (Municipal Government Financial Management) Data}
+\title{Baixa arquivos da Capacidade de Pagamento (CAPAG) de municípios}
 \usage{
-download_CAPAG(dir_path = "data_raw/")
+download_CAPAG(dir_path = "data_raw/", ano = "2021")
 }
 \arguments{
-\item{dir_path}{Character. Directory path where the downloaded file will be saved. Default is "data_raw/".
-The directory will be created if it doesn't already exist.}
+\item{dir_path}{Caminho do diretório de destino para os arquivos.
+Padrão: "data_raw/" (será criado se não existir)}
+
+\item{ano}{Ano base dos dados como string ou numérico (2017-2023).
+Padrão: "2023" (último ano disponível)}
 }
 \value{
-Invisible path to the downloaded file (string). The file will be named
-        "CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx" and saved in the specified directory.
+Retorna invisivelmente o caminho completo do arquivo baixado.
 }
 \description{
-This function downloads the CAPAG (Government Financial Management Indicator) data for municipalities
-from the Tesouro Transparente platform. The data is provided in an Excel file and will be saved to the
-specified directory.
+Esta função realiza o download dos arquivos da CAPAG (Capacidade de Pagamento),
+um indicador que avalia a capacidade financeira de estados e municípios brasileiros.
+Os dados são obtidos do Tesouro Transparente e salvos localmente no formato XLSX.
 }
 \examples{
 \dontrun{
-# Download the CAPAG data to the default "data_raw/" directory
-download_CAPAG()
+# Download do ano padrão (2023)
+arq_2023 <- download_CAPAG()
 
-# Download the CAPAG data to a custom directory
-download_CAPAG("my_data")
+# Download para ano específico
+arq_2019 <- download_CAPAG(ano = "2019")
+
+# Especificando diretório customizado
+arq_2021 <- download_CAPAG(dir_path = "dados/financeiros/", ano = 2021)
 }
-
 }
