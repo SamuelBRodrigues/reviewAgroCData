@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_endividamento.R
 \name{get_endividamento}
 \alias{get_endividamento}
-\title{Obtém dados de endividamento municipal}
+\title{Obtém dados municipais de Dívida Consolidada/Receita Corrente Líquida (Endividamento)}
 \usage{
 get_endividamento(download = TRUE, ano = 2023)
 }
