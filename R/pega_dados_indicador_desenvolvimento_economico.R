@@ -25,9 +25,10 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano_pib = 2021) {
   ivs <- extract_IVS()
 
   # Junta os dados
-  indicadores_desenvolvimento <- empregos %>%
-    dplyr::left_join(pib, by = c("municipio_codigo", "municipio_nome", "estado_sigla")) %>%
-    dplyr::left_join(ivs, by = c("municipio_nome", "estado_sigla"))
+  indicadores_desenvolvimento <- empregos |>
+    dplyr::mutate(municipio_codigo = as.character(municipio_codigo)) %>%
+    dplyr::left_join(pib |> dplyr::mutate(municipio_codigo = as.character(municipio_codigo)), by = c("municipio_codigo", "municipio_nome", "estado_sigla")) %>%
+    dplyr::left_join(ivs |> dplyr::mutate(municipio_codigo = as.character(municipio_codigo)), by = c("municipio_codigo"))
 
   return(indicadores_desenvolvimento)
 }

@@ -33,7 +33,7 @@
 #' @import dplyr
 extract_IVS <- function(
     file_path = 'data_raw/atlasivs_dadosbrutos_pt_v2.xlsx',
-    ano = 2022
+    ano = 2010
 ) {
   message('Loading file...')
   # Read data, keeping headers
@@ -41,8 +41,7 @@ extract_IVS <- function(
     file_path,
     col_names = TRUE
   )
-  ano = 2022
-  ano <- ano |> as.character()
+  data <- ano |> as.character()
 
   # Filter and select data
   ivs <- ivs_data |>
@@ -64,7 +63,7 @@ extract_IVS <- function(
       "municipio_codigo" = municipio
     ) |>
     dplyr::filter(
-      ano == ano
+      ano == data
     )
 
   return(ivs)

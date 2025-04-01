@@ -78,7 +78,14 @@ get_internacoes_DATASUS <- function(ano){
           municipio = stringr::str_to_title(abjutils::rm_accent(nome_do_municipio)),
           uf = cod_uf,
         ) |>
-        dplyr::select(municipio,uf, populacao)
+        tidyr::unite(
+          "municipio_codigo",
+          cod_uf:cod_munic,
+          sep = "",
+          remove = F
+        ) |>
+        dplyr::select(municipio, uf, municipio_codigo),
+      by = join_by(municipio, uf)
     ) |>
     dplyr::mutate(
       taxa_internacoes_100k_hab = (internacoes/populacao)*100000

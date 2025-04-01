@@ -68,7 +68,8 @@ get_gastos_per_capta_saude <- function(cod_municipios_ibge = target_cities$munic
         tibble::tibble() |>
         select(-DS_CONFIG) |>
         dplyr::mutate(
-          ANO = as.character(ANO)
+          ANO = as.character(ANO),
+          municipio_codigo = .x
         ) |>
         janitor::clean_names() |>
         dplyr::rename(

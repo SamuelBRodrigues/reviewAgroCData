@@ -4,7 +4,7 @@
 \alias{extract_IVS}
 \title{Extract and Filter IVS 2010 Data for Target Cities}
 \usage{
-extract_IVS(file_path = "data_raw/atlasivs_dadosbrutos_pt_v2.xlsx", ano = 2022)
+extract_IVS(file_path = "data_raw/atlasivs_dadosbrutos_pt_v2.xlsx", ano = 2010)
 }
 \arguments{
 \item{file_path}{A character string specifying the path to the Excel file containing the IVS data.

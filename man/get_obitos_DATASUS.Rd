@@ -16,7 +16,7 @@ do estado segundo IBGE e o ano dos dados
 }
 \description{
 A função extrai os dados de óbitos por acidente de trânsito a nível municipal
-por ano da plataforma do DATASUS. A função retorna uma tabela com nome do município,
+por ano do SIH plataforma do DATASUS. A função retorna uma tabela com nome do município,
 quantidade de óbitos, código do estado segundo IBGE e o ano dos dados
 }
 \examples{

@@ -94,7 +94,8 @@ get_taxa_mortalidade_infantil <- function(ano = "2022"){
     dplyr::mutate(
       nascimentos = tidyr::replace_na(nascimentos, 0),
       mortalidade_infantil = tidyr::replace_na(mortalidade_infantil, 0),
-      taxa_mortalidade_infantil = mortalidade_infantil/nascimentos * 1000
+      taxa_mortalidade_infantil = mortalidade_infantil/nascimentos * 1000,
+      ano = ano
     )
 
   return(data)
