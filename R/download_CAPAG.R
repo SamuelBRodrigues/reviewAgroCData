@@ -6,7 +6,7 @@
 #' Os dados são obtidos do Tesouro Transparente e salvos localmente no formato XLSX.
 #'
 #' @param dir_path Caminho do diretório de destino para os arquivos.
-#'   Padrão: "data_raw/" (será criado se não existir)
+#'   Padrão: "data_raw/CAPAG/" (será criado se não existir)
 #' @param ano Ano base dos dados como string ou numérico (2017-2023).
 #'   Padrão: "2023" (último ano disponível)
 #'
@@ -25,7 +25,7 @@
 #' # Especificando diretório customizado
 #' arq_2021 <- download_CAPAG(dir_path = "dados/financeiros/", ano = 2021)
 #' }
-download_CAPAG <- function(dir_path = "data_raw/", ano = "2021") {
+download_CAPAG <- function(dir_path = "data_raw/CAPAG/", ano = "2021") {
   anos_disponiveis <- as.character(2017:2023)
   ano <- as.character(ano)
 
