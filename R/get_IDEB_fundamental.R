@@ -87,7 +87,8 @@ get_IDEB_fundamental <- function(download = TRUE, ano = "2023", tipo = "anos_fin
                   `municipio_nome` =  NO_MUNICIPIO,
                   `estado_sigla` = SG_UF,
                   !!paste0("ideb_", ano, "_", tipo) := !!paste0("VL_OBSERVADO_", ano)) %>%
-    dplyr::filter(REDE == 'Pública')
+    dplyr::filter(REDE == 'Pública') %>%
+    dplyr::mutate(municipio_codigo = as.character((municipio_codigo)))
 
   # Filtrar os dados do IDEB para manter apenas as linhas das cidades-alvo
   message('Filtrando dados para as cidades-alvo...')
