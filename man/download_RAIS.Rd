@@ -2,22 +2,29 @@
 % Please edit documentation in R/download_RAIS.R
 \name{download_RAIS}
 \alias{download_RAIS}
-\title{Download RAIS 2022 Data}
+\title{Download dados da RAIS (Relação Anual de Informações Sociais)}
 \usage{
-download_RAIS(dir_path = "data_raw/")
+download_RAIS(dir_path = "data_raw/RAIS/", ano = "2022")
 }
 \arguments{
-\item{dir_path}{A character string specifying the directory where the file will be saved. Default is "data_raw/".}
+\item{dir_path}{Caminho do diretório onde o arquivo será salvo. Padrão: "data_raw/RAIS/"}
+
+\item{ano}{Ano dos dados a serem baixados (como string ou numérico). Anos disponíveis: 2020-2024 (obs: 2024 é uma tabela parcial)}
 }
 \value{
-No return value. The function downloads the file and saves it locally.
+Retorna invisivelmente o caminho completo do arquivo baixado (invisível)
 }
 \description{
-This function downloads the RAIS 2022 data file from the official government website
-and saves it in the specified directory.
+Esta função baixa os dados anuais da RAIS diretamente do portal do Ministério do Trabalho e Emprego.
+Os dados são disponibilizados em formato Excel (.xlsx) contendo tabelas consolidadas.
 }
 \examples{
-download_RAIS("my_data/")
+\dontrun{
+# Baixar dados de 2022 (padrão)
 download_RAIS()
+
+# Baixar dados de 2020 para um diretório específico
+download_RAIS(dir_path = "dados/rais/", ano = 2020)
+}
 
 }
