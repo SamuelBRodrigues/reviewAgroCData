@@ -25,8 +25,8 @@ get_internacoes_DATASUS <- function(ano){
 
   # Requisição para acesso aos dados de internações por acidente de transporte
   req <- httr2::request(url) |>
-    req_method("POST") |> # Utilizando o método POST para enviar dados para API
-    req_headers(
+    httr2::req_method("POST") |> # Utilizando o método POST para enviar dados para API
+    httr2::req_headers(
       "Accept" = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
       "Accept-Language" = "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
       "Cache-Control" = "max-age=0",
@@ -38,14 +38,14 @@ get_internacoes_DATASUS <- function(ano){
       "Upgrade-Insecure-Requests" = "1",
       "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0"
     ) |>
-    req_body_raw(body)
+    httr2::req_body_raw(body)
 
   # Performando a requisição
   resp <- httr2::req_perform(req)
 
   # Extraindo os dados de interesse
   internacoes <- resp |> # A requisão retorna um html
-    resp_body_html() |>
+    httr2::resp_body_html() |>
     # Dentro html lemos a tabela
     rvest::html_table() |>
     # A tabela de interesse é a tabela de index 1
@@ -84,7 +84,7 @@ get_internacoes_DATASUS <- function(ano){
           sep = "",
           remove = F
         ) |>
-        dplyr::select(municipio, uf, municipio_codigo),
+        dplyr::select(municipio, uf, municipio_codigo, populacao),
       by = join_by(municipio, uf)
     ) |>
     dplyr::mutate(
