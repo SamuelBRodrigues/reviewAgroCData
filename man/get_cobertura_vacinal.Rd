@@ -4,11 +4,13 @@
 \alias{get_cobertura_vacinal}
 \title{Extrai os dados de Cobertura Vacinal}
 \usage{
-get_cobertura_vacinal(cod_ibge = target_cities$municipio_codigo)
+get_cobertura_vacinal(cod_ibge = target_cities$municipio_codigo, ano = 2024)
 }
 \arguments{
 \item{cod_ibge}{Vetor character com os códigos do ibge dos municípios. Por padrão
 utiliza os códigos dos municípios da tabela target_cities}
+
+\item{ano}{Ano de interesse dos dados. Por padrão usa 2024.}
 }
 \value{
 Um dataframe
@@ -21,7 +23,8 @@ IGM - CFA.
 \examples{
 \dontrun{
  data_cobertura_vacinal <- get_cobertura_vacinal(
-  cod_ibge = c("1508126", "1708205", "2101400")
+  cod_ibge = c("1508126", "1708205", "2101400"),
+  ano = 2024
  )
 }
 }

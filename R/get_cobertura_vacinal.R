@@ -6,6 +6,7 @@
 #'
 #' @param cod_ibge Vetor character com os códigos do ibge dos municípios. Por padrão
 #' utiliza os códigos dos municípios da tabela target_cities
+#' @param ano Ano de interesse dos dados. Por padrão usa 2024.
 #'
 #' @returns Um dataframe
 #' @export
@@ -13,10 +14,12 @@
 #' @examples
 #' \dontrun{
 #'  data_cobertura_vacinal <- get_cobertura_vacinal(
-#'   cod_ibge = c("1508126", "1708205", "2101400")
+#'   cod_ibge = c("1508126", "1708205", "2101400"),
+#'   ano = 2024
 #'  )
 #' }
-get_cobertura_vacinal <- function(cod_ibge = target_cities$municipio_codigo){
+get_cobertura_vacinal <- function(cod_ibge = target_cities$municipio_codigo,
+                                  ano = 2024){
 
   # Estruturando os dados para que possam ser reconhecidos pelo arg da função
   table_municipio <- pop_municipios |>
@@ -111,7 +114,7 @@ get_cobertura_vacinal <- function(cod_ibge = target_cities$municipio_codigo){
                               Expressions = list(
                                 list(Column = list(Expression = list(SourceRef = list(Source = "i")), Property = "ano"))
                               ),
-                              Values = list(list(list(Literal = list(Value = "2024L"))))
+                              Values = list(list(list(Literal = list(Value = stringr::str_glue("{ano}L")))))
                             )
                           )
                         ),
@@ -165,6 +168,8 @@ get_cobertura_vacinal <- function(cod_ibge = target_cities$municipio_codigo){
 
       data <- tibble::tibble(
         municipio_codigo = .x,
+        municipio = cidade,
+        ano = ano,
         cobertura_vacinal_municipio = json[["results"]][[1]][["result"]][["data"]][["dsr"]][["DS"]][[1]][["PH"]][[1]][["DM0"]][[1]][["C"]][[1]],
         cobertura_vacinal_max = json[["results"]][[1]][["result"]][["data"]][["dsr"]][["DS"]][[1]][["PH"]][[1]][["DM0"]][[1]][["C"]][[2]]
       )
