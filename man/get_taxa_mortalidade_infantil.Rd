@@ -4,7 +4,7 @@
 \alias{get_taxa_mortalidade_infantil}
 \title{Extração dados de Mortalidade Infantil e Nascimento DATASUS}
 \usage{
-get_taxa_mortalidade_infantil(ano = "2022")
+get_taxa_mortalidade_infantil(ano = "2023")
 }
 \arguments{
 \item{ano}{Ano de interesse dos dados}

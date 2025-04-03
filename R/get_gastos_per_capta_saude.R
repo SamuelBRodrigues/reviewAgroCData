@@ -32,9 +32,9 @@ get_gastos_per_capta_saude <- function(cod_municipios_ibge = target_cities$munic
       )
 
       # Construindo a requisição
-      req <- request(url) |>
-        req_url_query(!!!query_params) |>
-        req_headers(
+      req <- httr2::request(url) |>
+        httr2::req_url_query(!!!query_params) |>
+        httr2::req_headers(
           "accept" = "*/*",
           "accept-language" = "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
           "cookie" = "_ga=GA1.1.1812424873.1742563784; _ga_LDYK37ZKX2=GS1.1.1743094194.4.0.1743094194.0.0.0",
@@ -49,10 +49,10 @@ get_gastos_per_capta_saude <- function(cod_municipios_ibge = target_cities$munic
         )
 
       # Fazendo a requisição para API
-      resp <- req |> req_perform()
+      resp <- req |> httr2::req_perform()
 
       # Lendo a resposta da API como um texto
-      body <- resp |> resp_body_string()
+      body <- resp |> httr2::resp_body_string()
 
       # Estruturar a resposta como um json
       jsonp_response <- body

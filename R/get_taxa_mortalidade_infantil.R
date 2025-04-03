@@ -14,7 +14,7 @@
 #' \dontrun{
 #'   get_taxa_mortalidade_infantil(ano = "2023")
 #' }
-get_taxa_mortalidade_infantil <- function(ano = "2022"){
+get_taxa_mortalidade_infantil <- function(ano = "2023"){
 
   data_mortalidade <- datasus::sim_inf10_mun(periodo = ano) |>
     tibble::tibble() |>

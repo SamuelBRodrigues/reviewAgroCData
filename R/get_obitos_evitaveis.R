@@ -89,6 +89,9 @@ get_obitos_evitaveis <- function(ano = 2023){
       municipio_codigo,
       ano
     ) |>
-    janitor::clean_names()
+    janitor::clean_names() |>
+    dplyr::mutate(
+      mortes_evitaveis = total_menor_5 + total_maior_5
+    )
 
 }

@@ -4,11 +4,13 @@
 \alias{get_internacoes_DATASUS}
 \title{Extração dos dados de Internações por acidentes de trânsito por munícipio do DATASUS}
 \usage{
-get_internacoes_DATASUS(ano)
+get_internacoes_DATASUS(ano = "25", mes = NULL)
 }
 \arguments{
 \item{ano}{Ano dos dados que serão requisitados. É necessário colocar apenas a década
 do ano de interesse no formato string, por exemplo: 2022, ano = "22"}
+
+\item{mes}{Mes de interesse dos dados}
 }
 \value{
 Uma tabela com nome do município, quantidade de internações, código

@@ -6,7 +6,7 @@
 \usage{
 pega_dados_indicador_saude(
   cod_ibge = target_cities$municipio_codigo,
-  ano = "2023"
+  ano = "last"
 )
 }
 \arguments{

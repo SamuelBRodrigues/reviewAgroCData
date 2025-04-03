@@ -4,7 +4,7 @@
 \alias{get_obitos_DATASUS}
 \title{Extração dos dados de Óbitos por acidentes de trânsito por munícipio do DATASUS}
 \usage{
-get_obitos_DATASUS(ano)
+get_obitos_DATASUS(ano = "25", mes = NULL)
 }
 \arguments{
 \item{ano}{Ano dos dados que serão requisitados. É necessário colocar apenas a década

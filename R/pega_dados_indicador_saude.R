@@ -9,20 +9,41 @@
 #' @return Uma lista com os dataframes: gastos_per_capta, mortalidade_infantil, obitos_evitaveis,
 #' abastecimento_esgoto, cobertura_aps, cobertura_vacinal.
 #' @export
-pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo, ano = "2023") {
-  cobertura_aps <- get_cobertura_aps(ano = ano)
-  gastos_per_capta <- get_gastos_per_capta_saude(cod_ibge)
-  mortalidade_infantil <- get_taxa_mortalidade_infantil(ano = ano)
-  obitos_evitaveis <- get_obitos_evitaveis(ano = ano)
-  abastecimento_esgoto <- get_abastecimento_esgoto()
-  cobertura_vacinal <- get_cobertura_vacinal(cod_ibge = cod_ibge)
+pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo, ano = "last") {
 
-  return(list(
+  if(ano == "last"){
+    cobertura_aps <- get_cobertura_aps(ano = 2024)
+    gastos_per_capta <- get_gastos_per_capta_saude(cod_ibge)
+    mortalidade_infantil <- get_taxa_mortalidade_infantil(ano = "2023")
+    obitos_evitaveis <- get_obitos_evitaveis(ano = "2023")
+    abastecimento_esgoto <- get_abastecimento_esgoto()
+    cobertura_vacinal <- get_cobertura_vacinal(cod_ibge = cod_ibge)
+    equip_por_estab <- get_equip_estab(ano = "25", mes = "02")
+    internacoes <- get_internacoes_DATASUS(ano = "25", mes = "01")
+    obitos <- get_obitos_DATASUS(ano = "25", mes = "01")
+  } else{
+    cobertura_aps <- get_cobertura_aps(ano = ano)
+    gastos_per_capta <- get_gastos_per_capta_saude(cod_ibge)
+    mortalidade_infantil <- get_taxa_mortalidade_infantil(ano = ano)
+    obitos_evitaveis <- get_obitos_evitaveis(ano = ano)
+    abastecimento_esgoto <- get_abastecimento_esgoto()
+    cobertura_vacinal <- get_cobertura_vacinal(cod_ibge = cod_ibge)
+    ano_datasus <- stringr::str_extract(ano, "..$")
+    equip_por_estab <- get_equip_estab(ano = ano_datasus, mes = "02")
+    internacoes <- get_internacoes_DATASUS(ano = ano_datasus, mes = "01")
+    obitos <- get_obitos_DATASUS(ano = ano_datasus, mes = "01")
+  }
+
+  data <- unite_indicador_saude(
+    cobertura_aps = cobertura_aps,
     gastos_per_capta = gastos_per_capta,
     mortalidade_infantil = mortalidade_infantil,
     obitos_evitaveis = obitos_evitaveis,
     abastecimento_esgoto = abastecimento_esgoto,
-    cobertura_aps = cobertura_aps,
-    cobertura_vacinal = cobertura_vacinal
-  ))
+    cobertura_vacinal = cobertura_vacinal,
+    equip_por_estab = equip_por_estab,
+    internacoes = internacoes,
+    obitos = obitos
+  )
+  return(data)
 }

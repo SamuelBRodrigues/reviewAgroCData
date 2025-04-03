@@ -4,12 +4,10 @@
 \alias{get_cobertura_aps}
 \title{Extração dos dados de Cobertura de Atenção Primária a Saúde (APS)}
 \usage{
-get_cobertura_aps(ano = "2024", mes = "04")
+get_cobertura_aps(ano = 2024)
 }
 \arguments{
 \item{ano}{Ano de interesse dos dados. Por padrão usa o ano de 2024}
-
-\item{mes}{Mês de interesse dos dados. Por padrão usa o mês de "04", abril}
 }
 \value{
 Um dataframe
