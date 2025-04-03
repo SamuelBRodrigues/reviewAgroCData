@@ -14,6 +14,7 @@ Um data frame contendo os dados de empregos formais por 100.000 habitantes para 
           \item `municipio_nome`: Nome do município.
           \item `estado_sigla`: Sigla do estado.
           \item `populacao`: População do município.
+          \item `total_empregos`: Total de empregos formais no município.
           \item `empregos_por_100khab`: Empregos formais por 100.000 habitantes no município.
         }
 }

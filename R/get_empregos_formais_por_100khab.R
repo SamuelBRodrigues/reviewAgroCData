@@ -17,6 +17,7 @@
 #'           \item `municipio_nome`: Nome do município.
 #'           \item `estado_sigla`: Sigla do estado.
 #'           \item `populacao`: População do município.
+#'           \item `total_empregos`: Total de empregos formais no município.
 #'           \item `empregos_por_100khab`: Empregos formais por 100.000 habitantes no município.
 #'         }
 #'
@@ -41,7 +42,8 @@ get_empregos_formais_por_100khab <- function() {
     select(municipio_codigo, municipio_nome, estado_sigla, populacao)
 
   empregos_por_100khab <- left_join(total_empregos_2022, populacao, by = "municipio_codigo") %>%
-    mutate(empregos_por_100khab = (total_empregos / populacao) * 100000)
+    mutate(empregos_por_100khab = (total_empregos / populacao) * 100000) %>%
+    relocate(municipio_codigo, municipio_nome, estado_sigla, populacao, total_empregos, empregos_por_100khab)
 
   return(empregos_por_100khab)
 }
