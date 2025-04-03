@@ -4,10 +4,10 @@
 \alias{pega_dados_indicador_mobilidade}
 \title{Coleta completa dos Indicadores de Mobilidade Urbana}
 \usage{
-pega_dados_indicador_mobilidade(ano = "22")
+pega_dados_indicador_mobilidade(ano = "last")
 }
 \arguments{
-\item{ano}{Ano dos dados. Padrão: "22"}
+\item{ano}{Ano dos dados. Padrão: "last"}
 }
 \value{
 Uma lista com os dataframes: internacoes_transito, obitos_transito, deslocamento_sidra, emissao.
