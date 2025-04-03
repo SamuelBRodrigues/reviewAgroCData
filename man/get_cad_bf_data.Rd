@@ -6,8 +6,8 @@
 \usage{
 get_cad_bf_data(
   cod_municipios_ibge = target_cities$municipio_codigo,
-  ano = "2023",
-  mes = "06"
+  ano = "2025",
+  mes = "03"
 )
 }
 \arguments{

@@ -6,7 +6,7 @@
 \usage{
 pega_dados_indicador_protecao_social(
   cod_municipios_ibge = target_cities$municipio_codigo,
-  ano = "2023",
+  ano = "last",
   mes = "06",
   dir = "data_raw"
 )

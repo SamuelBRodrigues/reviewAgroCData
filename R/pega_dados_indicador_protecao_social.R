@@ -11,17 +11,32 @@
 #' @return Uma lista com os dataframes: cad_bf, situacao_pobreza, cras.
 #' @export
 pega_dados_indicador_protecao_social <- function(cod_municipios_ibge = target_cities$municipio_codigo,
-                                                  ano = "2023",
-                                                  mes = "06",
-                                                  dir = "data_raw") {
-  cad_bf <- get_cad_bf_data(cod_municipios_ibge, ano, mes)
-  situacao_pobreza <- get_situacao_pobreza_data(cod_municipios_ibge)
-  download_cras_data(dir = dir, ano = ano)
-  cras <- extract_cras_data(dir = dir, ano = ano)
+                                                 ano = "last",
+                                                 mes = "06",
+                                                 dir = "data_raw") {
+  if(ano == "last"){
+    cad_bf <- get_cad_bf_data(cod_municipios_ibge, "2025", "03")
+    situacao_pobreza <- get_situacao_pobreza_data(cod_municipios_ibge)
+    download_cras_data(dir = dir, ano = "2023")
+    cras <- extract_cras_data(dir = dir, ano = "2023")
+    ivs <- extract_IVS()
+    perc_estab_dirigidos_por_mulheres <- get_estab_dirigido_por_mulheres()
+  } else{
+    ano_cad <- stringr::str_extract(ano, "..$")
+    cad_bf <- get_cad_bf_data(cod_municipios_ibge, ano_cad, mes)
+    situacao_pobreza <- get_situacao_pobreza_data(cod_municipios_ibge)
+    download_cras_data(dir = dir, ano = ano)
+    cras <- extract_cras_data(dir = dir, ano = ano)
+    ivs <- extract_IVS()
+    perc_estab_dirigidos_por_mulheres <- get_estab_dirigido_por_mulheres()
+  }
 
-  return(list(
+  data <- unite_indicador_protecao_social(
     cad_bf = cad_bf,
     situacao_pobreza = situacao_pobreza,
-    cras = cras
-  ))
+    cras = cras,
+    ivs = ivs,
+    perc_estab_dirigidos_por_mulheres = perc_estab_dirigidos_por_mulheres
+  )
+  return(data)
 }

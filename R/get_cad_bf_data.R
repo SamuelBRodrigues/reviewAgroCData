@@ -19,14 +19,12 @@
 #'     mes = "07"
 #'    )
 #' }
-get_cad_bf_data <- function(cod_municipios_ibge = target_cities$municipio_codigo, ano = "2023", mes = "06"){
+get_cad_bf_data <- function(cod_municipios_ibge = target_cities$municipio_codigo, ano = "2025", mes = "03"){
 
   data <- purrr::map_df(cod_municipios_ibge,
                         ~{
 
                           cod_ibge <- .x |> stringr::str_extract("^.*(?=.$)")
-                          # Mimetizar comportamento humano
-                          Sys.sleep(runif(1, 1,3))
 
                           # Url dos dados do cadunico
                           url_cadunico <- stringr::str_glue("https://aplicacoes.mds.gov.br/sagi/RIv3/geral/conteudo_modulo.php?id=2109&ibge={cod_ibge}&area=&ano={ano}&mes={mes}&ct_captcha=RIPBFPATS&ctidr=")
@@ -74,8 +72,8 @@ get_cad_bf_data <- function(cod_municipios_ibge = target_cities$municipio_codigo
                             cod_ibge = .x,
                             variables = variables,
                             values = values_cadunico,
-                            ano = "2023",
-                            mes = "06"
+                            ano = ano,
+                            mes = mes
                           ) |>
                             dplyr::mutate(
                               values = stringr::str_replace(values, "\\.",""),
@@ -107,6 +105,10 @@ get_cad_bf_data <- function(cod_municipios_ibge = target_cities$municipio_codigo
                             )
 
                           message(stringr::str_glue("Extraindo os dados: {data$nome_do_municipio}"))
+                          # Mimetizar comportamento humano
+                          Sys.sleep(runif(1, 1,3))
+
+                          dplyr::glimpse(data)
                           return(data)
 
                         }
