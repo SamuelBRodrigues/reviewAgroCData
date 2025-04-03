@@ -17,7 +17,6 @@
 #'           \item `municipio_nome`: Nome do município.
 #'           \item `estado_sigla`: Sigla do estado.
 #'           \item `populacao`: População do município.
-#'           \item `total_empregos`: Total de empregos formais no município.
 #'           \item `empregos_por_100khab`: Empregos formais por 100.000 habitantes no município.
 #'         }
 #'
@@ -28,7 +27,11 @@
 #'
 #' @export
 get_empregos_formais_por_100khab <- function() {
-  total_empregos_2022 <- get_empregos_formais_total_2022()
+  ano <- 2022
+  nome_coluna_empregos <- paste0('total_empregos_formais_', ano)
+
+  total_empregos_2022 <- get_empregos_formais_total(download = TRUE, ano = ano) %>%
+    select(municipio_codigo, total_empregos = !!nome_coluna_empregos)
 
   populacao <- reviewAgroCData::pop_municipios %>%
     mutate(municipio_codigo = paste0(cod_uf, cod_munic)) %>%
@@ -37,7 +40,7 @@ get_empregos_formais_por_100khab <- function() {
            municipio_nome = nome_do_municipio) %>%
     select(municipio_codigo, municipio_nome, estado_sigla, populacao)
 
-  empregos_por_100khab = left_join(total_empregos_2022, populacao) %>%
+  empregos_por_100khab <- left_join(total_empregos_2022, populacao, by = "municipio_codigo") %>%
     mutate(empregos_por_100khab = (total_empregos / populacao) * 100000)
 
   return(empregos_por_100khab)
