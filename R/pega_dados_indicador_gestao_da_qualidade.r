@@ -14,9 +14,11 @@ pega_dados_indicador_gestao_qualidade <- function(ano = "2023", download = TRUE)
   poupanca_corrente <- get_poupanca_corrente(download=FALSE, ano = ano)
   liquidez <- get_liquidez(download=FALSE, ano = ano)
 
-  return(list(
+  data <- unite_indicador_gestao_qualidade(
     endividamento = endividamento,
     poupanca_corrente = poupanca_corrente,
     liquidez = liquidez
-  ))
+  )
+
+  return(data)
 }
