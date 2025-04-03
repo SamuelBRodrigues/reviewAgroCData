@@ -1,21 +1,16 @@
-#' Une as tabelas que compõe o indicador de mobolidade
+#' Une as tabelas que compõe o indicador de mobilidade
 #'
-#' Essa função une as tabelas que compões o indicador de mobolidade em um único dataframe
+#' Essa função une as tabelas que compões o indicador de mobilidade em um único dataframe
 #'
-#' @param cobertura_aps Tabela com os dados de Cobertura de Assistência Básica
-#' @param gastos_per_capta Tabela com os dados de Gastor Per Capita em mobolidade
-#' @param mortalidade_infantil Tabela com os dados Mortalidade Infantil para 1000
-#' Nascimentos
-#' @param obitos_evitaveis Tabela com os dados de Mortalidade por Causas Evitáveis
-#' @param abastecimento_esgoto Tabela com os dados de Acesso a Esgoto e Abastecimento de Águga
-#' @param cobertura_vacinal Tabela com os dados de Cobertura Vacinal
-#' @param equip_por_estab Tabela com os dados Equipamento Sus por Equipamentos Totais
-#' @param internacoes Tabela com os dados Internações em Sinistros de Trânsito por
-#' 100 mil habitantes
-#' @param obitos Tabela com os dados Óbitos em Sinistros de Trânsito por
-#' 100 mil habitantes
+#' @param internacoes_transito Tabela com os dados de Internações por Sinistro de
+#' Trânsito por 100 mil Habitantes
+#' @param obitos_transito Tabela com os dados de Óbitos por Sinistro de
+#' Trânsito por 100 mil Habitantes
+#' @param deslocamento_sidra Tabela com os dados de Tempo de Deslocamento casa/trabalho
+#' superior a uma hora
+#' @param emissao Tabela com os dados de Emissão por População
 #'
-#' @returns Dataframe com todas as variáveis que compõe o indicador de mobolidade
+#' @returns Dataframe com todas as variáveis que compõe o indicador de mobilidade
 #' @export
 #'
 #' @examples

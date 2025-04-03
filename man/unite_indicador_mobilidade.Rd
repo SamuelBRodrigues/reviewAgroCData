@@ -2,7 +2,7 @@
 % Please edit documentation in R/unite_indicador_mobilidade.R
 \name{unite_indicador_mobilidade}
 \alias{unite_indicador_mobilidade}
-\title{Une as tabelas que compõe o indicador de mobolidade}
+\title{Une as tabelas que compõe o indicador de mobilidade}
 \usage{
 unite_indicador_mobilidade(
   internacoes_transito,
@@ -12,30 +12,20 @@ unite_indicador_mobilidade(
 )
 }
 \arguments{
-\item{cobertura_aps}{Tabela com os dados de Cobertura de Assistência Básica}
+\item{internacoes_transito}{Tabela com os dados de Internações por Sinistro de
+Trânsito por 100 mil Habitantes}
 
-\item{gastos_per_capta}{Tabela com os dados de Gastor Per Capita em mobolidade}
+\item{obitos_transito}{Tabela com os dados de Óbitos por Sinistro de
+Trânsito por 100 mil Habitantes}
 
-\item{mortalidade_infantil}{Tabela com os dados Mortalidade Infantil para 1000
-Nascimentos}
+\item{deslocamento_sidra}{Tabela com os dados de Tempo de Deslocamento casa/trabalho
+superior a uma hora}
 
-\item{obitos_evitaveis}{Tabela com os dados de Mortalidade por Causas Evitáveis}
-
-\item{abastecimento_esgoto}{Tabela com os dados de Acesso a Esgoto e Abastecimento de Águga}
-
-\item{cobertura_vacinal}{Tabela com os dados de Cobertura Vacinal}
-
-\item{equip_por_estab}{Tabela com os dados Equipamento Sus por Equipamentos Totais}
-
-\item{internacoes}{Tabela com os dados Internações em Sinistros de Trânsito por
-100 mil habitantes}
-
-\item{obitos}{Tabela com os dados Óbitos em Sinistros de Trânsito por
-100 mil habitantes}
+\item{emissao}{Tabela com os dados de Emissão por População}
 }
 \value{
-Dataframe com todas as variáveis que compõe o indicador de mobolidade
+Dataframe com todas as variáveis que compõe o indicador de mobilidade
 }
 \description{
-Essa função une as tabelas que compões o indicador de mobolidade em um único dataframe
+Essa função une as tabelas que compões o indicador de mobilidade em um único dataframe
 }
