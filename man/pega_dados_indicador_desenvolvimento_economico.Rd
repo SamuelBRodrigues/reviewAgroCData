@@ -5,7 +5,7 @@
 \alias{pega_dados_indicador_desenvolvimento_economico}
 \title{Coleta e organiza os dados da dimensão de Desenvolvimento Econômico}
 \usage{
-pega_dados_indicador_desenvolvimento_economico(ano_pib = 2021)
+pega_dados_indicador_desenvolvimento_economico(ano = "last")
 }
 \arguments{
 \item{ano_pib}{Ano para coleta do PIB per capita. Padrão é 2021.}

@@ -14,21 +14,43 @@
 #' \dontrun{
 #'   pega_dados_indicador_desenvolvimento_economico(ano_pib = 2021)
 #' }
-pega_dados_indicador_desenvolvimento_economico <- function(ano_pib = 2021) {
-  # Carrega dados de PIB per capita
-  pib <- get_PIB_per_capta(ano = ano_pib)
+pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
 
-  # Carrega dados de empregos formais por 100k habitantes
-  empregos <- get_empregos_formais_por_100khab()
+  if(ano == "last"){
+    pib <- get_PIB_per_capta(ano = 2021)
+    empregos <- get_empregos_formais_por_100khab()
+    ivs <- extract_IVS()
+    investimento_per_capita <- get_investimento_per_capita(ano = "2024")
+    recebe_assist <- get_recebe_assist()
+    produtividade_agricola <- get_valor_p_hectare_lt()
+    perc_produtores_jovnes <- get_perc_prod_jovens_25_35_anos()
+    perc_pessoas_parentesco <- get_perc_laco_parentesco_produtor()
+    prop_sistemas_florestais <- get_perc_area_cultv_espec_flor()
+    prop_boas_pastagens <- get_perc_pastagens_boas_cond()
+  } else{
+    pib <- get_PIB_per_capta(ano = ano)
+    empregos <- get_empregos_formais_por_100khab()
+    ivs <- extract_IVS()
+    investimento_per_capita <- get_investimento_per_capita(ano = ano)
+    recebe_assist <- get_recebe_assist()
+    produtividade_agricola <- get_valor_p_hectare_lt()
+    perc_produtores_jovnes <- get_perc_prod_jovens_25_35_anos()
+    perc_pessoas_parentesco <- get_perc_laco_parentesco_produtor()
+    prop_sistemas_florestais <- get_perc_area_cultv_espec_flor()
+    prop_boas_pastagens <- get_perc_pastagens_boas_cond()
+  }
+  data <- list(
+    pib,
+    empregos,
+    ivs,
+    investimento_per_capita,
+    recebe_assist,
+    produtividade_agricola,
+    perc_produtores_jovnes,
+    perc_pessoas_parentesco,
+    prop_sistemas_florestais,
+    prop_boas_pastagens
+  )
 
-  # Carrega dados do IVS 2010
-  ivs <- extract_IVS()
-
-  # Junta os dados
-  indicadores_desenvolvimento <- empregos |>
-    dplyr::mutate(municipio_codigo = as.character(municipio_codigo)) %>%
-    dplyr::left_join(pib |> dplyr::mutate(municipio_codigo = as.character(municipio_codigo)), by = c("municipio_codigo", "municipio_nome", "estado_sigla")) %>%
-    dplyr::left_join(ivs |> dplyr::mutate(municipio_codigo = as.character(municipio_codigo)), by = c("municipio_codigo"))
-
-  return(indicadores_desenvolvimento)
+  return(data)
 }
