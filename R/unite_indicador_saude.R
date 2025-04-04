@@ -2,7 +2,7 @@
 #'
 #' Essa função une as tabelas que compões o indicador de saúde em um único dataframe
 #'
-#' @param cobertura_aps Tabela com os dados de Cobertura de Assistência Básica
+#' @param cobertura_aps Tabela com os dados de Cobertura de Assistência Primária
 #' @param gastos_per_capta Tabela com os dados de Gastor Per Capita em Saúde
 #' @param mortalidade_infantil Tabela com os dados Mortalidade Infantil para 1000
 #' Nascimentos
@@ -14,13 +14,14 @@
 #' 100 mil habitantes
 #' @param obitos Tabela com os dados Óbitos em Sinistros de Trânsito por
 #' 100 mil habitantes
+#' @param cobertura_ab Tabela com os dados de Cobertura de Assistência Básica
 #'
 #' @returns Dataframe com todas as variáveis que compõe o indicador de saúde
 #' @export
 #'
 #' @examples
 unite_indicador_saude <- function(
-    cobertura_aps, gastos_per_capta, mortalidade_infantil, obitos_evitaveis,
+    cobertura_aps, cobertura_ab, gastos_per_capta, mortalidade_infantil, obitos_evitaveis,
     abastecimento_esgoto, cobertura_vacinal, equip_por_estab, internacoes, obitos
 ){
   data <- target_cities |>
@@ -30,9 +31,13 @@ unite_indicador_saude <- function(
     dplyr::left_join(
       cobertura_aps |>
         dplyr::select(
-          municipio_codigo,
-          time_period,
-          cobertura_aps
+          -municipio
+        )
+    ) |>
+    dplyr::left_join(
+      cobertura_ab |>
+        dplyr::select(
+          -municipio
         )
     ) |>
     dplyr::left_join(

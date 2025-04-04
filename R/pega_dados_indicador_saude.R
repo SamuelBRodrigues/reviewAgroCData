@@ -13,6 +13,7 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
 
   if(ano == "last"){
     cobertura_aps <- get_cobertura_aps(ano = 2024)
+    cobertura_ab <- get_cobertura_ab(ano = 2020)
     gastos_per_capta <- get_gastos_per_capta_saude(cod_ibge)
     mortalidade_infantil <- get_taxa_mortalidade_infantil(ano = "2023")
     obitos_evitaveis <- get_obitos_evitaveis(ano = "2023")
@@ -23,6 +24,7 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
     obitos <- get_obitos_DATASUS(ano = "25", mes = "01")
   } else{
     cobertura_aps <- get_cobertura_aps(ano = ano)
+    cobertura_ab <- get_cobertura_ab(ano = ano)
     gastos_per_capta <- get_gastos_per_capta_saude(cod_ibge)
     mortalidade_infantil <- get_taxa_mortalidade_infantil(ano = ano)
     obitos_evitaveis <- get_obitos_evitaveis(ano = ano)
@@ -36,6 +38,7 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
 
   data <- unite_indicador_saude(
     cobertura_aps = cobertura_aps,
+    cobertura_ab = cobertura_ab,
     gastos_per_capta = gastos_per_capta,
     mortalidade_infantil = mortalidade_infantil,
     obitos_evitaveis = obitos_evitaveis,

@@ -48,9 +48,9 @@ get_gestao_dr_vs_de <- function(ano = 2023) {
     dplyr::inner_join(ideb_anos_finais, by = "municipio_codigo") %>%
     dplyr::inner_join(despesas_educacao, by = "municipio_codigo") %>%
     dplyr::mutate(
-      ideb_2023_anos_iniciais = as.numeric(ideb_2023_anos_iniciais),
-      ideb_2023_anos_finais = as.numeric(ideb_2023_anos_finais),
-      gestao_dr_vs_de_col = despesas_educacao_2023/(ideb_2023_anos_finais + ideb_2023_anos_iniciais)
+      dplyr::across(dplyr::all_of(c(ideb_iniciais_col, ideb_finais_col, despesas_col)), as.double),
+      !!gestao_dr_vs_de_col := .data[[despesas_col]] /
+        (.data[[ideb_iniciais_col]] + .data[[ideb_finais_col]])
     )
 
   return(gestao_dr_vs_de)
