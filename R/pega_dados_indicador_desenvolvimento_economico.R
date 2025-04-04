@@ -27,6 +27,7 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
     perc_pessoas_parentesco <- get_perc_laco_parentesco_produtor()
     prop_sistemas_florestais <- get_perc_area_cultv_espec_flor()
     prop_boas_pastagens <- get_perc_pastagens_boas_cond()
+    empresas_abertas <- get_perc_empresas_permanecem_abertas()
   } else{
     pib <- get_PIB_per_capta(ano = ano)
     empregos <- get_empregos_formais_por_100khab()
@@ -38,6 +39,7 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
     perc_pessoas_parentesco <- get_perc_laco_parentesco_produtor()
     prop_sistemas_florestais <- get_perc_area_cultv_espec_flor()
     prop_boas_pastagens <- get_perc_pastagens_boas_cond()
+    empresas_abertas <- get_perc_empresas_permanecem_abertas()
   }
   data <- unite_indicador_desenvolvimento_economico(
     pib = pib,
@@ -49,7 +51,8 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
     perc_produtores_jovens = perc_produtores_jovens,
     perc_pessoas_parentesco = perc_pessoas_parentesco,
     prop_sistemas_florestais = prop_sistemas_florestais,
-    prop_boas_pastagens = prop_boas_pastagens
+    prop_boas_pastagens = prop_boas_pastagens,
+    empresas_abertas = empresas_abertas
   )
 
   return(data)

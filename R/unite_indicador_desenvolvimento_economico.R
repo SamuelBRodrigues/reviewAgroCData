@@ -12,6 +12,7 @@
 #' @param perc_pessoas_parentesco Tabela com os dados
 #' @param prop_sistemas_florestais Tabela com os dados
 #' @param prop_boas_pastagens Tabela com os dados
+#' @param empresas_abertas Tabela com os dados de empresas
 #'
 #' @returns Dataframe com todas as variáveis que compõe o indicador de desenvolvimento econômico
 #' @export
@@ -20,7 +21,7 @@
 unite_indicador_desenvolvimento_economico <- function(
     pib, empregos, ivs, investimento_per_capita, recebe_assist, produtividade_agricola,
     perc_produtores_jovens, perc_pessoas_parentesco, prop_sistemas_florestais,
-    prop_boas_pastagens
+    prop_boas_pastagens, empresas_abertas
 ){
   data <- target_cities |>
     dplyr::select(
@@ -90,6 +91,10 @@ unite_indicador_desenvolvimento_economico <- function(
         dplyr::select(
           municipio_codigo, perc_pastagens_plantadas_em_boas_condicoes
         )
+    ) |>
+    dplyr::left_join(
+      empresas_abertas |>
+        dplyr::select(-municipio_nome)
     )
   return(data)
 }

@@ -6,6 +6,7 @@
 \usage{
 unite_indicador_saude(
   cobertura_aps,
+  cobertura_ab,
   gastos_per_capta,
   mortalidade_infantil,
   obitos_evitaveis,
@@ -17,7 +18,9 @@ unite_indicador_saude(
 )
 }
 \arguments{
-\item{cobertura_aps}{Tabela com os dados de Cobertura de Assistência Básica}
+\item{cobertura_aps}{Tabela com os dados de Cobertura de Assistência Primária}
+
+\item{cobertura_ab}{Tabela com os dados de Cobertura de Assistência Básica}
 
 \item{gastos_per_capta}{Tabela com os dados de Gastor Per Capita em Saúde}
 
