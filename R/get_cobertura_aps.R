@@ -30,10 +30,10 @@ get_cobertura_aps <- function(ano = 2024){
   data <- data |>
     janitor::clean_names() |>
     dplyr::select(
-      competencia_cnes, ibge, municipio, cobertura_aps
+      ibge, municipio, cobertura_aps
     ) |>
     dplyr::rename(
-      "time_period" = competencia_cnes
+      !!stringr::str_glue("cobertura_aps_{ano}") := cobertura_aps
     ) |>
     dplyr::left_join(
       pop_municipios |>
@@ -48,7 +48,10 @@ get_cobertura_aps <- function(ano = 2024){
         )
     ) |>
     dplyr::select(
-      municipio_codigo, municipio, time_period, cobertura_aps
+      -ibge
+    ) |>
+    dplyr::relocate(
+      municipio_codigo, municipio
     )
 
   return(data)
