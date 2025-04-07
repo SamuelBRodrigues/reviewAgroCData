@@ -14,7 +14,8 @@ unite_indicador_desenvolvimento_economico(
   perc_produtores_jovens,
   perc_pessoas_parentesco,
   prop_sistemas_florestais,
-  prop_boas_pastagens
+  prop_boas_pastagens,
+  empresas_abertas
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ unite_indicador_desenvolvimento_economico(
 \item{prop_sistemas_florestais}{Tabela com os dados}
 
 \item{prop_boas_pastagens}{Tabela com os dados}
+
+\item{empresas_abertas}{Tabela com os dados de empresas}
 }
 \value{
 Dataframe com todas as variáveis que compõe o indicador de desenvolvimento econômico
