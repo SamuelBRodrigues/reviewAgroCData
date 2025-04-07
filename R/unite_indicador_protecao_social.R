@@ -44,19 +44,19 @@ unite_indicador_protecao_social <- function(
     dplyr::left_join(
       cras |>
         dplyr::select(
-          municipio_codigo, cras_por_100k_hab
+          -c(municipio_nome, cras, populacao)
         )
     ) |>
     dplyr::left_join(
       ivs |>
         dplyr::select(
-          municipio_codigo, ivs
+          -c(ano, ivs_capital_humano, ivs_infraestrutura_urbana, ivs_renda_e_trabalho)
         )
     ) |>
     dplyr::left_join(
       perc_estab_dirigidos_por_mulheres |>
         dplyr::select(
-          municipio_codigo, perc_dirigido_por_mulheres
+          -c(municipio, ano, Total, Homens, Mulheres)
         )
     )
   return(data)

@@ -49,18 +49,13 @@ unite_indicador_saude <- function(
     dplyr::left_join(
       obitos_evitaveis |>
         dplyr::select(
-          municipio_codigo,
-          total_menor_5,
-          total_maior_5,
-          mortes_evitaveis
+          -dplyr::starts_with("x"), -ano
         )
     ) |>
     dplyr::left_join(
       abastecimento_esgoto |>
         dplyr::select(
-          municipio_codigo,
-          indice_da_populacao_total_atendida_com_esgotamento_sanitario_percent ,
-          indice_da_populacao_total_atendida_com_abastecimento_de_agua_percent
+          -c(municipio_nome, ano)
         ) |>
         dplyr::mutate(
           municipio_codigo = as.character(municipio_codigo)
@@ -69,8 +64,7 @@ unite_indicador_saude <- function(
     dplyr::left_join(
       cobertura_vacinal |>
         dplyr::select(
-          municipio_codigo,
-          cobertura_vacinal_municipio
+          -c(municipio, ano, cobertura_vacinal_max)
         )
     ) |>
     dplyr::left_join(
@@ -87,20 +81,19 @@ unite_indicador_saude <- function(
     dplyr::left_join(
       equip_por_estab |>
         dplyr::select(
-          municipio_codigo, equipamentos_existentes, estab_c_equip_sus,
-          perc_equip_sus_nos_estab_saude
+          -c(municipio, uf, year,)
         )
     ) |>
     dplyr::left_join(
-      internacoes  |>
+      internacoes |>
         dplyr::select(
-          municipio_codigo, internacoes, populacao, taxa_internacoes_100k_hab
+          -c(uf, year, municipio)
         )
     ) |>
     dplyr::left_join(
       obitos |>
         dplyr::select(
-          municipio_codigo, obitos, populacao, taxa_obito_100k_hab
+          -c(uf, year, municipio)
         )
     )
   return(data)

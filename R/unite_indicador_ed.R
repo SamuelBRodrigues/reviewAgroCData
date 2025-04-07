@@ -29,8 +29,7 @@ unite_indicador_ed <- function(
     dplyr::left_join(
       ideb_finais |>
         dplyr::select(
-          municipio_codigo,
-          ideb_2023_anos_finais
+          -c(municipio_nome, estado_sigla, REDE)
         ) |>
         dplyr::mutate(
           ideb_2023_anos_finais = as.numeric(ideb_2023_anos_finais)
@@ -39,8 +38,7 @@ unite_indicador_ed <- function(
     dplyr::left_join(
       ideb_iniciais |>
         dplyr::select(
-          municipio_codigo,
-          ideb_2023_anos_iniciais
+          -c(municipio_nome, estado_sigla, REDE)
         ) |>
         dplyr::mutate(
           ideb_2023_anos_iniciais = as.numeric(ideb_2023_anos_iniciais)
@@ -49,9 +47,7 @@ unite_indicador_ed <- function(
     dplyr::left_join(
       tdi |>
         dplyr::select(
-          municipio_codigo,
-          tdi_ensino_fundamental_2023,
-          tdi_ensino_medio_2023
+          -c(municipio_nome, estado_sigla)
         ) |>
         dplyr::mutate(
           municipio_codigo = as.character(municipio_codigo),
@@ -62,9 +58,7 @@ unite_indicador_ed <- function(
     dplyr::left_join(
       abandono_escolar |>
         dplyr::select(
-          municipio_codigo,
-          taxa_abandono_fundamental_2023,
-          taxa_abandono_medio_2023
+          -c(municipio_nome, estado_sigla)
         ) |>
         dplyr::mutate(
           municipio_codigo = as.character(municipio_codigo)
@@ -73,8 +67,7 @@ unite_indicador_ed <- function(
     dplyr::left_join(
       matricula_creche |>
         dplyr::select(
-          municipio_codigo,
-          taxa_liquida_matricula_creche_2023
+          -c(municipio_nome)
         ) |>
         dplyr::mutate(
           municipio_codigo = as.character(municipio_codigo)
@@ -94,18 +87,22 @@ unite_indicador_ed <- function(
     dplyr::left_join(
       gestao |>
         dplyr::select(
-          municipio_codigo, despesas_educacao_2023, gestao_dr_vs_de_2023
+          -c(municipio_nome, estado_sigla, ideb_2023_anos_iniciais, ideb_2023_anos_finais)
         )
     ) |>
     dplyr::left_join(
       perc_agricultor_ens_bas |>
         dplyr::select(
-          municipio_codigo, perc_agricultor_ens_bas
+          -c(municipio, ano, antigo_ginasial_medio_1o_ciclo, antigo_ginasial_medio_1o_ciclo,
+             regular_do_ensino_fundamental_ou_1o_grau, eja_educacao_de_jovens_e_adultos_e_supletivo_do_ensino_fundamental_ou_do_1o_grau,
+             antigo_primario_elementar, total, agricultor_com_ens_bas)
         )
     ) |>
     dplyr::left_join(
       perc_alimentos_pnae |>
-        dplyr::select(municipio_codigo, prop_alimentos_pnae)
+        dplyr::select(
+          -c(municipio_nome, ano)
+        )
     )
   return(data)
 }

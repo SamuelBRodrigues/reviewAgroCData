@@ -18,19 +18,19 @@ unite_indicador_gestao_qualidade <- function(
     dplyr::left_join(
       endividamento |>
         dplyr::select(
-          municipio_codigo, endividamento_2023
+          -c(municipio_nome, estado_sigla)
         )
     ) |>
     dplyr::left_join(
-      poupanca_corrente
-    ) |>
-    dplyr::select(
-      municipio_codigo, poupanca_corrente_2023
+      poupanca_corrente |>
+        dplyr::select(
+          -c(municipio_nome, estado_sigla)
+        )
     ) |>
     dplyr::left_join(
       liquidez |>
         dplyr::select(
-          municipio_codigo, liquidez_2023
+          -c(municipio_nome, estado_sigla)
         )
     )
 }

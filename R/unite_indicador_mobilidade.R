@@ -24,27 +24,26 @@ unite_indicador_mobilidade <- function(
     dplyr::left_join(
       deslocamento_sidra |>
         dplyr::select(
-          municipio_codigo,
-          `Percentual da população que gasta 1hora ou mais no deslocamento casatrabalho (total e por faixa de renda)`
+          -c(municipio, variavel, ano, mais_de_duas_horas, mais_de_uma_hora_ate_duas_horas)
         )
     ) |>
     dplyr::left_join(
       emissao |>
         dplyr::select(
-          cod_ibge, emissao_por_pop
+          -c(municipio, uf)
         ),
       by = join_by(municipio_codigo == cod_ibge)
     ) |>
     dplyr::left_join(
-      internacoes_transito  |>
+      internacoes_transito |>
         dplyr::select(
-          municipio_codigo, internacoes, populacao, taxa_internacoes_100k_hab
+          -c(uf, year, municipio)
         )
     ) |>
     dplyr::left_join(
       obitos_transito |>
         dplyr::select(
-          municipio_codigo, obitos, populacao, taxa_obito_100k_hab
+          -c(uf, year, municipio)
         )
     )
   return(data)

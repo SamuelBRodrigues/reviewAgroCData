@@ -36,7 +36,7 @@ unite_indicador_desenvolvimento_economico <- function(
           municipio_codigo = as.character(municipio_codigo)
         ) |>
         dplyr::select(
-          municipio_codigo, PIB_per_capta_2021
+          -c(municipio_nome, estado_sigla)
         )
     ) |>
     dplyr::left_join(
@@ -48,27 +48,26 @@ unite_indicador_desenvolvimento_economico <- function(
     dplyr::left_join(
       investimento_per_capita |>
         dplyr::select(
-          muncipio_codigo, investimento_per_capita
+          -c(municipio, ano, variavel)
         ),
       by = join_by(municipio_codigo == muncipio_codigo)
     ) |>
     dplyr::left_join(
       ivs |>
         dplyr::select(
-          municipio_codigo, ivs_infraestrutura_urbana, ivs_renda_e_trabalho
+          -c(ano, ivs, ivs_capital_humano)
         )
     ) |>
     dplyr::left_join(
       recebe_assist |>
         dplyr::select(
-          municipio_codigo, perc_origem_da_orientacao_tecnica_recebida
+          -c(municipio, ano, Total, Recebe)
         )
     ) |>
     dplyr::left_join(
       produtividade_agricola_lt |>
         dplyr::select(
-          municipio_codigo, valor_da_producao_das_lavouras_temporarias,
-          area_colhida_nas_lavouras_temporarias, prod_por_hec_lavouras_temporarias
+          -c(municipio, ano)
         )
     ) |>
     dplyr::left_join(
@@ -81,25 +80,25 @@ unite_indicador_desenvolvimento_economico <- function(
     dplyr::left_join(
       perc_produtores_jovens |>
         dplyr::select(
-          municipio_codigo, perc_prod_jovens_25_35_anos
+          -c(municipio, ano, total, de_25_a_menos_de_35_anos)
         )
     ) |>
     dplyr::left_join(
       perc_pessoas_parentesco |>
         dplyr::select(
-          municipio_codigo, perc_estabelecimento_agrop_ocup_laço_parentesco_prod
+          -c(municipio, ano, ocupante, total)
         )
     ) |>
     dplyr::left_join(
       prop_sistemas_florestais |>
         dplyr::select(
-          municipio_codigo, perc_producao_florestal_florestas_nativas
+          -c(municipio, ano, total, producao_area_florestal)
         )
     ) |>
     dplyr::left_join(
       prop_boas_pastagens |>
         dplyr::select(
-          municipio_codigo, perc_pastagens_plantadas_em_boas_condicoes
+          -c(municipio, ano, total, pastagens_plantadas_em_boas_condicoes)
         )
     ) |>
     dplyr::left_join(
