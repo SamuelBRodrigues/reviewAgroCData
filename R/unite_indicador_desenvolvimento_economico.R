@@ -7,21 +7,24 @@
 #' @param ivs Tabela com os dados Índice de Vulnerabilidade Social
 #' @param investimento_per_capita Tabela com os dados
 #' @param recebe_assist Tabela com os dados
-#' @param produtividade_agricola Tabela com os dados
 #' @param perc_produtores_jovens Tabela com os dados
 #' @param perc_pessoas_parentesco Tabela com os dados
 #' @param prop_sistemas_florestais Tabela com os dados
 #' @param prop_boas_pastagens Tabela com os dados
 #' @param empresas_abertas Tabela com os dados de empresas
+#' @param produtividade_agricola_lt Tabela com os dados de Produtividade Agrícola
+#' por hectare das lavouras temporárias
+#' @param produtividade_agricola_lp Tabela com os dados de Produtividade Agrícola
+#' por hectare das lavouras permanentes
 #'
 #' @returns Dataframe com todas as variáveis que compõe o indicador de desenvolvimento econômico
 #' @export
 #'
 #' @examples
 unite_indicador_desenvolvimento_economico <- function(
-    pib, empregos, ivs, investimento_per_capita, recebe_assist, produtividade_agricola,
-    perc_produtores_jovens, perc_pessoas_parentesco, prop_sistemas_florestais,
-    prop_boas_pastagens, empresas_abertas
+    pib, empregos, ivs, investimento_per_capita, recebe_assist, produtividade_agricola_lt,
+    produtividade_agricola_lp,perc_produtores_jovens, perc_pessoas_parentesco,
+    prop_sistemas_florestais, prop_boas_pastagens, empresas_abertas
 ){
   data <- target_cities |>
     dplyr::select(
@@ -62,10 +65,17 @@ unite_indicador_desenvolvimento_economico <- function(
         )
     ) |>
     dplyr::left_join(
-      produtividade_agricola |>
+      produtividade_agricola_lt |>
         dplyr::select(
           municipio_codigo, valor_da_producao_das_lavouras_temporarias,
           area_colhida_nas_lavouras_temporarias, prod_por_hec_lavouras_temporarias
+        )
+    ) |>
+    dplyr::left_join(
+      produtividade_agricola_lp |>
+        dplyr::select(
+          -c(municipio, ano,
+             valor_da_producao_das_lavouras_permanentes_nos_estabelecimentos_agropecuarios_com_50_pes_e_mais_existentes)
         )
     ) |>
     dplyr::left_join(

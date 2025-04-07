@@ -10,7 +10,8 @@ unite_indicador_desenvolvimento_economico(
   ivs,
   investimento_per_capita,
   recebe_assist,
-  produtividade_agricola,
+  produtividade_agricola_lt,
+  produtividade_agricola_lp,
   perc_produtores_jovens,
   perc_pessoas_parentesco,
   prop_sistemas_florestais,
@@ -29,7 +30,11 @@ unite_indicador_desenvolvimento_economico(
 
 \item{recebe_assist}{Tabela com os dados}
 
-\item{produtividade_agricola}{Tabela com os dados}
+\item{produtividade_agricola_lt}{Tabela com os dados de Produtividade Agrícola
+por hectare das lavouras temporárias}
+
+\item{produtividade_agricola_lp}{Tabela com os dados de Produtividade Agrícola
+por hectare das lavouras permanentes}
 
 \item{perc_produtores_jovens}{Tabela com os dados}
 
