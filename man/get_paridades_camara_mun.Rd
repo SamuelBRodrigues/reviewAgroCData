@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_paridades_camara_mun.R
 \name{get_paridades_camara_mun}
 \alias{get_paridades_camara_mun}
-\title{Pega os dados de Paridade de Gênero e Paridade de Negros das Câmaras Municipais}
+\title{Pega os dados de Paridade de Gênero e Paridade de Negros das Câmaras Municipais -
+Indicador de Proteção Social}
 \usage{
 get_paridades_camara_mun()
 }

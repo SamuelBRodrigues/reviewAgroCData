@@ -2,12 +2,9 @@
 % Please edit documentation in R/constroi_subnutricao_sisvan.R
 \name{constroi_subnutricao_sisvan}
 \alias{constroi_subnutricao_sisvan}
-\title{Controi os dados de Subnutrição}
+\title{Controi os dados de Subnutrição - Indicador de Saúde}
 \usage{
-constroi_subnutricao_sisvan(diretorio_sisvan = "./data_raw/sisvan.xlsx")
-}
-\arguments{
-\item{diretorio_sisvan}{Diretório onde se encontra os dados baixados do Sisvan.}
+constroi_subnutricao_sisvan()
 }
 \value{
 Uma dataframe
@@ -21,8 +18,6 @@ adultos, idosos e gestantes (baixo peso).
 }
 \examples{
 \dontrun{
-  data <- constroi_subnutricao_sisvan(
-    diretorio_sisvan = "data_raw/sisvan.xlsx"
-  )
+  data <- constroi_subnutricao_sisvan()
 }
 }

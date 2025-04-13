@@ -16,7 +16,8 @@ unite_indicador_desenvolvimento_economico(
   perc_pessoas_parentesco,
   prop_sistemas_florestais,
   prop_boas_pastagens,
-  empresas_abertas
+  empresas_abertas,
+  perc_estab_agric_familia
 )
 }
 \arguments{

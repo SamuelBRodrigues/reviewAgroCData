@@ -9,7 +9,8 @@ unite_indicador_protecao_social(
   situacao_pobreza,
   cras,
   ivs,
-  perc_estab_dirigidos_por_mulheres
+  perc_estab_dirigidos_por_mulheres,
+  paridades_camera
 )
 }
 \arguments{

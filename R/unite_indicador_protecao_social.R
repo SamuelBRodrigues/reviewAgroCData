@@ -21,7 +21,8 @@ unite_indicador_protecao_social <- function(
     situacao_pobreza,
     cras,
     ivs,
-    perc_estab_dirigidos_por_mulheres
+    perc_estab_dirigidos_por_mulheres,
+    paridades_camera
 ){
   data <- target_cities |>
     dplyr::select(
@@ -58,6 +59,13 @@ unite_indicador_protecao_social <- function(
         dplyr::select(
           -c(municipio, ano, Total, Homens, Mulheres)
         )
+    ) |>
+    dplyr::left_join(
+      paridades_camera |>
+        dplyr::select(
+          -c(sg_uf, nm_ue, total)
+        ),
+      by = join_by(municipio_codigo == cod_muni)
     )
   return(data)
 }

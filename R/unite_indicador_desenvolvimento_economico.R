@@ -24,7 +24,7 @@
 unite_indicador_desenvolvimento_economico <- function(
     pib, empregos, ivs, investimento_per_capita, recebe_assist, produtividade_agricola_lt,
     produtividade_agricola_lp,perc_produtores_jovens, perc_pessoas_parentesco,
-    prop_sistemas_florestais, prop_boas_pastagens, empresas_abertas
+    prop_sistemas_florestais, prop_boas_pastagens, empresas_abertas, perc_estab_agric_familia
 ){
   data <- target_cities |>
     dplyr::select(
@@ -104,6 +104,12 @@ unite_indicador_desenvolvimento_economico <- function(
     dplyr::left_join(
       empresas_abertas |>
         dplyr::select(-municipio_nome)
+    ) |>
+    dplyr::left_join(
+      perc_estab_agric_familia |>
+        dplyr::select(
+          -c(municipio, ano)
+        )
     )
   return(data)
 }

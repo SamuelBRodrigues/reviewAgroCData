@@ -1,4 +1,5 @@
-#' Pega os dados de Paridade de Gênero e Paridade de Negros das Câmaras Municipais
+#' Pega os dados de Paridade de Gênero e Paridade de Negros das Câmaras Municipais -
+#' Indicador de Proteção Social
 #'
 #' Essa função pega os dados de Paridade de Gênero e Paridade de Negros de Câmaras
 #' Municipais diretamente do TSE

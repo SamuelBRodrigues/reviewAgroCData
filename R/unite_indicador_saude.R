@@ -22,7 +22,8 @@
 #' @examples
 unite_indicador_saude <- function(
     cobertura_aps, cobertura_ab, gastos_per_capta, mortalidade_infantil, obitos_evitaveis,
-    abastecimento_esgoto, cobertura_vacinal, equip_por_estab, internacoes, obitos
+    abastecimento_esgoto, cobertura_vacinal, equip_por_estab, internacoes, obitos,
+    subnutricao, obesidade
 ){
   data <- target_cities |>
     dplyr::select(
@@ -95,6 +96,19 @@ unite_indicador_saude <- function(
         dplyr::select(
           -c(uf, year, municipio)
         )
+    ) |>
+    dplyr::left_join(
+      subnutricao |>
+        dplyr::select(
+          municipio_codigo, crianca_0_10, adultos_idoso_gestantes, adolescentes
+        )
+    ) |>
+    dplyr::left_join(
+      obesidade |>
+        dplyr::select(
+          municipio_codigo, pop_obesa
+        )
     )
+
   return(data)
 }

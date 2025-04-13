@@ -22,6 +22,8 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
     equip_por_estab <- get_equip_estab(ano = "25", mes = "02")
     internacoes <- get_internacoes_DATASUS(ano = "25", mes = "01")
     obitos <- get_obitos_DATASUS(ano = "25", mes = "01")
+    subnutricao <- constroi_subnutricao_sisvan()
+    obesidade <- constroi_obesid_mun()
   } else{
     cobertura_aps <- get_cobertura_aps(ano = ano)
     cobertura_ab <- get_cobertura_ab(ano = ano)
@@ -34,6 +36,8 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
     equip_por_estab <- get_equip_estab(ano = ano_datasus, mes = "02")
     internacoes <- get_internacoes_DATASUS(ano = ano_datasus, mes = "01")
     obitos <- get_obitos_DATASUS(ano = ano_datasus, mes = "01")
+    subnutricao <- constroi_subnutricao_sisvan()
+    obesidade <- constroi_obesid_mun()
   }
 
   data <- unite_indicador_saude(
@@ -46,7 +50,9 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
     cobertura_vacinal = cobertura_vacinal,
     equip_por_estab = equip_por_estab,
     internacoes = internacoes,
-    obitos = obitos
+    obitos = obitos,
+    subnutricao = subnutricao,
+    obesidade = obesidade
   )
   return(data)
 }

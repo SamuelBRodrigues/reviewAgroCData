@@ -1,4 +1,4 @@
-#' Proporção de estabelecimentos de agricultura familiar
+#' Proporção de estabelecimentos de agricultura familiar - Desenvolvimento Econômico
 #'
 #' Essa função pega os dados da Proporção de Estabelecimentos de Agricultura Familiar
 #' diretamente do Censo Agro na plataforma do SIDRA

@@ -3,7 +3,7 @@
 %   R/get_percentual_estabelecimentos_agricultura_familiar.R
 \name{get_percentual_estabelecimentos_agricultura_familiar}
 \alias{get_percentual_estabelecimentos_agricultura_familiar}
-\title{Proporção de estabelecimentos de agricultura familiar}
+\title{Proporção de estabelecimentos de agricultura familiar - Desenvolvimento Econômico}
 \usage{
 get_percentual_estabelecimentos_agricultura_familiar()
 }

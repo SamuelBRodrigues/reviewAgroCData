@@ -14,7 +14,9 @@ unite_indicador_saude(
   cobertura_vacinal,
   equip_por_estab,
   internacoes,
-  obitos
+  obitos,
+  subnutricao,
+  obesidade
 )
 }
 \arguments{

@@ -21,6 +21,7 @@ pega_dados_indicador_protecao_social <- function(cod_municipios_ibge = target_ci
     cras <- extract_cras_data(dir = dir, ano = "2023")
     ivs <- extract_IVS()
     perc_estab_dirigidos_por_mulheres <- get_estab_dirigido_por_mulheres()
+    paridades_camera <- get_paridades_camara_mun()
   } else{
     ano_cad <- stringr::str_extract(ano, "..$")
     cad_bf <- get_cad_bf_data(cod_municipios_ibge, ano_cad, mes)
@@ -29,6 +30,7 @@ pega_dados_indicador_protecao_social <- function(cod_municipios_ibge = target_ci
     cras <- extract_cras_data(dir = dir, ano = ano)
     ivs <- extract_IVS()
     perc_estab_dirigidos_por_mulheres <- get_estab_dirigido_por_mulheres()
+    paridades_camera <- get_paridades_camara_mun()
   }
 
   data <- unite_indicador_protecao_social(
@@ -36,7 +38,8 @@ pega_dados_indicador_protecao_social <- function(cod_municipios_ibge = target_ci
     situacao_pobreza = situacao_pobreza,
     cras = cras,
     ivs = ivs,
-    perc_estab_dirigidos_por_mulheres = perc_estab_dirigidos_por_mulheres
+    perc_estab_dirigidos_por_mulheres = perc_estab_dirigidos_por_mulheres,
+    paridades_camera = paridades_camera
   )
   return(data)
 }

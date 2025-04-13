@@ -1,4 +1,4 @@
-#' Controi os dados de Subnutrição
+#' Controi os dados de Subnutrição - Indicador de Saúde
 #'
 #' Essa função constroi os dados de Subnutrição do Sisvan/Ministério da Saúde	 População de todas as
 #' faixas etárias que estão abaixo do peso ideal, a saber:
@@ -6,30 +6,27 @@
 #' adolescentes (magreza acentuada para a idade),
 #' adultos, idosos e gestantes (baixo peso).
 #'
-#' @param diretorio_sisvan Diretório onde se encontra os dados baixados do Sisvan.
-#'
 #' @returns Uma dataframe
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'   data <- constroi_subnutricao_sisvan(
-#'     diretorio_sisvan = "data_raw/sisvan.xlsx"
-#'   )
+#'   data <- constroi_subnutricao_sisvan()
 #' }
-constroi_subnutricao_sisvan <- function(diretorio_sisvan = "./data_raw/sisvan.xlsx"){
+constroi_subnutricao_sisvan <- function(){
 
+  url <- "https://docs.google.com/spreadsheets/d/16PPVjMjD00g4UFKR5RDLeaREBOthgoxbv7xyOO_sr4g/edit?gid=1528928475#gid=1528928475"
   crianca_0_10 <- purrr::map(
     1:2,
     ~{
-      peso_colunas <- readxl::read_excel(diretorio_sisvan,
-                                         skip = 6) %>%
+      peso_colunas <- googlesheets4::read_sheet(url,
+                                                skip = 6) %>%
         janitor::clean_names() %>%
         names()
 
-      readxl::read_excel(diretorio_sisvan,
-                         skip = 6,
-                         col_names = peso_colunas, sheet = .x) %>%
+      googlesheets4::read_sheet(url,
+                                skip = 6,
+                                col_names = peso_colunas, sheet = .x) %>%
         janitor::clean_names() %>%
         dplyr::inner_join(
           target_cities %>%
@@ -41,7 +38,7 @@ constroi_subnutricao_sisvan <- function(diretorio_sisvan = "./data_raw/sisvan.xl
         dplyr::select(1:6, 8) %>%
         dplyr::mutate(
           dplyr::across(dplyr::starts_with("peso"), as.numeric),
-          dplyr::across(dplyr::starts_with("codigo"), as.numeric))
+          dplyr::across(dplyr::starts_with("codigo"), as.character))
     }
   ) %>%
     purrr::list_rbind() %>%
@@ -54,18 +51,22 @@ constroi_subnutricao_sisvan <- function(diretorio_sisvan = "./data_raw/sisvan.xl
   adultos_idosos_gestantes <- purrr::map(
     3:5,
     ~{
-      peso_colunas <- readxl::read_excel(diretorio_sisvan,
-                                         skip = 6, sheet = 3) %>%
+      peso_colunas <- googlesheets4::read_sheet(url,
+                                                skip = 6, sheet = 3) %>%
         janitor::clean_names() %>%
         names()
 
-      readxl::read_excel(diretorio_sisvan,
-                         skip = 6,
-                         #col_names = peso_colunas,
-                         sheet = .x) %>%
+      googlesheets4::read_sheet(url,
+                                #col_names = peso_colunas,
+                                sheet = .x,
+                                range = "A:F",
+                                col_types = c("ccccci"))|>
+        tail(-5) |>
+        janitor::row_to_names(1) |>
         janitor::clean_names() %>%
-        dplyr::select(1:6) %>%
-        dplyr::mutate(baixo_peso = as.numeric(baixo_peso)) %>%
+        dplyr::rename(
+          baixo_peso = 6
+        ) %>%
         dplyr::inner_join(
           target_cities %>%
             dplyr::select(municipio =municipio_nome, uf = estado_sigla) %>%
@@ -82,8 +83,8 @@ constroi_subnutricao_sisvan <- function(diretorio_sisvan = "./data_raw/sisvan.xl
     )
 
 
-  adolescentes <-  readxl::read_excel(diretorio_sisvan,
-                                      skip = 6, sheet = 6) %>%
+  adolescentes <-  googlesheets4::read_sheet(url,
+                                             skip = 6, sheet = 6) %>%
     janitor::clean_names() %>%
     dplyr::inner_join(
       target_cities %>%
@@ -92,14 +93,25 @@ constroi_subnutricao_sisvan <- function(diretorio_sisvan = "./data_raw/sisvan.xl
           municipio, "Latin-ASCII") %>%
             stringr::str_to_upper())
     ) %>%
-    dplyr::mutate(adolescentes = as.numeric(magreza_acentuada)) %>%
+    dplyr::mutate(adolescentes = as.numeric(magreza_acentuada),
+                  dplyr::across(dplyr::starts_with("codigo"), as.character)) %>%
     dplyr::select(1:5, adolescentes)
 
   # unindo tudo
   subnutricao <-
     crianca_0_10 %>%
     dplyr::left_join(adultos_idosos_gestantes) %>%
-    dplyr::left_join(adolescentes)
+    dplyr::left_join(adolescentes) |>
+    dplyr::left_join(
+      target_cities |>
+        dplyr::mutate(
+          codigo_ibge = stringr::str_extract(municipio_codigo, "......")
+        ) |>
+        dplyr::select(
+          codigo_ibge, municipio_codigo
+        )
+    ) |>
+    dplyr::select(-codigo_ibge)
 
   return(subnutricao)
 }
