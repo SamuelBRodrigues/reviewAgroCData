@@ -20,7 +20,7 @@
 #'   )
 #' }
 pega_dados_indicadores <- function(
-    cod_ibge = target_cities$municipio_codigo, ano = "last", mes = "06", download = TRUE,
+    cod_ibge = target_cities$municipio_codigo, ano = "last", mes = "03", download = TRUE,
     dir = "data_raw"
     ){
 

@@ -7,7 +7,7 @@
 pega_dados_indicadores(
   cod_ibge = target_cities$municipio_codigo,
   ano = "last",
-  mes = "06",
+  mes = "03",
   download = TRUE,
   dir = "data_raw"
 )
