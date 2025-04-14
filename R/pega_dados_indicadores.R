@@ -24,8 +24,8 @@ pega_dados_indicadores <- function(
     dir = "data_raw"
     ){
 
-  dados_indicador_saude <- pega_dados_indicador_saude(cod_ibge = cod_ibge, ano = ano)
   dados_indicador_educacao <- pega_dados_indicador_educacao(cod_ibge = cod_ibge, ano = ano, download = download)
+  dados_indicador_saude <- pega_dados_indicador_saude(cod_ibge = cod_ibge, ano = ano)
   dados_indicador_protecao_social <- pega_dados_indicador_protecao_social(cod_municipios_ibge = cod_ibge,
                                                           ano = ano,
                                                           mes = mes,
