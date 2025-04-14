@@ -30,26 +30,6 @@ get_taxa_liq_matricula_creche <- function(ano = '2023'){
   if (!(ano %in% anos_disponiveis)) {
     stop("Ano inválido. Os anos disponíveis são: ", paste(anos_disponiveis, collapse = ", "))
   }
-
-  # Definir o caminho do arquivo
-  file_path = 'data_raw/Taxa líquida de matrículas em creches.xlsx'
-  message('Carregando dados do arquivo: ', file_path)
-
-  # Ler os dados da planilha
-  taxa_matricula <- read_xlsx(
-    file_path,
-    col_names = TRUE,
-    sheet = '1 -   Proporção de crianças ent',
-    skip = 2,
-    na = "-"
-  )
-  message('Arquivo carregado com sucesso.')
-
-  # Carregar os dados das cidades-alvo do pacote
-  message('Carregando dados das cidades-alvo...')
-  load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
-  message('Dados das cidades-alvo carregados.')
-
   # Filtrar e selecionar as colunas relevantes dos dados do INEP
   message('Filtrando e selecionando colunas relevantes...')
   taxa_liq_matricula <- taxa_matricula %>%
