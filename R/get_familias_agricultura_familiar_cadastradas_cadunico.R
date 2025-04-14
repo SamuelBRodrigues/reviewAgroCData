@@ -49,7 +49,7 @@ get_familias_agricultura_familiar_cadastradas_cadunico <- function(
           httr2::resp_body_string()
 
         # Extrair a parte com os dados do arrayToDataTable
-        dados_brutos <- str_extract(resp_body_string, "(?s)google\\.visualization\\.arrayToDataTable\\(\\[(.*?)\\]\\)")
+        dados_brutos <- stringr::str_extract(resp_body_string, "(?s)google\\.visualization\\.arrayToDataTable\\(\\[(.*?)\\]\\)")
         # Agora extrair só os dados (sem a primeira linha de cabeçalho)
         linhas <- stringr::str_match_all(dados_brutos, "\\['(\\d{2}/\\d{4})',(\\d+),'(\\d{4})',\\s*'(\\d{2})'\\]")[[1]]
 
@@ -70,7 +70,7 @@ get_familias_agricultura_familiar_cadastradas_cadunico <- function(
           familias = dados_df$familias
         ) |>
           dplyr::rename(
-            !!stringr::str_glue("fam_agric_fam_cadastradas_cadunico_{m}_{y}") := familias
+            !!stringr::str_glue("pop_vulnerabilidade_rural_{m}_{y}") := familias
           )
       }
     )
@@ -122,7 +122,7 @@ get_familias_agricultura_familiar_cadastradas_cadunico <- function(
           familias = dados_df$familias
         ) |>
           dplyr::rename(
-            !!stringr::str_glue("fam_agric_fam_cadastradas_cadunico_{m}_{y}") := familias
+            !!stringr::str_glue("pop_vulnerabilidade_rural_{m}_{y}") := familias
           )
 
       }

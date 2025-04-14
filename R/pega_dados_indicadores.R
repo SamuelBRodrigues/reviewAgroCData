@@ -31,7 +31,7 @@ pega_dados_indicadores <- function(
                                                           mes = mes,
                                                           dir = dir)
   dados_indicador_mobilidade <- pega_dados_indicador_mobilidade(ano = ano)
-  dados_indicador_gestao_qualidade <- pega_dados_indicador_gestao_qualidade(ano = ano, download = download)
+  dados_indicador_gestao_qualidade <- pega_dados_indicador_gestao_qualidade(ano = ano)
   dados_indicador_desenvolvimento_economico <- pega_dados_indicador_desenvolvimento_economico(ano = ano)
 
   data <- dados_indicador_educacao |>

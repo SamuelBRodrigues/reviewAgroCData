@@ -4,10 +4,7 @@
 \alias{get_emissao}
 \title{Extrai os dados de Emissão por População}
 \usage{
-get_emissao(dir = "data_raw")
-}
-\arguments{
-\item{dir}{Diretório onde o arquivo será salvo}
+get_emissao()
 }
 \value{
 Retorna uma tabela com os dados de Emissão por Populção a nível municipal
@@ -17,6 +14,6 @@ A função extra os dados de Emissão por População do SEEG Municípios.
 }
 \examples{
 \dontrun{
-  get_emissao(dir = "data_raw")
+  data <- get_emissao()
 }
 }

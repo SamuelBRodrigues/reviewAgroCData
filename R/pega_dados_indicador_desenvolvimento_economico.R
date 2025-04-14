@@ -19,6 +19,7 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
   if(ano == "last"){
     pib <- get_PIB_per_capta(ano = 2021)
     empregos <- get_empregos_formais_por_100khab()
+    download_IVS()
     ivs <- extract_IVS()
     investimento_per_capita <- get_investimento_per_capita(ano = "2024")
     recebe_assist <- get_recebe_assist()
@@ -30,6 +31,7 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
     prop_boas_pastagens <- get_perc_pastagens_boas_cond()
     empresas_abertas <- get_perc_empresas_permanecem_abertas()
     perc_estab_agric_familia <- get_percentual_estabelecimentos_agricultura_familiar()
+    pop_vulnerabilidade_rural <- get_familias_agricultura_familiar_cadastradas_cadunico()
   } else{
     pib <- get_PIB_per_capta(ano = ano)
     empregos <- get_empregos_formais_por_100khab()
@@ -43,6 +45,7 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
     prop_boas_pastagens <- get_perc_pastagens_boas_cond()
     empresas_abertas <- get_perc_empresas_permanecem_abertas()
     perc_estab_agric_familia <- get_percentual_estabelecimentos_agricultura_familiar()
+    pop_vulnerabilidade_rural <- get_familias_agricultura_familiar_cadastradas_cadunico()
   }
   data <- unite_indicador_desenvolvimento_economico(
     pib = pib,
@@ -57,7 +60,8 @@ pega_dados_indicador_desenvolvimento_economico <- function(ano= "last") {
     prop_sistemas_florestais = prop_sistemas_florestais,
     prop_boas_pastagens = prop_boas_pastagens,
     empresas_abertas = empresas_abertas,
-    perc_estab_agric_familia = perc_estab_agric_familia
+    perc_estab_agric_familia = perc_estab_agric_familia,
+    pop_vulnerabilidade_rural = pop_vulnerabilidade_rural
   )
 
   return(data)
