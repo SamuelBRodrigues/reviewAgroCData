@@ -26,9 +26,10 @@ constroi_obesid_mun <- function(){
               municipio, "Latin-ASCII") %>%
                 stringr::str_to_upper())
         ) %>%
-        dplyr::select(1:5, dplyr::starts_with("obesidade")) %>%
+        dplyr::select(1:5, dplyr::starts_with("obesidade"), total) %>%
         dplyr::mutate(
-          dplyr::across(dplyr::starts_with("obesidade"), as.numeric)) %>%
+          dplyr::across(dplyr::starts_with("obesidade"), as.numeric),
+          total = as.numeric(total)) %>%
         dplyr::mutate(
           obesidade_total = rowSums(dplyr::select(., dplyr::contains("obesidade")), na.rm = TRUE)
         )
@@ -37,7 +38,9 @@ constroi_obesid_mun <- function(){
     purrr::list_rbind() %>%
     dplyr::summarise(
       .by = c(1:5),
-      pop_obesa = sum(obesidade_total, na.rm = TRUE)
+      pop_total = sum(total, na.rm = TRUE),
+      pop_obesa = sum(obesidade_total, na.rm = TRUE),
+      tax_pop_obesa = pop_obesa / pop_total
     ) |>
   dplyr::mutate(
     codigo_ibge = as.character(codigo_ibge)

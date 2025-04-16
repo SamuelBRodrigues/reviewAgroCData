@@ -2,6 +2,8 @@
 #'
 #' A função extra os dados de Emissão por População do SEEG Municípios.
 #'
+#' @param ano Ano de interesse dos dados. Por padrão usa o mais recente, 2019.
+#'
 #' @returns Retorna uma tabela com os dados de Emissão por Populção a nível municipal
 #' @export
 #'
@@ -9,23 +11,25 @@
 #' \dontrun{
 #'   data <- get_emissao()
 #' }
-get_emissao <- function(){
+get_emissao <- function(ano = 2019){
 
-  emissao <-  emissao_2019 |>
-    dplyr::mutate(
-      dplyr::across(-c(`CÓD. IBGE`,Município, UF),
-                    ~ tidyr::replace_na(.x, 0)
-      )
-    ) |>
-    dplyr::mutate(
-      emissao_por_pop = AC + AL + AM + AP + BA + CE + DF + ES + GO + MA + MG + MS +
-        MT + PA + PB + PE + PI + PR + RJ + RN + RO + RR + RS + SC + SE + SP + TO
-    ) |>
+  ano <- as.character(ano)
+
+  data <- emissao_completo |>
     janitor::clean_names() |>
+    dplyr::filter(ano1 == ano) |>
+    dplyr::group_by(
+      cod_ibge, municipio, ano1
+    ) |>
+    dplyr::summarise(
+      emissao_populacao = sum(emissao_populacao,na.rm = T)
+    ) |>
+    dplyr::rename(
+      municipio_codigo = cod_ibge,
+      municipio_nome = municipio,
+      !!stringr::str_glue("emissao_populacao_{ano}") := emissao_populacao
+    ) |>
     dplyr::select(
-      cod_ibge, municipio, uf, emissao_por_pop
+      -ano1
     )
-
-  return(emissao)
-
 }

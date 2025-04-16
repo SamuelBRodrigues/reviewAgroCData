@@ -4,7 +4,10 @@
 \alias{get_emissao}
 \title{Extrai os dados de Emissão por População}
 \usage{
-get_emissao()
+get_emissao(ano = 2019)
+}
+\arguments{
+\item{ano}{Ano de interesse dos dados. Por padrão usa o mais recente, 2019.}
 }
 \value{
 Retorna uma tabela com os dados de Emissão por Populção a nível municipal
