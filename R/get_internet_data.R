@@ -87,7 +87,7 @@ get_internet_data <- function(dir = "data_raw", ano = 2024){
       acesso
     ) |>
     dplyr::filter(
-      ano == ano
+      ano == y
     ) |>
     select(-ano)
 
