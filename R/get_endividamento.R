@@ -17,7 +17,7 @@
 #'
 #' @export
 get_endividamento <- function(download = TRUE, ano = 2023){
-  anos_disponiveis <- as.character(2017:2023)
+  anos_disponiveis <- as.character(2017:2025)
   ano <- as.character(ano)
 
   if (!(ano %in% anos_disponiveis)) {
@@ -32,7 +32,9 @@ get_endividamento <- function(download = TRUE, ano = 2023){
     '2020' = 'Capag-Municipios---novembro-2021.xlsx',
     '2021' = 'CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx',
     '2022' = 'CAPAG-Municipios-2023.xlsx',
-    '2023' = '20241015CAPAG-Municipios.xlsx'
+    '2023' = '20241015CAPAG-Municipios.xlsx',
+    '2024' = '20241015CAPAG-Municipios.xlsx',
+    '2025' = 'CAPAG-Municipios-posicao-2025-fev-19.xlsx'
   )
 
   file_path = paste0('data_raw/CAPAG/', file_name[[ano]])
@@ -43,10 +45,10 @@ get_endividamento <- function(download = TRUE, ano = 2023){
 
   message('Loading CAPAG data from file: ', file_path)
 
-  capag_data <- read_xlsx(
+  capag_data <- readxl::read_xlsx(
     file_path,
-    skip = if (ano == "2023") 2 else 0,
-    col_names = TRUE,
+    skip = if (ano %in% c("2023", "2024", "2025")) 2 else 0,
+    col_names = TRUE
   )
   message('File loaded successfully.')
 
@@ -54,47 +56,38 @@ get_endividamento <- function(download = TRUE, ano = 2023){
   load(system.file("data", "target_cities.rda", package = "reviewAgroCData"))
   message('Target cities data loaded.')
 
-
   message('Filtering and selecting relevant columns...')
   if (ano == '2021'){
     endividamento_data <- capag_data %>%
-      filter(Ano_Base== '2021') %>%
-      mutate(endividamento = coalesce(as.numeric(Indicador_1_Revisão), as.numeric(Indicador_1))) %>%
-      select(`Cod.IBGE`,
-             `endividamento`) %>%
-      rename(`municipio_codigo` = `Cod.IBGE`,
-             !!paste0('endividamento_',ano) := `endividamento`)
-
-  } else if (ano == '2023'){
-
+      dplyr::filter(Ano_Base == '2021') %>%
+      dplyr::mutate(endividamento = dplyr::coalesce(as.numeric(Indicador_1_Revisão), as.numeric(Indicador_1))) %>%
+      dplyr::select(`Cod.IBGE`, endividamento) %>%
+      dplyr::rename(municipio_codigo = `Cod.IBGE`,
+                    !!paste0('endividamento_', ano) := endividamento)
+  } else if (ano %in% c('2023', '2024', '2025')){
     endividamento_data <- capag_data %>%
-      select(`Código Município Completo`,
-             `Indicador 1`) %>%
-     rename(`municipio_codigo` = `Código Município Completo`,
-            !!paste0('endividamento_',ano) := `Indicador 1`)
+      dplyr::select(`Código Município Completo`, `Indicador 1`) %>%
+      dplyr::rename(municipio_codigo = `Código Município Completo`,
+                    !!paste0('endividamento_', ano) := `Indicador 1`)
   } else if (ano == '2018'){
     endividamento_data <- capag_data %>%
-      select(`Cod.IBGE`,
-             `Indicador 1`) %>%
-      rename(`municipio_codigo` = `Cod.IBGE`,
-             !!paste0('endividamento_',ano) := `Indicador 1`)
-  } else{
+      dplyr::select(`Cod.IBGE`, `Indicador 1`) %>%
+      dplyr::rename(municipio_codigo = `Cod.IBGE`,
+                    !!paste0('endividamento_', ano) := `Indicador 1`)
+  } else {
     endividamento_data <- capag_data %>%
-      select(`Cod.IBGE`,
-             `Indicador_1`) %>%
-      rename(`municipio_codigo` = `Cod.IBGE`,
-             !!paste0('endividamento_',ano) := `Indicador_1`)
+      dplyr::select(`Cod.IBGE`, `Indicador_1`) %>%
+      dplyr::rename(municipio_codigo = `Cod.IBGE`,
+                    !!paste0('endividamento_', ano) := `Indicador_1`)
   }
 
   message('Filtering data for target cities...')
   endividamento_data <- endividamento_data %>%
-    mutate(municipio_codigo = as.character(municipio_codigo)) %>%
-    right_join(target_cities, by='municipio_codigo') %>%
-    select(municipio_codigo,
-           municipio_nome,
-           estado_sigla,
-           !!paste0('endividamento_', ano))
+    dplyr::mutate(municipio_codigo = as.character(municipio_codigo)) %>%
+    dplyr::right_join(target_cities, by = 'municipio_codigo') %>%
+    dplyr::select(municipio_codigo, municipio_nome, estado_sigla, !!paste0('endividamento_', ano))
 
   message('Data filtered and processed successfully.')
   return(endividamento_data)
 }
+
