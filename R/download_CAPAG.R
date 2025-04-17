@@ -25,8 +25,8 @@
 #' # Especificando diretório customizado
 #' arq_2021 <- download_CAPAG(dir_path = "dados/financeiros/", ano = 2021)
 #' }
-download_CAPAG <- function(dir_path = "data_raw/CAPAG/", ano = "2021") {
-  anos_disponiveis <- as.character(2017:2023)
+download_CAPAG <- function(dir_path = "data_raw/CAPAG/", ano = "2023") {
+  anos_disponiveis <- as.character(2017:2025)
   ano <- as.character(ano)
 
   if (!(ano %in% anos_disponiveis)) {
@@ -41,7 +41,9 @@ download_CAPAG <- function(dir_path = "data_raw/CAPAG/", ano = "2021") {
     '2020' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/10387f66-f44d-4096-811c-58e68503100a/download/Capag-Municipios---novembro-2021.xlsx',
     '2021' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/6a218451-f1b4-4fce-ac2a-00a3675bf4eb/download/CAPAG-Oficial-Municipios-2023-02-23-corrigido.xlsx',
     '2022' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/31ed778a-9115-419c-b18e-c9131a978aef/download/CAPAG-Municipios-2023.xlsx',
-    '2023' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/30c5fc20-634d-4558-9d45-01645b501deb/download/20241015CAPAG-Municipios.xlsx'
+    '2023' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/30c5fc20-634d-4558-9d45-01645b501deb/download/20241015CAPAG-Municipios.xlsx',
+    '2024' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/30c5fc20-634d-4558-9d45-01645b501deb/download/20241015CAPAG-Municipios.xlsx',
+    '2025' = 'https://www.tesourotransparente.gov.br/ckan/dataset/9ff93162-409e-48b5-91d9-cf645a47fdfc/resource/986ec09d-f867-40e2-a466-0f525217df20/download/CAPAG-Municipios-posicao-2025-fev-19.xlsx'
   )
 
   if (!ano %in% names(urls)) {
@@ -50,13 +52,12 @@ download_CAPAG <- function(dir_path = "data_raw/CAPAG/", ano = "2021") {
 
   url <- urls[[ano]]
 
-  # Garante que o diretório existe
   if (!dir.exists(dir_path)) {
     dir.create(dir_path, recursive = TRUE)
   }
 
-  # Faz o download do arquivo
   file_path <- .download_file(url, dir_path)
 
   invisible(file_path)
 }
+
