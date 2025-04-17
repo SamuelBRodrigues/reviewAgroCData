@@ -3,15 +3,15 @@
 #'
 #' Executa o pipeline de extração dos indicadores de gestão da qualidade nos municípios.
 #'
-#' @param ano Ano de referência. Padrão: "2023"
+#' @param ano Ano de referência. Padrão: "last" ano mais recente.
 #' @param download Lógico. Se TRUE, baixa os dados. Padrão: TRUE
 #'
 #' @return Uma lista com os dataframes: endividamento, liquidez, poupanca_corrente.
 #' @export
-pega_dados_indicador_gestao_qualidade <- function(ano = "2023", download = TRUE) {
+pega_dados_indicador_gestao_qualidade <- function(ano = "last", download = TRUE) {
 
   if(ano == "last"){
-    endividamento <- get_endividamento(download=download, ano = "2023")
+    endividamento <- get_endividamento(download=download, ano = "2025")
     poupanca_corrente <- get_poupanca_corrente(download=download, ano = "2023")
     liquidez <- get_liquidez(download=download, ano = "2023")
   } else{

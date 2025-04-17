@@ -16,7 +16,7 @@
 #' df <- get_endividamento(download = TRUE, ano = 2021)
 #'
 #' @export
-get_endividamento <- function(download = TRUE, ano = 2023){
+get_endividamento <- function(download = TRUE, ano = 2025){
   anos_disponiveis <- as.character(2017:2025)
   ano <- as.character(ano)
 

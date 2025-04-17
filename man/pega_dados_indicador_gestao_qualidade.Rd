@@ -4,10 +4,10 @@
 \alias{pega_dados_indicador_gestao_qualidade}
 \title{Coleta completa dos Indicadores de Gestão da Qulidade}
 \usage{
-pega_dados_indicador_gestao_qualidade(ano = "2023", download = TRUE)
+pega_dados_indicador_gestao_qualidade(ano = "last", download = TRUE)
 }
 \arguments{
-\item{ano}{Ano de referência. Padrão: "2023"}
+\item{ano}{Ano de referência. Padrão: "last" ano mais recente.}
 
 \item{download}{Lógico. Se TRUE, baixa os dados. Padrão: TRUE}
 }

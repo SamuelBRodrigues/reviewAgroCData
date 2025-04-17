@@ -4,7 +4,7 @@
 \alias{get_endividamento}
 \title{Obtém dados municipais de Dívida Consolidada/Receita Corrente Líquida (Endividamento)}
 \usage{
-get_endividamento(download = TRUE, ano = 2023)
+get_endividamento(download = TRUE, ano = 2025)
 }
 \arguments{
 \item{download}{Lógico. Se `TRUE`, baixa o arquivo correspondente ao ano escolhido. Default é `TRUE`.}
