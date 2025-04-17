@@ -30,7 +30,7 @@ unite_indicador_mobilidade <- function(
     dplyr::left_join(
       emissao |>
         dplyr::select(
-          -c(municipio, uf)
+          -c(municipio_nome, uf)
         ),
       by = join_by(municipio_codigo == cod_ibge)
     ) |>

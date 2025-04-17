@@ -20,7 +20,7 @@ pega_dados_indicador_mobilidade <- function(ano = "last") {
     internacoes_transito <- get_internacoes_DATASUS(ano = ano, mes = "01")
     obitos_transito <- get_obitos_DATASUS(ano = ano, mes = "01")
     deslocamento_sidra <- get_deslocamento_SIDRA()
-    emissao <- get_emissao()
+    emissao <- get_emissao(ano = ano)
   }
 
   data <- unite_indicador_mobilidade(
