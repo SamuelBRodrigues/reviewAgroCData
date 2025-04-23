@@ -5,7 +5,6 @@
 #' e Saneamento.
 #'
 #' @returns Uma dataframe
-#' @export
 #'
 #' @examples
 #' \dontrun{
