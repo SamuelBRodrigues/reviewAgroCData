@@ -10,7 +10,6 @@ unite_indicador_saude(
   gastos_per_capta,
   mortalidade_infantil,
   obitos_evitaveis,
-  abastecimento_esgoto,
   cobertura_vacinal,
   equip_por_estab,
   internacoes,
@@ -31,8 +30,6 @@ Nascimentos}
 
 \item{obitos_evitaveis}{Tabela com os dados de Mortalidade por Causas Evitáveis}
 
-\item{abastecimento_esgoto}{Tabela com os dados de Acesso a Esgoto e Abastecimento de Águga}
-
 \item{cobertura_vacinal}{Tabela com os dados de Cobertura Vacinal}
 
 \item{equip_por_estab}{Tabela com os dados Equipamento Sus por Equipamentos Totais}
@@ -42,6 +39,8 @@ Nascimentos}
 
 \item{obitos}{Tabela com os dados Óbitos em Sinistros de Trânsito por
 100 mil habitantes}
+
+\item{abastecimento_esgoto}{Tabela com os dados de Acesso a Esgoto e Abastecimento de Águga}
 }
 \value{
 Dataframe com todas as variáveis que compõe o indicador de saúde

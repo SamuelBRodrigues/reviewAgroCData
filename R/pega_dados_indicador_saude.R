@@ -17,7 +17,6 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
     gastos_per_capta <- get_gastos_per_capta_saude(cod_ibge)
     mortalidade_infantil <- get_taxa_mortalidade_infantil(ano = "2023")
     obitos_evitaveis <- get_obitos_evitaveis(ano = "2023")
-    abastecimento_esgoto <- get_abastecimento_esgoto()
     cobertura_vacinal <- get_cobertura_vacinal(cod_ibge = cod_ibge)
     equip_por_estab <- get_equip_estab(ano = "25", mes = "02")
     internacoes <- get_internacoes_DATASUS(ano = "25", mes = "01")
@@ -46,7 +45,6 @@ pega_dados_indicador_saude <- function(cod_ibge = target_cities$municipio_codigo
     gastos_per_capta = gastos_per_capta,
     mortalidade_infantil = mortalidade_infantil,
     obitos_evitaveis = obitos_evitaveis,
-    abastecimento_esgoto = abastecimento_esgoto,
     cobertura_vacinal = cobertura_vacinal,
     equip_por_estab = equip_por_estab,
     internacoes = internacoes,

@@ -22,7 +22,7 @@
 #' @examples
 unite_indicador_saude <- function(
     cobertura_aps, cobertura_ab, gastos_per_capta, mortalidade_infantil, obitos_evitaveis,
-    abastecimento_esgoto, cobertura_vacinal, equip_por_estab, internacoes, obitos,
+    cobertura_vacinal, equip_por_estab, internacoes, obitos,
     subnutricao, obesidade
 ){
   data <- target_cities |>
@@ -51,15 +51,6 @@ unite_indicador_saude <- function(
       obitos_evitaveis |>
         dplyr::select(
           -dplyr::starts_with("x"), -ano
-        )
-    ) |>
-    dplyr::left_join(
-      abastecimento_esgoto |>
-        dplyr::select(
-          -c(municipio_nome, ano)
-        ) |>
-        dplyr::mutate(
-          municipio_codigo = as.character(municipio_codigo)
         )
     ) |>
     dplyr::left_join(

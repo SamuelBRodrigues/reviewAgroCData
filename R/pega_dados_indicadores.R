@@ -33,6 +33,7 @@ pega_dados_indicadores <- function(
   dados_indicador_mobilidade <- pega_dados_indicador_mobilidade(ano = ano)
   dados_indicador_gestao_qualidade <- pega_dados_indicador_gestao_qualidade(ano = ano)
   dados_indicador_desenvolvimento_economico <- pega_dados_indicador_desenvolvimento_economico(ano = ano)
+  dados_indicador_infraestrutura <- pega_dados_indicador_infraestrutura(dir = dir, ano = ano)
 
   data <- dados_indicador_educacao |>
     dplyr::left_join(
@@ -50,6 +51,9 @@ pega_dados_indicadores <- function(
     dplyr::left_join(
       dados_indicador_protecao_social |>
         dplyr::select(-estado_sigla)
+    ) |>
+    dplyr::left_join(
+      dados_indicador_infraestrutura
     )
   return(data)
 }
