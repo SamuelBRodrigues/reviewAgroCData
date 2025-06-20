@@ -4,10 +4,12 @@
 \alias{get_gestao_dr_vs_de}
 \title{Obtém o indicador Gestão (Dispêndio do Recurso vs Desempenho - Educação)}
 \usage{
-get_gestao_dr_vs_de(ano = 2023)
+get_gestao_dr_vs_de(ano = 2023, download_perform = FALSE)
 }
 \arguments{
 \item{ano}{Ano de referência (padrão: 2023).}
+
+\item{download_perform}{Se TRUE baixa os dados do ideb. Default é FALSE.}
 }
 \value{
 Um data frame contendo o código do município, nome, estado e o índice de gestão de recursos vs desempenho educacional.

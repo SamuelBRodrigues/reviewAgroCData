@@ -1,6 +1,7 @@
 #' Obtém o indicador Gestão (Dispêndio do Recurso vs Desempenho - Educação)
 #'
 #' @param ano Ano de referência (padrão: 2023).
+#' @param download_perform Se TRUE baixa os dados do ideb. Default é FALSE.
 #'
 #' @return Um data frame contendo o código do município, nome, estado e o índice de gestão de recursos vs desempenho educacional.
 #'
@@ -14,15 +15,15 @@
 #' }
 #'
 #' @export
-get_gestao_dr_vs_de <- function(ano = 2023) {
+get_gestao_dr_vs_de <- function(ano = 2023 , download_perform = FALSE) {
   # Obter dados do IDEB
-  ideb_anos_iniciais <- get_IDEB_fundamental(download = FALSE, ano = ano, tipo = "anos_iniciais") %>%
+  ideb_anos_iniciais <- get_IDEB_fundamental(download = download_perform, ano = ano, tipo = "anos_iniciais") %>%
     dplyr::select(municipio_codigo,
                   municipio_nome,
                   estado_sigla,
                   !!glue::glue("ideb_{ano}_anos_iniciais"))
 
-  ideb_anos_finais <- get_IDEB_fundamental(download = FALSE, ano = ano, tipo = "anos_finais") %>%
+  ideb_anos_finais <- get_IDEB_fundamental(download = download_perform, ano = ano, tipo = "anos_finais") %>%
     dplyr::select(municipio_codigo, !!glue::glue("ideb_{ano}_anos_finais"))
 
   # Carregar dados de despesas educacionais
