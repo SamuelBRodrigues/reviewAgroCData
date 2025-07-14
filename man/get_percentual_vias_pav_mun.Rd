@@ -4,7 +4,10 @@
 \alias{get_percentual_vias_pav_mun}
 \title{Obtém o percentual de vias pavimentadas nos municípios selecionados}
 \usage{
-get_percentual_vias_pav_mun()
+get_percentual_vias_pav_mun(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um tibble com o percentual de domicílios em vias pavimentadas por município e ano.

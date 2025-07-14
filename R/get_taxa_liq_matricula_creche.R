@@ -40,11 +40,6 @@ get_taxa_liq_matricula_creche <- function(ano = '2023'){
                   `municipio_nome` =  Localidade,
                   !!paste0('taxa_liquida_matricula_creche_', ano) := !!paste0('​',ano))
 
-  # Filtrar os dados para manter apenas as cidades-alvo
-  message('Filtrando dados para as cidades-alvo...')
-  taxa_liq_matricula <- taxa_liq_matricula %>%
-    dplyr::filter(municipio_codigo %in% target_cities$municipio_codigo)
-
   # Retornar os dados filtrados
   message('Dados filtrados e processados com sucesso.')
   return(taxa_liq_matricula)

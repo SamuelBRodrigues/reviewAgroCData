@@ -43,10 +43,10 @@ get_equip_estab <- function(ano = "25", mes = "02"){
 
   # Lendo o arquivo csv
   data <- read_delim(link_csv_file, delim = ";", locale = locale(encoding = "latin1"),
-                     skip = 3) |>
-    head(-3) |>
+                     skip = 3) %>%
+    head(-3) %>%
     subset(
-      !stringr::str_detect(Município, "MUNICIPIO IGNORADO")
+      !stringr::str_detect(.$Município, "MUNICIPIO IGNORADO")
     ) |>
     janitor::clean_names() |>
     dplyr::mutate(

@@ -118,11 +118,6 @@ get_taxa_abandono_escolar <- function(download = TRUE, ano = "2023") {
       dplyr::across(starts_with("taxa_abandono"), ~ ifelse(is.na(.), 0, .))  # Substituir NA por 0
     )
 
-  # Filtrar apenas para os municípios-alvo (target_cities)
-  message('Filtrando dados para os municípios-alvo...')
-  taxa_abandono <- taxa_abandono %>%
-    dplyr::filter(municipio_codigo %in% target_cities$municipio_codigo)
-
   message('Dados filtrados e processados com sucesso.')
   return(taxa_abandono)
 }

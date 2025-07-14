@@ -5,7 +5,10 @@
 \alias{get_percentual_estabelecimentos_agricultura_familiar}
 \title{Proporção de estabelecimentos de agricultura familiar - Desenvolvimento Econômico}
 \usage{
-get_percentual_estabelecimentos_agricultura_familiar()
+get_percentual_estabelecimentos_agricultura_familiar(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

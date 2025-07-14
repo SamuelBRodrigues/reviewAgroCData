@@ -4,7 +4,10 @@
 \alias{get_recebe_assist}
 \title{Extrai os dados de Estabelecimentos Agropecuários que recebem Assistência Técnica}
 \usage{
-get_recebe_assist()
+get_recebe_assist(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

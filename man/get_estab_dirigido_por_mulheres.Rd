@@ -4,7 +4,10 @@
 \alias{get_estab_dirigido_por_mulheres}
 \title{Extrai os dados de Estabelecimentos Agropecuários dirigidos por Mulheres}
 \usage{
-get_estab_dirigido_por_mulheres()
+get_estab_dirigido_por_mulheres(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

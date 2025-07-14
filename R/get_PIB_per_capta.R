@@ -60,8 +60,7 @@ get_PIB_per_capta <- function(download = TRUE, ano=2021){
 
   # Filtrar e selecionar dados
   pib_per_capita <- pib_data %>%
-    dplyr::filter(Ano == ano,
-                  `Código do Município` %in% target_cities$municipio_codigo) %>%
+    dplyr::filter(Ano == ano) %>%
     dplyr::select(`Código do Município`,
                   `Nome do Município`,
                   `Sigla da Unidade da Federação`,

@@ -17,15 +17,11 @@ constroi_obesid_mun <- function(){
     c(3, 5:8),
     ~ {
       googlesheets4::read_sheet(url,
-                         skip = 6, sheet = .x) %>%
+                                skip = 6, sheet = .x) %>%
         janitor::clean_names() %>%
-        dplyr::inner_join(
-          target_cities %>%
-            dplyr::select(municipio =municipio_nome, uf = estado_sigla) %>%
-            dplyr::mutate(municipio = stringi::stri_trans_general(
-              municipio, "Latin-ASCII") %>%
-                stringr::str_to_upper())
-        ) %>%
+        tidyr::drop_na(uf) %>%
+        dplyr::select(!starts_with("x")) %>%
+        tidyr::unnest() %>%
         dplyr::select(1:5, dplyr::starts_with("obesidade"), total) %>%
         dplyr::mutate(
           dplyr::across(dplyr::starts_with("obesidade"), as.numeric),
@@ -42,19 +38,9 @@ constroi_obesid_mun <- function(){
       pop_obesa = sum(obesidade_total, na.rm = TRUE),
       tax_pop_obesa = pop_obesa / pop_total
     ) |>
-  dplyr::mutate(
-    codigo_ibge = as.character(codigo_ibge)
-  ) |>
-    dplyr::left_join(
-      target_cities |>
-        dplyr::mutate(
-          codigo_ibge = stringr::str_extract(municipio_codigo, "......")
-        ) |>
-        dplyr::select(
-          codigo_ibge, municipio_codigo
-        )
-    ) |>
-    dplyr::select(-codigo_ibge)
+    dplyr::mutate(
+      codigo_ibge = as.character(codigo_ibge)
+    )
 
   return(obesidade)
 }

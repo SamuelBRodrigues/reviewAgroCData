@@ -4,7 +4,10 @@
 \alias{get_percentual_acess_agua_mun}
 \title{Obtém o percentual de domicílios com acesso à rede geral de água}
 \usage{
-get_percentual_acess_agua_mun()
+get_percentual_acess_agua_mun(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um tibble com o percentual de domicílios com acesso à rede geral de água por município e ano.

@@ -4,7 +4,10 @@
 \alias{get_percentual_acess_esgot_mun}
 \title{Obtém o percentual de domicílios com acesso à rede de esgotamento sanitário}
 \usage{
-get_percentual_acess_esgot_mun()
+get_percentual_acess_esgot_mun(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um tibble com o percentual de domicílios com acesso à rede de esgoto por município e ano.

@@ -4,7 +4,10 @@
 \alias{get_valor_p_hectare_lp}
 \title{Extrai os dados do Valor da Produção das Lavouras Permanentes por Hectare}
 \usage{
-get_valor_p_hectare_lp()
+get_valor_p_hectare_lp(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

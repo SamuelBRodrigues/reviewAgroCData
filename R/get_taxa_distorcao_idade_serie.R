@@ -116,12 +116,6 @@ get_taxa_distorcao_idade_serie <- function(download = TRUE, ano = "2023"){
                   `estado_sigla` = SG_UF,
                   !!paste0('tdi_ensino_fundamental_', ano) := `FUN_CAT_0`,
                   !!paste0("tdi_ensino_medio_", ano):= `MED_CAT_0`)
-
-  # Filter distortion rate data to keep only rows for target cities
-  message('Filtering data for target cities...')
-  taxa_de_distorcao <- taxa_de_distorcao %>%
-    dplyr::filter(municipio_codigo %in% target_cities$municipio_codigo)
-
   # Return the filtered data
   message('Data filtered and processed successfully.')
   return(taxa_de_distorcao)

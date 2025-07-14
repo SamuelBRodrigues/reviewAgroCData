@@ -5,7 +5,10 @@
 \title{Extrai os dados de Estabelecimentos Agropecuários com Pessoal Ocupado com Laço
 de Parentesco com o Produtor}
 \usage{
-get_perc_laco_parentesco_produtor()
+get_perc_laco_parentesco_produtor(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

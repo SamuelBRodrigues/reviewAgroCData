@@ -4,7 +4,10 @@
 \alias{get_perc_area_cultv_espec_flor}
 \title{Extrai os dados da Área Cultivada com Espécies Florestais}
 \usage{
-get_perc_area_cultv_espec_flor()
+get_perc_area_cultv_espec_flor(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

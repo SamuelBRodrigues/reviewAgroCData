@@ -1,12 +1,10 @@
 #' Extrai os dados de Cobertura Vacinal
 #'
-#' A função extrai os dados de Cobertura Vacinal a nível municipal diretamente do
-#' PowerBI Índice de Governança Municipal do Conselho Federal de Administração,
-#' IGM - CFA.
+#' A função extrai os dados de Cobertura Vacinal a nível municipal diretamente
+#' da plataforma da FGV Municípios
 #'
 #' @param cod_ibge Vetor character com os códigos do ibge dos municípios. Por padrão
 #' utiliza os códigos dos municípios da tabela target_cities
-#' @param ano Ano de interesse dos dados. Por padrão usa 2024.
 #'
 #' @returns Um dataframe
 #' @export
@@ -14,170 +12,96 @@
 #' @examples
 #' \dontrun{
 #'  data_cobertura_vacinal <- get_cobertura_vacinal(
-#'   cod_ibge = c("1508126", "1708205", "2101400"),
-#'   ano = 2024
+#'   cod_ibge = c("1508126", "1708205", "2101400")
 #'  )
 #' }
-get_cobertura_vacinal <- function(cod_ibge = target_cities$municipio_codigo,
-                                  ano = 2024){
+get_cobertura_vacinal <- function(cod_ibge = target_cities$municipio_codigo){
 
-  # Estruturando os dados para que possam ser reconhecidos pelo arg da função
-  table_municipio <- pop_municipios |>
-    tidyr::unite(
-      "municipio_codigo",
-      cod_uf:cod_munic,
-      sep = ""
-    ) |>
-    dplyr::mutate(
-      nome_do_municipio = stringr::str_to_upper(abjutils::rm_accent(nome_do_municipio)),
-      municipio = stringr::str_glue("{nome_do_municipio} - {uf}")
-    )
-  # Criando uma named list
-  data_cidade <- setNames(table_municipio$municipio,table_municipio$municipio_codigo)
-
-  data_table <- purrr::map_df(
+  reqs <- purrr::map(
     cod_ibge,
-    ~{
-      # Mimetizando comportamento humano
-      Sys.sleep(runif(1,1,3))
-      # Selecionando a cidade
-      cidade <- data_cidade[.x]
+    ~ {
 
-      # Definir a URL da requisição
-      url <- "https://wabi-brazil-south-api.analysis.windows.net/public/reports/querydata?synchronous=true"
+      cod_munic <- .x
+      # url da API
+      url <- "https://analitica.municipios.fgv.br/"
 
-      # Definir os headers da requisição
-      headers <- list(
-        "Accept" = "application/json, text/plain, */*",
-        "Accept-Language" = "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-        "ActivityId" = "2873a0f7-61d0-4954-beb1-3fe8f012e2c8",
-        "Connection" = "keep-alive",
-        "Content-Type" = "application/json;charset=UTF-8",
-        "Origin" = "https://app.powerbi.com",
-        "Referer" = "https://app.powerbi.com/",
-        "RequestId" = "deddd3a3-6b62-81b4-ade7-ab1cb090d898",
-        "Sec-Fetch-Dest" = "empty",
-        "Sec-Fetch-Mode" = "cors",
-        "Sec-Fetch-Site" = "cross-site",
-        "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0",
-        "X-PowerBI-ResourceKey" = "f5adf4d1-ab3e-4370-ae6e-2008edc90875",
-        "sec-ch-ua" = "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Opera GX\";v=\"117\"",
-        "sec-ch-ua-mobile" = "?0",
-        "sec-ch-ua-platform" = "\"Windows\""
-      )
-
-      # Definir o corpo da requisição
-      body <- list(
-        version = "1.0.0",
-        queries = list(
-          list(
-            Query = list(
-              Commands = list(
-                list(
-                  SemanticQueryDataShapeCommand = list(
-                    Query = list(
-                      Version = 2,
-                      From = list(
-                        list(Name = "i", Entity = "IGM CFA", Type = 0)
-                      ),
-                      Select = list(
-                        list(
-                          Aggregation = list(
-                            Expression = list(
-                              Column = list(
-                                Expression = list(SourceRef = list(Source = "i")),
-                                Property = "Desempenho - Saúde - Cobertura Vacinal - Dado Bruto"
-                              )
-                            ),
-                            Function = 0
-                          ),
-                          Name = "Sum(IGM CFA.Desempenho - Saúde - Cobertura Vacinal - Dado Bruto)"
-                        ),
-                        list(
-                          Aggregation = list(
-                            Expression = list(
-                              Column = list(
-                                Expression = list(SourceRef = list(Source = "i")),
-                                Property = "Desempenho - Saúde - Cobertura Vacinal - Meta"
-                              )
-                            ),
-                            Function = 0
-                          ),
-                          Name = "Sum(IGM CFA.Desempenho - Saúde - Cobertura Vacinal - Meta)",
-                          NativeReferenceName = "Desempenho - Saúde - Cobertura Vacinal - Meta"
-                        )
-                      ),
-                      Where = list(
-                        list(
-                          Condition = list(
-                            In = list(
-                              Expressions = list(
-                                list(Column = list(Expression = list(SourceRef = list(Source = "i")), Property = "ano"))
-                              ),
-                              Values = list(list(list(Literal = list(Value = stringr::str_glue("{ano}L")))))
-                            )
-                          )
-                        ),
-                        list(
-                          Condition = list(
-                            In = list(
-                              Expressions = list(
-                                list(Column = list(Expression = list(SourceRef = list(Source = "i")), Property = "Nome_UF"))
-                              ),
-                              Values = list(list(list(Literal = list(Value = stringr::str_glue("'{cidade}'")))))
-                            )
-                          )
-                        )
-                      )
-                    ),
-                    Binding = list(
-                      Primary = list(Groupings = list(list(Projections = c(0, 1)))),
-                      Version = 1
-                    ),
-                    ExecutionMetricsKind = 1
-                  )
-                )
-              )
-            ),
-            QueryId = "",
-            ApplicationContext = list(
-              DatasetId = "35860f86-188c-4360-a50f-3febbb08041c",
-              Sources = list(
-                list(ReportId = "0ba0c1e5-15df-49a2-bdde-de130f8c6a4a", VisualId = "772ad347d2c0b7a34aea")
-              )
-            )
-          )
-        ),
-        cancelQueries = list(),
-        modelId = 7655674
-      )
-
-      # Fazer a requisição
-      resp <- httr2::request(url) %>%
-        httr2::req_headers(!!!headers) %>%
-        httr2::req_body_json(body) %>%
-        httr2::req_perform()
-
-      # Ver a resposta como um json
-      json <- resp |>
-        httr2::resp_body_string() |>
-        jsonlite::fromJSON() |>
-        jsonlite::toJSON() |>
-        jsonlite::parse_json()
-
-
-      data <- tibble::tibble(
-        municipio_codigo = .x,
-        municipio = cidade,
-        ano = ano,
-        cobertura_vacinal_municipio = json[["results"]][[1]][["result"]][["data"]][["dsr"]][["DS"]][[1]][["PH"]][[1]][["DM0"]][[1]][["C"]][[1]],
-        cobertura_vacinal_max = json[["results"]][[1]][["result"]][["data"]][["dsr"]][["DS"]][[1]][["PH"]][[1]][["DM0"]][[1]][["C"]][[2]]
-      )
-
-      data |> dplyr::glimpse()
-      return(data)
-
+      req <- httr2::request(url) |>
+        httr2::req_url_query(
+          callback = "jQuery364011825524496822326_1750829718859",
+          api_ticket = "b09981dc947ed0b1e3a8371eeaf67178c5caf20ee90bcea702cb8c2a19145d3a",
+          channel = "default",
+          api_indicator = "19f3cd308f1455b3fa09a282e0d496f4", # Codigo indicador: Cobertura Vacinal
+          filters = stringr::str_glue("co_municipio,2,'{cod_munic}'") # Filtro para o código do município
+        ) |>
+        httr2::req_headers(
+          "accept" = "*/*",
+          "accept-language" = "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+          "cookie" = "_ga=GA1.1.1812424873.1742563784; _ga_LDYK37ZKX2=GS1.1.1743094194.4.0.1743094194.0.0.0",
+          "referer" = "https://municipios.fgv.br/",
+          "sec-ch-ua" = "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Opera GX\";v=\"117\"",
+          "sec-ch-ua-mobile" = "?0",
+          "sec-ch-ua-platform" = "\"Windows\"",
+          "sec-fetch-dest" = "script",
+          "sec-fetch-mode" = "no-cors",
+          "sec-fetch-site" = "same-site",
+          "user-agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0"
+        ) |>
+        httr2::req_retry(5) |> # Tentativas de requisição
+        httr2::req_throttle(60, realm = url) # Limite de requisições por minuto
     }
   )
-  return(data_table)
+
+  resps <- httr2::req_perform_parallel(reqs,
+                                       max_active = 10, # Limite de requisições em paralelo
+                                       progress = TRUE
+  )
+
+  extract_function <- function(resp){
+    # Pegando o código do município
+    cod_munic <- resp$request$url |>
+      stringr::str_extract("(?<=27)[0-9]{7}(?=%)") |>
+      as.integer()
+
+    # Pegando o body da resposta
+    body <- resp |> httr2::resp_body_string()
+
+    # Convertendo o body em um JSON
+    json <- stringr::str_match(body, "\\((.*)\\)")[, 2] |>
+      jsonlite::fromJSON()
+
+    # Estruturando os dados em uma tabela
+    data <- json$dados |>
+      tibble::tibble() |>
+      dplyr::mutate(
+        municipio_codigo = cod_munic
+      )
+
+  }
+
+  dataset <- httr2::resps_data(
+    resps,
+    \(resp) extract_function(resp)
+  )
+
+  data_treated <- dataset |>
+    dplyr::select(municipio_codigo, NO_MUNICIPIO, ANO, NR_COBERTRA_VACINAL_2010) |>
+    dplyr::mutate(
+      ANO = as.integer(ANO)
+    ) |>
+    dplyr::rename(
+      municipio_nome = NO_MUNICIPIO,
+      ano = ANO,
+      cobertura_vacinal = NR_COBERTRA_VACINAL_2010
+    )
+
+  null_mun <- setdiff(cod_ibge, data_treated$municipio_codigo)
+
+  if(length(null_mun) > 0){
+    warning(
+      "Alguns municípios não retornaram dados: ",
+      paste(null_mun, collapse = ", ")
+    )
+  }
+
+  return(data_treated)
 }

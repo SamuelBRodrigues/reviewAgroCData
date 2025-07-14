@@ -21,7 +21,11 @@
 #' }
 get_cad_bf_data <- function(cod_municipios_ibge = target_cities$municipio_codigo, ano = "2025", mes = "03"){
 
-  data <- purrr::map_df(cod_municipios_ibge,
+  cores <- future::availableCores()
+
+  future::plan(future::multisession(), workers = cores)
+
+  data <- furrr::future_map(cod_municipios_ibge,
                         ~{
 
                           cod_ibge <- .x |> stringr::str_extract("^.*(?=.$)")
@@ -111,6 +115,14 @@ get_cad_bf_data <- function(cod_municipios_ibge = target_cities$municipio_codigo
                           dplyr::glimpse(data)
                           return(data)
 
-                        }
-  )
+                        },
+                        .progress = TRUE,
+                        .options = furrr::furrr_options(
+                          seed = TRUE,
+                          globals = list(
+                            pop_municipios = reviewAgroCData::pop_municipios
+                          )
+                          )
+  ) |>
+    purrr::list_rbind()
 }

@@ -14,11 +14,9 @@
 #'}
 get_gastos_per_capta_saude <- function(cod_municipios_ibge = target_cities$municipio_codigo){
 
-  purrr::map_df(
+  reqs <- purrr::map(
     cod_municipios_ibge,
     ~{
-      # Simular o comportamento humano
-      Sys.sleep(runif(1,1,3))
       # Url dos dados
       url <- "https://analitica.municipios.fgv.br/"
 
@@ -46,41 +44,66 @@ get_gastos_per_capta_saude <- function(cod_municipios_ibge = target_cities$munic
           "sec-fetch-mode" = "no-cors",
           "sec-fetch-site" = "same-site",
           "user-agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 OPR/117.0.0.0"
-        )
-
-      # Fazendo a requisição para API
-      resp <- req |> httr2::req_perform()
-
-      # Lendo a resposta da API como um texto
-      body <- resp |> httr2::resp_body_string()
-
-      # Estruturar a resposta como um json
-      jsonp_response <- body
-
-      # Remover o callback e extrair apenas o JSON
-      json_text <- sub("^[^(]*\\((.*)\\);?$", "\\1", jsonp_response)
-
-      # Converter JSON para lista
-      json_data <- jsonlite::fromJSON(json_text)
-
-      # Estruturando os dados em uma tabela
-      data <- json_data$dados |>
-        tibble::tibble() |>
-        select(-DS_CONFIG) |>
-        dplyr::mutate(
-          ANO = as.character(ANO),
-          municipio_codigo = .x
         ) |>
-        janitor::clean_names() |>
-        dplyr::rename(
-          "municipio" = no_municipio,
-          "valor_percapta_saude" = valor_percapta
-        )
-
-      message(stringr::str_glue("Pegando os dados: {data$municipio[1]}"))
-
-      return(data)
+        httr2::req_retry(5) |> # Tentativas de requisição
+        httr2::req_throttle(60, realm = url) # Limite de requisiçõesp por minuto
+      # Retornando a requisição
+      return(req)
     }
   )
+  # Performando as requisições em paralelo
+  resps <- httr2::req_perform_parallel(reqs,
+                                       max_active = 10, # Limite de requisições em paralelo
+                                       progress = TRUE
+  )
+
+  # Extraindo os dados
+  extract_function <- function(resp){
+
+    # Lendo a resposta da API como um texto
+    body <- resp |> httr2::resp_body_string()
+    cod_munic <- resp$request$url |> stringr::str_extract("(?<=27)[:digit:]{7}(?=%)")
+    # Estruturar a resposta como um json
+    jsonp_response <- stringr::str_match(body, "\\((.*)\\)")[, 2]
+
+    # Converter JSON para lista
+    json <- jsonlite::fromJSON(jsonp_response)
+
+    # Estruturando os dados em uma tabela
+    data <- json$dados |>
+      tibble::tibble() |>
+      dplyr::mutate(
+        municipio_codigo = cod_munic
+      )
+  }
+  # Aplicando a função de extração a cada resposta
+  dataset <- httr2::resps_data(
+    resps,
+    resp_data = \(resp) extract_function(resp)
+  )
+
+  data_treated <- dataset |>
+    dplyr::select(municipio_codigo, NO_MUNICIPIO, ANO, VALOR_PERCAPTA) |>
+    dplyr::mutate(
+      ANO = as.integer(ANO)
+    ) |>
+    dplyr::rename(
+      ano = ANO,
+      municipio_nome = NO_MUNICIPIO,
+      gasto_per_capta_saude = VALOR_PERCAPTA
+    )
+
+  # Checando se algum municipio não retornou dados
+
+  null_mun <- setdiff(cod_municipios_ibge, data_treated$municipio_codigo)
+
+  if(length(null_mun) > 0){
+    warning(
+      "Alguns municípios não retornaram dados: ",
+      paste(null_mun, collapse = ", ")
+    )
+  }
+
+  return(data_treated)
 
 }

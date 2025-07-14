@@ -4,7 +4,10 @@
 \alias{get_perc_pastagens_boas_cond}
 \title{Extrai os dados de Estabelecimentos Agropecuários com Pastagens em Boas condições}
 \usage{
-get_perc_pastagens_boas_cond()
+get_perc_pastagens_boas_cond(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

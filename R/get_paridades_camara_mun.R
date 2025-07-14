@@ -20,17 +20,58 @@ get_paridades_camara_mun <- function(){
       SG_UF, SG_UE, NM_UE,
       DS_COR_RACA,DS_GENERO) %>%
     janitor::clean_names() %>%
-    dplyr::inner_join(
-      target_cities %>%
-        dplyr::select(nm_ue =municipio_nome, sg_uf = estado_sigla,
-                      cod_muni = municipio_codigo) %>%
-        dplyr::mutate(nm_ue = stringr::str_to_upper(nm_ue),
-                      sg_uf = stringr::str_to_upper(sg_uf))
+    dplyr::mutate(
+      sg_uf = dplyr::case_match(
+        sg_uf,
+        "AC" ~ "12",
+        "AL" ~ "27",
+        "AP" ~ "16",
+        "AM" ~ "13",
+        "BA" ~ "29",
+        "CE" ~ "23",
+        "DF" ~ "53",
+        "ES" ~ "32",
+        "GO" ~ "52",
+        "MA" ~ "21",
+        "MT" ~ "51",
+        "MS" ~ "50",
+        "MG" ~ "31",
+        "PA" ~ "15",
+        "PB" ~ "25",
+        "PR" ~ "41",
+        "PE" ~ "26",
+        "PI" ~ "22",
+        "RJ" ~ "33",
+        "RN" ~ "24",
+        "RS" ~ "43",
+        "RO" ~ "11",
+        "RR" ~ "14",
+        "SC" ~ "42",
+        "SP" ~ "35",
+        "SE" ~ "28",
+        "TO" ~ "17"
+      )
+    ) |>
+    dplyr::left_join(
+      pop_municipios |>
+        tidyr::unite(
+          "cod_ibge",
+          cod_uf:cod_munic,
+          sep = "",
+          remove = FALSE
+        ) |>
+        dplyr::select(
+          sg_uf = cod_uf, nm_ue = nome_do_municipio, cod_ibge
+        ) |>
+        dplyr::mutate(
+          nm_ue = stringr::str_to_upper(nm_ue),
+          sg_uf = as.character(sg_uf)
+        )
     )
 
   # paridade de genero
   par_genero_mun <- dados_eleicao %>%
-    dplyr::group_by(sg_uf, nm_ue, cod_muni) %>%
+    dplyr::group_by(sg_uf, nm_ue, cod_ibge) %>%
     dplyr::count(ds_genero) %>%
     dplyr::mutate(total = sum(n)) %>%
     dplyr::filter(ds_genero == "FEMININO") %>%
@@ -44,7 +85,7 @@ get_paridades_camara_mun <- function(){
   # paridade de genero e cor
 
   par_neg_mun <- dados_eleicao %>%
-    dplyr::group_by(sg_uf, nm_ue, cod_muni) %>%
+    dplyr::group_by(sg_uf, nm_ue, cod_ibge) %>%
     dplyr::count(ds_cor_raca) %>%
     dplyr::mutate(total = sum(n)) %>%
     dplyr::filter(ds_cor_raca %in% c("PARDA", "PRETA")) %>%

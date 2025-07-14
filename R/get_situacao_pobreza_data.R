@@ -15,7 +15,11 @@
 #' }
 get_situacao_pobreza_data <- function(cod_municipios_ibge = target_cities$municipio_codigo){
 
-  purrr::map_df(
+  cores <- future::availableCores()
+
+  future::plan(future::multisession(), workers = cores)
+
+  data <- furrr::future_map(
     cod_municipios_ibge,
     ~{
       # Pegando os 6 primeiros digites do código do municipio
@@ -88,7 +92,14 @@ get_situacao_pobreza_data <- function(cod_municipios_ibge = target_cities$munici
           cod_ibge, nome_do_municipio, ano, mes
         )
 
-    }
+    },
+    .progress = TRUE,
+    .options = furrr::furrr_options(
+      seed = TRUE,
+      globals = list(
+        pop_municipios = reviewAgroCData::pop_municipios
+      )
+    )
   )
 
 }

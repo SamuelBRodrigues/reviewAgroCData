@@ -28,17 +28,12 @@ constroi_subnutricao_sisvan <- function(){
                                 skip = 6,
                                 col_names = peso_colunas, sheet = .x) %>%
         janitor::clean_names() %>%
-        dplyr::inner_join(
-          target_cities %>%
-            dplyr::select(municipio =municipio_nome, uf = estado_sigla) %>%
-            dplyr::mutate(municipio = stringi::stri_trans_general(
-              municipio, "Latin-ASCII") %>%
-                stringr::str_to_upper())
-        ) %>%
         dplyr::select(1:6, 8, total) %>%
+        tail(-1) %>%
+        tidyr::drop_na(uf) %>%
         dplyr::mutate(
           dplyr::across(dplyr::starts_with("peso"), as.numeric),
-          dplyr::across(dplyr::starts_with("codigo"), as.numeric),
+          dplyr::across(dplyr::starts_with("codigo"), as.character),
           total = as.numeric(total))
     }
   ) %>%
@@ -74,17 +69,11 @@ constroi_subnutricao_sisvan <- function(){
         dplyr::rename(
           baixo_peso = 6,
           total = 7
-        ) %>%
-        dplyr::inner_join(
-          target_cities %>%
-            dplyr::select(municipio =municipio_nome, uf = estado_sigla) %>%
-            dplyr::mutate(municipio = stringi::stri_trans_general(
-              municipio, "Latin-ASCII") %>%
-                stringr::str_to_upper())
         )
     }
   ) %>%
     purrr::list_rbind() %>%
+    tidyr::drop_na(uf) %>%
     dplyr::summarise(
       .by = c(1:5),
       total_pop_adultos_idoso_gestantes = sum(total, na.rm = TRUE),
@@ -99,13 +88,7 @@ constroi_subnutricao_sisvan <- function(){
   adolescentes <-  googlesheets4::read_sheet(url,
                                              skip = 6, sheet = 6) %>%
     janitor::clean_names() %>%
-    dplyr::inner_join(
-      target_cities %>%
-        dplyr::select(municipio =municipio_nome, uf = estado_sigla) %>%
-        dplyr::mutate(municipio = stringi::stri_trans_general(
-          municipio, "Latin-ASCII") %>%
-            stringr::str_to_upper())
-    ) %>%
+    tail(-1) %>% tidyr::drop_na(uf) %>%
     dplyr::mutate(dplyr::across(dplyr::starts_with("codigo"), as.character),
                   adolescentes = as.numeric(magreza_acentuada),
                   taxa_adolescentes = adolescentes/total) %>%
@@ -115,17 +98,7 @@ constroi_subnutricao_sisvan <- function(){
   subnutricao <-
     crianca_0_10 |>
     dplyr::left_join(adultos_idosos_gestantes) %>%
-    dplyr::left_join(adolescentes) |>
-    dplyr::left_join(
-      target_cities |>
-        dplyr::mutate(
-          codigo_ibge = stringr::str_extract(municipio_codigo, "......")
-        ) |>
-        dplyr::select(
-          codigo_ibge, municipio_codigo
-        )
-    ) |>
-    dplyr::select(-codigo_ibge)
+    dplyr::left_join(adolescentes)
 
   return(subnutricao)
 }

@@ -4,7 +4,10 @@
 \alias{get_perc_prod_jovens_25_35_anos}
 \title{Extrai os dados de Estabelecimento Agropecuário dirigidos por Jovens}
 \usage{
-get_perc_prod_jovens_25_35_anos()
+get_perc_prod_jovens_25_35_anos(cod_ibge = "Brasil")
+}
+\arguments{
+\item{cod_ibge}{Um vetor de caracteres com o código IBGE do município ou "Brasil" para todos os municípios ou "Targets" para os municípios alvo.}
 }
 \value{
 Um dataframe

@@ -18,41 +18,22 @@
 #' }
 get_cobertura_aps <- function(ano = 2024){
 
-  if(ano == 2024){
-    data <- reviewAgroCData::cobertura_aps_04_2024
+  if(ano == 2025){
+    data <- "https://relatorioaps-prd.saude.gov.br/cobertura/aps?unidadeGeografica=MUNICIPIO&nuCompInicio=202501&nuCompFim=202504"
+  } else if(ano == 2024){
+    data <- "https://relatorioaps-prd.saude.gov.br/cobertura/aps?unidadeGeografica=MUNICIPIO&nuCompInicio=202401&nuCompFim=202412"
   } else if(ano == 2023){
-    data <- reviewAgroCData::cobertura_aps_12_2023
+    data <- "https://relatorioaps-prd.saude.gov.br/cobertura/aps?unidadeGeografica=MUNICIPIO&nuCompInicio=202301&nuCompFim=202312"
+  } else if(ano == 2022){
+    data <- "https://relatorioaps-prd.saude.gov.br/cobertura/aps?unidadeGeografica=MUNICIPIO&nuCompInicio=202201&nuCompFim=202212"
+  } else if(ano == 2021){
+    data <- "https://relatorioaps-prd.saude.gov.br/cobertura/aps?unidadeGeografica=MUNICIPIO&nuCompInicio=202101&nuCompFim=202112"
   } else{
-    stop("Anos diponíveis apenas para 2023 e 2024")
+    stop("Anos diponíveis apenas para 2021 a 2025")
   }
 
-  # Tratando a tabela para os dados de interesse
-  data <- data |>
-    janitor::clean_names() |>
-    dplyr::select(
-      ibge, municipio, cobertura_aps
-    ) |>
-    dplyr::rename(
-      !!stringr::str_glue("cobertura_aps_{ano}") := cobertura_aps
-    ) |>
-    dplyr::left_join(
-      pop_municipios |>
-        tidyr::unite(
-          "municipio_codigo",
-          cod_uf:cod_munic,
-          sep = ""
-        ) |>
-        dplyr::select(municipio_codigo) |>
-        dplyr::mutate(
-          ibge = stringr::str_extract(municipio_codigo, "^.*(?=.$)")
-        )
-    ) |>
-    dplyr::select(
-      -ibge
-    ) |>
-    dplyr::relocate(
-      municipio_codigo, municipio
-    )
-
-  return(data)
+  dataset <- jsonlite::read_json(data) %>%
+    tibble::tibble() %>%
+    tidyr::unnest_wider(".") %>%
+    janitor::clean_names()
 }
